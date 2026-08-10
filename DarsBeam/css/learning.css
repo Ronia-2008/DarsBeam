@@ -1,0 +1,156 @@
+/* ===========================
+   Learning Paths
+=========================== */
+
+
+.learning-paths{
+
+    padding:100px 0;
+
+}
+
+
+
+.path-card{
+
+    background:rgba(255,255,255,.08);
+
+    backdrop-filter:blur(15px);
+
+    border:1px solid rgba(255,255,255,.15);
+
+    border-radius:25px;
+
+    padding:35px 25px;
+
+    text-align:center;
+
+    transition:.4s;
+
+    height:100%;
+    position:relative;
+overflow:hidden;
+
+}
+
+
+
+.path-card:hover{
+
+    transform:translateY(-10px);
+
+}
+
+
+
+.path-icon{
+
+    font-size:50px;
+
+    margin-bottom:20px;
+
+}
+
+
+
+.path-card h3{
+
+    color:white;
+
+    margin-bottom:15px;
+
+}
+
+
+
+.path-card p{
+
+    color:#cbd5e1;
+
+}
+
+
+
+.path-card button{
+
+    margin-top:20px;
+
+    padding:10px 30px;
+
+    border-radius:30px;
+
+    border:none;
+
+    background:var(--primary);
+
+    color:white;
+
+}
+.path-card:hover{
+
+    transform:translateY(-12px);
+
+    border-color:rgba(255,255,255,.4);
+
+    box-shadow:
+    0 20px 40px rgba(0,0,0,.25);
+
+}
+.path-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    bottom:0;
+
+    left:0;
+
+    width:100%;
+
+    height:4px;
+
+    background:var(--primary);
+
+    transform:scaleX(0);
+
+    transition:.4s;
+
+}
+
+
+.path-card:hover::before{
+
+    transform:scaleX(1);
+
+}
+.path-btn{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    margin-top:20px;
+
+    padding:12px 30px;
+
+    border-radius:30px;
+
+    background:var(--primary);
+
+    color:white;
+
+    text-decoration:none;
+
+    transition:.3s;
+
+}
+
+
+.path-btn:hover{
+
+    transform:scale(1.05);
+
+}

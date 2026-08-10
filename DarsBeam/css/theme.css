@@ -1,0 +1,111 @@
+:root{
+
+    /* Colors */
+
+    --bg:#0f172a;
+
+    --text:#ffffff;
+
+    --card:rgba(255,255,255,.08);
+
+    --primary:#2563EB;
+
+    --bg:#0F172A;
+
+    --bg-secondary:#111827;
+
+    --surface:#1E293B;
+
+    --surface-light:#334155;
+
+    --text:#F8FAFC;
+
+    --text-secondary:#CBD5E1;
+
+    --border:#334155;
+
+    --shadow:rgba(0,0,0,.2);
+
+    /* Radius */
+
+    --radius:22px;
+
+    /* Shadow */
+
+    --shadow:0 20px 45px rgba(0,0,0,.35);
+
+    /* Transition */
+
+    --transition:.35s;
+}
+/* ===========================
+   Light Mode
+=========================== */
+
+body.light {
+
+    background: #f8fafc;
+
+    color: #0f172a;
+
+    --bg:#F8FAFC;
+
+    --bg-secondary:#FFFFFF;
+
+    --surface:#FFFFFF;
+
+    --surface-light:#F1F5F9;
+
+    --text:#0F172A;
+
+    --text-secondary:#64748B;
+
+    --border:#E2E8F0;
+
+    --shadow:rgba(15,23,42,.08);
+
+}
+
+
+/* Paragraph */
+
+body.light p {
+
+    color: #475569;
+
+}
+
+
+/* Cards */
+
+body.light .path-card,
+body.light .quiz-card,
+body.light .advantage-card {
+
+    background: rgba(255, 255, 255, 0.85);
+
+    border-color: rgba(15, 23, 42, 0.1);
+
+}
+
+
+/* Card Titles */
+
+body.light .path-card h3,
+body.light .quiz-card h3,
+body.light .advantage-card h3 {
+
+    color: #0f172a;
+
+}
+
+
+/* Card Text */
+
+body.light .path-card p,
+body.light .quiz-card p,
+body.light .advantage-card p {
+
+    color: #475569;
+
+}

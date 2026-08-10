@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>درس‌بیم | DarsBeam</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+    <!-- Vazirmatn -->
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+     <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/settings.css">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top custom-navbar">
+
+    <div class="container">
+
+        <a class="navbar-brand fw-bold logo" href="#">
+
+            <i class="bi bi-book-half"></i>
+
+            DarsBeam
+
+        </a>
+
+        <button class="navbar-toggler"
+                data-bs-toggle="collapse"
+                data-bs-target="#menu">
+
+            <span class="navbar-toggler-icon"></span>
+
+        </button>
+
+        <div class="collapse navbar-collapse" id="menu">
+
+            <ul class="navbar-nav mx-auto">
+
+                <li class="nav-item">
+
+                    <a class="nav-link active" href="#">
+                        خانه
+                    </a>
+
+                </li>
+
+                <li class="nav-item">
+
+                    <a class="nav-link" href="#">
+                        درس‌ها
+                    </a>
+
+                </li>
+
+                <li class="nav-item">
+
+                    <a class="nav-link" href="#">
+                        آزمون‌ها
+                    </a>
+
+                </li>
+
+                <li class="nav-item">
+
+                    <a class="nav-link" href="#">
+                        درباره ما
+                    </a>
+
+                </li>
+
+            </ul>
+
+            <div class="d-flex align-items-center gap-2">
+
+                
+
+                <button class="btn btn-outline-light">
+
+                    <i class="bi bi-gear-fill"></i>
+
+                </button>
+
+              <a
+                   href="login.html"
+                   class="btn btn-primary">
+
+                      ورود
+
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+
+</nav>
+<!-- ================= Settings Panel ================= -->
+
+<div class="settings-panel" id="settingsPanel">
+
+    <div class="settings-header">
+
+        <h4>
+            <i class="bi bi-sliders"></i>
+            تنظیمات
+        </h4>
+
+        <button id="closeSettings">
+            <i class="bi bi-x-lg"></i>
+        </button>
+
+    </div>
+
+    <hr>
+
+
+    <!-- Dark Mode -->
+
+    <div class="setting-item">
+
+        <label for="darkMode">
+            🌙 حالت روشن / تیره
+        </label>
+
+        <input
+            type="checkbox"
+            id="darkMode">
+
+    </div>
+
+
+    <!-- Theme Colors -->
+
+    <div class="setting-item">
+
+        <label>
+            🎨 رنگ اصلی سایت
+        </label>
+
+        <div class="theme-colors">
+
+            <button
+                class="theme-color blue"
+                data-color="#2563EB">
+            </button>
+
+            <button
+                class="theme-color purple"
+                data-color="#7C3AED">
+            </button>
+
+            <button
+                class="theme-color green"
+                data-color="#10B981">
+            </button>
+
+            <button
+                class="theme-color orange"
+                data-color="#F97316">
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+    <!-- Hero -->
+ <section class="hero">
+
+    <div class="container">
+
+        <div class="row align-items-center min-vh-100">
+ 
+            <!-- متن -->
+            <div class="col-lg-6">
+
+                <span class="hero-badge">
+                    🚀 نسخه آزمایشی درس‌بیم
+                </span>
+
+                <h1 class="hero-title">
+                    آینده از یک
+                    <span>درس</span>
+                    شروع می‌شود.
+                </h1>
+
+                <p class="hero-description">
+                    یک پلتفرم مدرن برای آموزش، آزمون آنلاین و مدیریت کلاس‌های هوشمند.
+                </p>
+
+                <div class="hero-buttons">
+
+                    <a href="#" class="btn btn-primary btn-lg">
+                        شروع یادگیری
+                    </a>
+
+                    <a href="#" class="btn btn-outline-light btn-lg">
+                        مشاهده آزمون‌ها
+                    </a>
+
+                </div>
+
+            </div>
+
+            <!-- تصویر -->
+            <div class="col-lg-6 text-center">
+
+                <img
+                    src="assets/images/hero.png"
+                    class="hero-image img-fluid"
+                    alt="Hero">
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ===========================
+     Courses Section
+  =========================== -->
+
+<section class="courses">
+
+    <div class="container">
+
+        <h2 class="section-title">
+            درس‌های محبوب
+        </h2>
+
+
+        <div class="row g-4">
+
+
+            <div class="col-lg-4 col-md-6">
+
+                <div class="course-card">
+
+                    <i class="bi bi-calculator"></i>
+
+                    <h3>
+                        ریاضی
+                    </h3>
+
+                    <p>
+                        یادگیری مفاهیم ریاضی با آموزش ساده
+                    </p>
+
+
+                    <div class="progress">
+
+                        <span style="width:70%"></span>
+
+                    </div>
+
+
+                    <button>
+                        شروع یادگیری
+                    </button>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ===========================
+     Learning Paths
+=========================== -->
+
+<section class="learning-paths">
+
+    <div class="container">
+
+
+        <div class="section-title text-center">
+
+            <h2>
+                مسیر یادگیری خودت را انتخاب کن
+            </h2>
+
+            <p>
+                درس‌بیم برای همه دانش‌آموزان با هر سن و مقطعی ساخته شده
+            </p>
+
+        </div>
+
+
+
+        <div class="row g-4 mt-4">
+
+
+            <div class="col-lg-3 col-md-6">
+
+                <div class="path-card">
+
+                    <div class="path-icon">
+                        📕
+                    </div>
+
+                    <h3>
+                        ابتدایی
+                    </h3>
+
+                    <p>
+                        یادگیری آسان و جذاب برای شروع
+                    </p>
+
+                    <a href="#" class="path-btn">
+    شروع یادگیری
+    <i class="bi bi-arrow-left"></i>
+</a>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="col-lg-3 col-md-6">
+
+                <div class="path-card">
+
+                    <div class="path-icon">
+                        📘
+                    </div>
+
+                    <h3>
+                        متوسطه اول
+                    </h3>
+
+                    <p>
+                        تقویت پایه‌های درسی
+                    </p>
+
+                    <a href="#" class="path-btn">
+    شروع یادگیری
+    <i class="bi bi-arrow-left"></i>
+</a>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="col-lg-3 col-md-6">
+
+                <div class="path-card">
+
+                    <div class="path-icon">
+                        📗
+                    </div>
+
+                    <h3>
+                        متوسطه دوم
+                    </h3>
+
+                    <p>
+                        آمادگی امتحان و کنکور
+                    </p>
+
+                    <a href="#" class="path-btn">
+    شروع یادگیری
+    <i class="bi bi-arrow-left"></i>
+</a>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="col-lg-3 col-md-6">
+
+                <div class="path-card">
+
+                    <div class="path-icon">
+                        💻
+                    </div>
+
+                    <h3>
+                        مهارت‌ها
+                    </h3>
+
+                    <p>
+                        یادگیری چیزهای جدید
+                    </p>
+
+                    <a href="#" class="path-btn">
+    شروع یادگیری
+    <i class="bi bi-arrow-left"></i>
+</a>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+</section>
+<!-- ===========================
+     Quizzes Section
+=========================== -->
+
+<section class="quizzes">
+
+    <div class="container">
+
+        <div class="section-title text-center">
+
+            <h2>
+                آخرین آزمونک‌ها
+            </h2>
+
+            <p>
+                مهارتت را بسنج و پیشرفتت را ببین
+            </p>
+
+        </div>
+
+
+        <div class="row g-4 mt-4">
+
+
+            <div class="col-lg-4 col-md-6">
+
+
+                <div class="quiz-card">
+
+
+                    <div class="quiz-icon">
+                        🧮
+                    </div>
+
+
+                    <h3>
+                        ریاضی هشتم
+                    </h3>
+
+
+                    <p>
+                        آزمون فصل دوم
+                    </p>
+
+
+                    <div class="quiz-info">
+
+                        <span>
+                            📝 10 سوال
+                        </span>
+
+                        <span>
+                            ⏱ 15 دقیقه
+                        </span>
+
+                    </div>
+
+
+                    <a href="#">
+                        شروع آزمون
+                    </a>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+</section>
+    <!-- Features -->
+
+<section class="features py-5">
+
+    <div class="container">
+
+        <div class="text-center mb-5">
+
+            <h2 class="section-title">
+                چرا درس‌بیم؟
+            </h2>
+
+            <p class="section-text">
+
+                هر چیزی که برای یادگیری نیاز داری، یکجا جمع شده.
+
+            </p>
+
+        </div>
+
+        <div class="row g-4">
+
+            <div class="col-lg-4 col-md-6">
+
+                <div class="feature-card">
+
+                    <i class="bi bi-journal-bookmark-fill"></i>
+
+                    <h4>آموزش کامل</h4>
+
+                    <p>
+                        دسترسی به درس‌ها و محتوای آموزشی.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+
+                <div class="feature-card">
+
+                    <i class="bi bi-pencil-square"></i>
+
+                    <h4>آزمون آنلاین</h4>
+
+                    <p>
+                        آزمون‌های سریع و حرفه‌ای.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+
+                <div class="feature-card">
+
+                    <i class="bi bi-person-workspace"></i>
+
+                    <h4>کمک معلم‌ها</h4>
+
+                    <p>
+                        ساخت آزمون و محتوای آموزشی
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+
+                <div class="feature-card">
+
+                    <i class="bi bi-trophy-fill"></i>
+
+                    <h4>پیشرفت</h4>
+
+                    <p>
+                        مشاهده روند یادگیری.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+
+                <div class="feature-card">
+
+                    <i class="bi bi-signpost-2"></i>
+
+                    <h4>مسیر اختصاصی</h4>
+
+                    <p>
+                       انتخاب مسیر مناسب با سن و هدف
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+
+                <div class="feature-card">
+
+                    <i class="bi bi-robot"></i>
+
+                    <h4>هوش مصنوعی</h4>
+
+                    <p>
+
+                        پاسخ به سوالات درسی.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- ================= Footer ================= -->
+
+<footer class="footer">
+
+    <div class="container">
+
+        <div class="row gy-5">
+
+            <div class="col-lg-4">
+
+                <h3>📚 درس‌بیم</h3>
+
+                <p>
+
+                    پلتفرم هوشمند آموزش آنلاین
+                    برای دانش‌آموزان و معلمان.
+
+                </p>
+
+            </div>
+
+            <div class="col-lg-2">
+
+                <h5>دسترسی سریع</h5>
+
+                <ul>
+
+                    <li>خانه</li>
+
+                    <li>درس‌ها</li>
+
+                    <li>آزمون‌ها</li>
+
+                    <li>درباره ما</li>
+
+                </ul>
+
+            </div>
+
+            <div class="col-lg-3">
+
+                <h5>ارتباط</h5>
+
+                <p>
+
+                    📧 info@darsbeam.ir
+
+                </p>
+
+                <p>
+
+                    📞 0903-495-0689
+
+                </p>
+
+            </div>
+
+            <div class="col-lg-3">
+
+                <h5>ما را دنبال کنید</h5>
+
+                <div class="socials">
+
+                    <i class="bi bi-instagram"></i>
+
+                    <i class="bi bi-telegram"></i>
+
+                    <i class="bi bi-github"></i>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <hr>
+
+        <p class="copyright">
+
+            © 2026 DarsBeam — تمامی حقوق محفوظ است.
+
+        </p>
+
+    </div>
+
+</footer>
+<script src="js/app.js"></script>
+<script src="js/settings.js"></script>
+</body>
+
+</html>

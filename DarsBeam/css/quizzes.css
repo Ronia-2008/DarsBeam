@@ -1,0 +1,96 @@
+/* ===========================
+      Quizzes
+=========================== */
+
+
+.quizzes{
+
+    padding:100px 0;
+
+}
+
+
+
+.quiz-card{
+
+    background:rgba(255,255,255,.08);
+
+    backdrop-filter:blur(15px);
+
+    border:1px solid rgba(255,255,255,.15);
+
+    border-radius:25px;
+
+    padding:35px;
+
+    transition:.4s;
+
+    height:100%;
+
+}
+
+
+
+.quiz-card:hover{
+
+    transform:translateY(-10px);
+
+}
+
+
+
+.quiz-icon{
+
+    font-size:45px;
+
+}
+
+
+
+.quiz-card h3{
+
+    color:white;
+
+    margin:20px 0 10px;
+
+}
+
+
+
+.quiz-card p{
+
+    color:#cbd5e1;
+
+}
+
+
+
+.quiz-info{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    margin:25px 0;
+
+    color:#e2e8f0;
+
+}
+
+
+
+.quiz-card a{
+
+    display:inline-block;
+
+    padding:10px 25px;
+
+    border-radius:30px;
+
+    background:var(--primary);
+
+    color:white;
+
+    text-decoration:none;
+
+}

@@ -1,0 +1,96 @@
+/* ============================= */
+/* Aurora Background */
+/* ============================= */
+
+body{
+    background:#0F172A;
+    position:relative;
+}
+
+body::before{
+    content:"";
+    position:fixed;
+    width:600px;
+    height:600px;
+
+    background:var(--primary);
+
+    filter:blur(170px);
+
+    top:-200px;
+    right:-150px;
+
+    opacity:.35;
+
+    z-index:-2;
+}
+
+body::after{
+
+    content:"";
+
+    position:fixed;
+
+    width:500px;
+    height:500px;
+
+    background:#7C3AED;
+
+    filter:blur(180px);
+
+    bottom:-200px;
+    left:-100px;
+
+    opacity:.30;
+
+    z-index:-2;
+}
+.hero-stats{
+
+    display:flex;
+
+    gap:20px;
+
+    margin-top:50px;
+
+    flex-wrap:wrap;
+
+}
+
+.glass-card{
+
+    width:160px;
+
+    padding:25px;
+
+    border-radius:22px;
+
+    text-align:center;
+
+    background:rgba(255,255,255,.08);
+
+    backdrop-filter:blur(18px);
+
+    border:1px solid rgba(255,255,255,.12);
+
+    transition:.35s;
+}
+
+.glass-card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:0 15px 40px rgba(37,99,235,.35);
+
+}
+.btn{
+
+    transition:.3s;
+
+}
+
+.btn:hover{
+
+    transform:translateY(-4px);
+
+}

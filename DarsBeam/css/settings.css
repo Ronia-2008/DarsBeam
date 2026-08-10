@@ -1,0 +1,153 @@
+/* ===============================
+        Settings Panel
+================================ */
+
+.settings-panel{
+    position: fixed;
+    top: 0;
+    right: -340px;
+    width: 320px;
+    height: 100vh;
+    background: #1E293B;
+    transition: .4s;
+    z-index: 9999;
+}
+
+.settings-panel.active{
+
+    right:0;
+
+}
+
+.settings-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+.settings-header button{
+
+    background:none;
+
+    border:none;
+
+    color:white;
+
+    font-size:22px;
+
+}
+
+.setting-item{
+
+    margin:30px 0;
+
+}
+
+.theme-color{
+
+    width:45px;
+
+    height:45px;
+
+    border-radius:50%;
+
+    border:none;
+
+}
+
+.blue{
+
+    background:#2563EB;
+
+}
+
+.purple{
+
+    background:#7C3AED;
+
+}
+/* ===========================
+   Theme Colors
+=========================== */
+
+.theme-colors{
+
+    display:flex;
+
+    gap:15px;
+
+    margin-top:15px;
+
+}
+
+.theme-color{
+
+    width:38px;
+
+    height:38px;
+
+    border-radius:50%;
+
+    border:none;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.theme-color:hover{
+
+    transform:scale(1.15);
+
+}
+
+.blue{
+    background:#2563EB;
+}
+
+.purple{
+    background:#7C3AED;
+}
+
+.green{
+    background:#10B981;
+}
+
+.orange{
+    background:#F97316;
+}
+/* ===========================
+   Settings Mobile
+=========================== */
+
+@media(max-width:768px){
+
+    .settings-panel{
+
+        width:300px;
+
+        padding:20px;
+
+    }
+
+
+    .settings-header h4{
+
+        font-size:18px;
+
+    }
+
+
+    .setting-item{
+
+        margin:20px 0;
+
+    }
+
+
+}

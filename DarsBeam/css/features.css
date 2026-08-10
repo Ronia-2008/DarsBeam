@@ -1,0 +1,73 @@
+/* ========================= */
+/* Features */
+/* ========================= */
+
+.features{
+
+    padding:120px 0;
+
+}
+
+.section-title{
+
+    font-size:42px;
+
+    font-weight:800;
+
+}
+
+.section-text{
+
+    color:#94A3B8;
+
+    margin-top:15px;
+
+}
+
+.feature-card{
+
+    background:rgba(255,255,255,.05);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    backdrop-filter:blur(18px);
+
+    border-radius:25px;
+
+    padding:40px 30px;
+
+    text-align:center;
+
+    transition:.4s;
+
+    height:100%;
+
+}
+
+.feature-card:hover{
+
+    transform:translateY(-12px);
+
+    box-shadow:0 25px 45px rgba(37,99,235,.35);
+
+}
+
+.feature-card i{
+
+    font-size:60px;
+
+    color:#3B82F6;
+
+}
+
+.feature-card h4{
+
+    margin:25px 0 15px;
+
+}
+
+.feature-card p{
+
+    color:#CBD5E1;
+
+}
