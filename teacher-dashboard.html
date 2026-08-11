@@ -1,377 +1,274 @@
 <!DOCTYPE html>
-
 <html lang="fa" dir="rtl">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>پنل معلم | درس‌بیم</title>
 
-
     <!-- Bootstrap -->
-
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-        rel="stylesheet">
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-    <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- ===== CSS ===== -->
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/settings.css">
+    <link rel="stylesheet" href="css/modal.css">
+    <link rel="stylesheet" href="css/teacher-dashboard.css">
+    <link rel="stylesheet" href="css/style.css">
 
+    <style>
+        /* ===== دکمه‌ی تنظیمات ===== */
+        .settings-btn-wrapper {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+        }
 
-    <!-- Dashboard CSS -->
+        .settings-btn-wrapper button {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            padding: 10px 14px;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 18px;
+            box-shadow: var(--shadow-sm);
+        }
 
-        <link rel="stylesheet" href="css/theme.css">
+        .settings-btn-wrapper button:hover {
+            transform: rotate(60deg);
+            box-shadow: var(--shadow-md);
+        }
 
-<link rel="stylesheet" href="css/settings.css">
+        /* ===== هماهنگی تم ===== */
+        .dashboard-main {
+            background: var(--bg-body) !important;
+        }
 
-<link rel="stylesheet" href="css/teacher-dashboard.css">
+        .teacher-sidebar {
+            background: var(--bg-sidebar) !important;
+            border-left: 1px solid var(--border-color) !important;
+        }
 
-<link rel="stylesheet" href="css/style.css">
+        .dashboard-header {
+            background: var(--bg-header) !important;
+            border-bottom: 1px solid var(--border-color) !important;
+        }
 
+        .stat-card {
+            background: var(--bg-card) !important;
+            border: 1px solid var(--border-color) !important;
+        }
+
+        .exam-card {
+            background: var(--bg-card) !important;
+            border: 1px solid var(--border-color) !important;
+        }
+
+        .exam-card:hover {
+            background: var(--bg-card-hover) !important;
+        }
+
+        .exam-action {
+            background: var(--primary-color) !important;
+        }
+
+        .exam-action:hover {
+            background: var(--primary-hover) !important;
+        }
+
+        .create-exam-btn {
+            background: var(--primary-color) !important;
+        }
+
+        .create-exam-btn:hover {
+            background: var(--primary-hover) !important;
+        }
+
+        body.dark-theme .teacher-sidebar {
+            background: #0f172a !important;
+            border-color: #334155 !important;
+        }
+
+        body.dark-theme .dashboard-header {
+            background: #1e293b !important;
+            border-color: #334155 !important;
+        }
+
+        body.dark-theme .stat-card {
+            background: #1e293b !important;
+            border-color: #334155 !important;
+        }
+
+        body.dark-theme .exam-card {
+            background: #1e293b !important;
+            border-color: #334155 !important;
+        }
+
+        body.dark-theme .exam-card:hover {
+            background: #334155 !important;
+        }
+    </style>
 </head>
-
 
 <body>
 
-
-<!-- ===========================
-        Sidebar
-=========================== -->
-
-<aside class="teacher-sidebar">
-
-
-    <div class="dashboard-logo">
-
-        <i class="bi bi-book-half"></i>
-
-        DarsBeam
-
+    <!-- ===== دکمه‌ی تنظیمات ===== -->
+    <div class="settings-btn-wrapper">
+        <button id="settingsToggleBtn">
+            <i class="bi bi-gear-fill"></i>
+        </button>
     </div>
 
-
-    <nav class="dashboard-nav">
-
-
-        <a href="#" class="active">
-
-            <i class="bi bi-grid-1x2"></i>
-
-            داشبورد
-
-        </a>
-
-
-        <a href="#">
-
-            <i class="bi bi-file-earmark-text"></i>
-
-            آزمون‌های من
-
-        </a>
-
-
-        <a href="#">
-
-            <i class="bi bi-people"></i>
-
-            دانش‌آموزان
-
-        </a>
-
-
-        <a href="#">
-
-            <i class="bi bi-bar-chart"></i>
-
-            گزارش‌ها
-
-        </a>
-
-
-    </nav>
-
-
-    <div class="sidebar-bottom">
-
-        <a href="#">
-
-            <i class="bi bi-gear"></i>
-
-            تنظیمات
-
-        </a>
-
-
-        <a href="index.html">
-
-            <i class="bi bi-box-arrow-right"></i>
-
-            خروج
-
-        </a>
-
-    </div>
-
-
-</aside>
-
-
-<!-- ===========================
-        Main
-=========================== -->
-
-<main class="dashboard-main">
-
-
-    <!-- Top -->
-
-    <header class="dashboard-header">
-
-
-        <div>
-
-            <h1>
-                سلام، استاد 👋
-            </h1>
-
-            <p>
-                امروز آماده‌ای کلاس‌هات رو مدیریت کنی؟
-            </p>
-
+    <!-- ===== پنل تنظیمات ===== -->
+    <div class="settings-panel" id="settingsPanel">
+        <div class="settings-header">
+            <h4><i class="bi bi-sliders"></i> تنظیمات</h4>
+            <button id="closeSettings"><i class="bi bi-x-lg"></i></button>
         </div>
-
-
-        <div class="teacher-profile">
-
-            <div class="profile-icon">
-
-                <i class="bi bi-person"></i>
-
+        <hr>
+        <div class="setting-item">
+            <label for="darkMode">🌙 حالت روشن / تیره</label>
+            <input type="checkbox" id="darkMode">
+        </div>
+        <div class="setting-item">
+            <label>🎨 رنگ اصلی سایت</label>
+            <div class="theme-colors">
+                <button class="theme-color blue" data-color="#2563EB"></button>
+                <button class="theme-color purple" data-color="#7C3AED"></button>
+                <button class="theme-color green" data-color="#10B981"></button>
+                <button class="theme-color orange" data-color="#F97316"></button>
             </div>
-
-
-            <span>
-                حساب معلم
-            </span>
-
         </div>
-
-
-    </header>
-
+    </div>
 
     <!-- ===========================
-            Stats
+            Sidebar
     =========================== -->
+    <aside class="teacher-sidebar">
+        <div class="dashboard-logo">
+            <i class="bi bi-book-half"></i>
+            DarsBeam
+        </div>
 
-    <section class="stats-grid">
-
-
-        <div class="stat-card">
-
-            <div class="stat-icon">
-
+        <nav class="dashboard-nav">
+            <a href="#" class="active">
+                <i class="bi bi-grid-1x2"></i>
+                <span>داشبورد</span>
+            </a>
+            <a href="#">
                 <i class="bi bi-file-earmark-text"></i>
-
-            </div>
-
-            <div>
-
-                <span>
-                    آزمون‌ها
-                </span>
-
-                <strong>
-                    12
-                </strong>
-
-            </div>
-
-        </div>
-
-
-        <div class="stat-card">
-
-            <div class="stat-icon">
-
+                <span>آزمون‌های من</span>
+            </a>
+            <a href="#">
                 <i class="bi bi-people"></i>
+                <span>دانش‌آموزان</span>
+            </a>
+            <a href="#">
+                <i class="bi bi-bar-chart"></i>
+                <span>گزارش‌ها</span>
+            </a>
+        </nav>
 
-            </div>
-
-            <div>
-
-                <span>
-                    دانش‌آموزان
-                </span>
-
-                <strong>
-                    86
-                </strong>
-
-            </div>
-
+        <div class="sidebar-bottom">
+            <a href="#">
+                <i class="bi bi-gear"></i>
+                <span>تنظیمات</span>
+            </a>
+            <a href="index.html">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>خروج</span>
+            </a>
         </div>
-
-
-        <div class="stat-card">
-
-            <div class="stat-icon">
-
-                <i class="bi bi-graph-up-arrow"></i>
-
-            </div>
-
-            <div>
-
-                <span>
-                    میانگین عملکرد
-                </span>
-
-                <strong>
-                    74%
-                </strong>
-
-            </div>
-
-        </div>
-
-
-    </section>
-
+    </aside>
 
     <!-- ===========================
-            Exams
+            Main
     =========================== -->
+    <main class="dashboard-main">
 
-    <section class="exams-section">
-
-
-        <div class="section-header">
-
+        <!-- Top -->
+        <header class="dashboard-header">
             <div>
+                <h1>سلام، استاد 👋</h1>
+                <p>امروز آماده‌ای کلاس‌هات رو مدیریت کنی؟</p>
+            </div>
+            <div class="teacher-profile">
+                <div class="profile-icon">
+                    <i class="bi bi-person"></i>
+                </div>
+                <span>حساب معلم</span>
+            </div>
+        </header>
 
-                <h2>
-                    آزمون‌های من
-                </h2>
-
-                <p>
-                    آزمون‌هایی که ساخته‌ای را مدیریت کن.
-                </p>
-
+        <!-- ===========================
+                Stats
+        =========================== -->
+        <section class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="bi bi-file-earmark-text"></i>
+                </div>
+                <div>
+                    <span>آزمون‌ها</span>
+                    <strong id="examCount">0</strong>
+                </div>
             </div>
 
-
-            <a
-    href="create-exam.html"
-    class="create-exam-btn">
-
-    <i class="bi bi-plus-lg"></i>
-
-    ساخت آزمون جدید
-
-</a>
-
-        </div>
-
-
-        <!-- Exam Cards -->
-
-        <div class="exam-list">
-
-
-            <div class="exam-card">
-
-
-                <div class="exam-icon">
-
-                    <i class="bi bi-calculator"></i>
-
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="bi bi-people"></i>
                 </div>
-
-
-                <div class="exam-info">
-
-                    <h3>
-                        آزمون ریاضی فصل اول
-                    </h3>
-
-                    <p>
-                        10 سؤال
-                        •
-                        24 دانش‌آموز
-                    </p>
-
+                <div>
+                    <span>دانش‌آموزان</span>
+                    <strong id="studentCount">0</strong>
                 </div>
-
-
-                <button class="exam-action">
-
-                    مشاهده
-
-                    <i class="bi bi-arrow-left"></i>
-
-                </button>
-
-
             </div>
 
-
-            <div class="exam-card">
-
-
-                <div class="exam-icon">
-
-                    <i class="bi bi-book"></i>
-
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="bi bi-graph-up-arrow"></i>
                 </div>
-
-
-                <div class="exam-info">
-
-                    <h3>
-                        آزمون علوم
-                    </h3>
-
-                    <p>
-                        15 سؤال
-                        •
-                        18 دانش‌آموز
-                    </p>
-
+                <div>
+                    <span>میانگین عملکرد</span>
+                    <strong>--</strong>
                 </div>
+            </div>
+        </section>
 
-
-                <button class="exam-action">
-
-                    مشاهده
-
-                    <i class="bi bi-arrow-left"></i>
-
-                </button>
-
-
+        <!-- ===========================
+                Exams
+        =========================== -->
+        <section class="exams-section">
+            <div class="section-header">
+                <div>
+                    <h2>آزمون‌های من</h2>
+                    <p>آزمون‌هایی که ساخته‌ای را مدیریت کن.</p>
+                </div>
+                <a href="create-exam.html" class="create-exam-btn">
+                    <i class="bi bi-plus-lg"></i>
+                    ساخت آزمون جدید
+                </a>
             </div>
 
+            <!-- Exam Cards -->
+            <div class="exam-list" id="examList">
+                <!-- توسط JS پر میشه -->
+            </div>
+        </section>
 
-        </div>
+    </main>
 
-
-    </section>
-
-
-</main>
-
-<script src="js/settings.js"></script>
+    <!-- ===== اسکریپت‌ها ===== -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/settings.js"></script>
+    <script src="js/modal.js"></script>
+    <script src="js/teacher-dashboard.js"></script>
 
 </body>
 

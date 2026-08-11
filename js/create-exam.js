@@ -1,727 +1,447 @@
-/* ===========================
-   Create Exam
-=========================== */
-
-const nextToQuestions =
-    document.getElementById("nextToQuestions");
-
-const examFormCard =
-    document.querySelector(".exam-form-card");
-
-const questionsSection =
-    document.getElementById("questionsSection");
-
-const questionsContainer =
-    document.getElementById("questionsContainer");
-
-const addQuestionBtn =
-    document.getElementById("addQuestionBtn");
-
-const backToInfo =
-    document.getElementById("backToInfo");
-    
-    const reviewExamBtn =
-    document.getElementById("reviewExamBtn");
-
-const reviewSection =
-    document.getElementById("reviewSection");
-
-const reviewQuestions =
-    document.getElementById("reviewQuestions");
-
-const editQuestionsBtn =
-    document.getElementById("editQuestionsBtn");
-
-const saveExamBtn =
-    document.getElementById("saveExamBtn");
-
-/* ===========================
-   Exam Information
-=========================== */
-
-nextToQuestions.addEventListener("click", () => {
-
-    const title =
-        document.getElementById("examTitle").value.trim();
-
-    const subject =
-        document.getElementById("examSubject").value;
-
-    const grade =
-        document.getElementById("examGrade").value;
-
-    const duration =
-        document.getElementById("examDuration").value;
-
-    const difficulty =
-        document.getElementById("examDifficulty").value;
-
-
-    if (
-        !title ||
-        !subject ||
-        !grade ||
-        !duration ||
-        !difficulty
-    ) {
-
-        alert(
-            "لطفاً تمام اطلاعات اصلی آزمون را وارد کن."
-        );
-
-        return;
-
-    }
-
-
-    examFormCard.style.display = "none";
-
-    questionsSection.classList.add("active");
-
-
-    if (
-        questionsContainer.children.length === 0
-    ) {
-
-        addQuestion();
-
-    }
-
-});
-
-
-/* ===========================
-   Back To Information
-=========================== */
-
-backToInfo.addEventListener("click", () => {
-
-    questionsSection.classList.remove("active");
-
-    examFormCard.style.display = "block";
-
-});
-
-
-/* ===========================
-   Add Question
-=========================== */
-
-addQuestionBtn.addEventListener("click", () => {
-
-    addQuestion();
-
-});
-
-
-function addQuestion() {
-
-    const questionNumber =
-        questionsContainer.children.length + 1;
-
-
-    const questionHTML = `
-
-        <div class="question-card">
-
-            <div class="question-card-header">
-
-                <h3>
-
-                    <span class="question-number">
-
-                        ${questionNumber}
-
-                    </span>
-
-                    سؤال ${questionNumber}
-
-                </h3>
-
-
-                <button
-                    type="button"
-                    class="delete-question">
-
-                    <i class="bi bi-trash"></i>
-
-                </button>
-
-            </div>
-
-
-            <!-- Question -->
-
-            <div class="question-field">
-
-                <label>
-
-                    متن سؤال
-
-                </label>
-
-
-                <textarea
-                    class="question-text"
-                    rows="4"
-                    placeholder="سؤال خود را اینجا بنویس..."></textarea>
-
-            </div>
-
-
-            <!-- Options -->
-
-            <div class="options-title">
-
-                گزینه‌ها
-
-            </div>
-
-
-            <div class="options-grid">
-
-
-                <label class="option-item">
-
-                    <input
-                        type="radio"
-                        name="correct-${questionNumber}">
-
-                    <span class="option-letter">
-
-                        الف
-
-                    </span>
-
-
-                    <input
-                        type="text"
-                        placeholder="گزینه اول">
-
-                </label>
-
-
-                <label class="option-item">
-
-                    <input
-                        type="radio"
-                        name="correct-${questionNumber}">
-
-                    <span class="option-letter">
-
-                        ب
-
-                    </span>
-
-
-                    <input
-                        type="text"
-                        placeholder="گزینه دوم">
-
-                </label>
-
-
-                <label class="option-item">
-
-                    <input
-                        type="radio"
-                        name="correct-${questionNumber}">
-
-                    <span class="option-letter">
-
-                        ج
-
-                    </span>
-
-
-                    <input
-                        type="text"
-                        placeholder="گزینه سوم">
-
-                </label>
-
-
-                <label class="option-item">
-
-                    <input
-                        type="radio"
-                        name="correct-${questionNumber}">
-
-                    <span class="option-letter">
-
-                        د
-
-                    </span>
-
-
-                    <input
-                        type="text"
-                        placeholder="گزینه چهارم">
-
-                </label>
-
-
-            </div>
-
-
-            <p class="correct-answer-text">
-
-                <i class="bi bi-check-circle"></i>
-
-                پاسخ صحیح را با انتخاب دایره کنار گزینه مشخص کن.
-
-            </p>
-
-
-        </div>
-
-    `;
-
-
-    questionsContainer.insertAdjacentHTML(
-        "beforeend",
-        questionHTML
-    );
-
-/* ===========================
-   Review Exam
-=========================== */
-
-reviewExamBtn.addEventListener("click", () => {
-
-    const questionCards =
-        document.querySelectorAll(".question-card");
-
-
-    if (questionCards.length === 0) {
-
-        alert(
-            "حداقل یک سؤال اضافه کن."
-        );
-
-        return;
-
-    }
-
-
-    for (const question of questionCards) {
-
-        const questionText =
-            question.querySelector(".question-text")
-            .value
-            .trim();
-
-
-        const options =
-            question.querySelectorAll(
-                '.option-item input[type="text"]'
-            );
-
-
-        const correctAnswer =
-            question.querySelector(
-                'input[type="radio"]:checked'
-            );
-
-
-        if (!questionText) {
-
-            alert(
-                "لطفاً متن همه سؤال‌ها را وارد کن."
-            );
-
-            return;
-
-        }
-
-
-        for (const option of options) {
-
-            if (!option.value.trim()) {
-
-                alert(
-                    "لطفاً همه گزینه‌ها را کامل کن."
-                );
-
-                return;
-
-            }
-
-        }
-
-
-        if (!correctAnswer) {
-
-            alert(
-                "برای هر سؤال پاسخ صحیح را انتخاب کن."
-            );
-
-            return;
-
-        }
-
-    }
-
-
-    showExamReview();
-
-});
-    updateQuestionNumbers();
-
-}
-
-
-/* ===========================
-   Delete Question
-=========================== */
-
-questionsContainer.addEventListener(
-    "click",
-    (event) => {
-
-        const deleteButton =
-            event.target.closest(".delete-question");
-
-
-        if (!deleteButton) {
-
-            return;
-
-        }
-
-
-        const questionCard =
-            deleteButton.closest(".question-card");
-
-
-        questionCard.remove();
-
-
-        updateQuestionNumbers();
-
-    }
-);
-
-
-/* ===========================
-   Update Question Numbers
-=========================== */
-
-function updateQuestionNumbers() {
-
-    const questions =
-        document.querySelectorAll(".question-card");
-
-
-    questions.forEach(
-        (question, index) => {
-
-            const number =
-                index + 1;
-
-
-            question.querySelector(
-                ".question-number"
-            ).textContent = number;
-
-
-            question.querySelector(
-                "h3"
-            ).lastChild.textContent =
-                ` سؤال ${number}`;
-
-
-            question.querySelectorAll(
-                'input[type="radio"]'
-            ).forEach(radio => {
-
-                radio.name =
-                    `correct-${number}`;
-
-            });
-
-        }
-    );
-
-}
-function showExamReview() {
-
-    const title =
-        document.getElementById("examTitle").value;
-
-    const subject =
-        document.getElementById("examSubject").value;
-
-    const grade =
-        document.getElementById("examGrade").value;
-
-    const duration =
-        document.getElementById("examDuration").value;
-
-    const difficulty =
-        document.getElementById("examDifficulty").value;
-
-
-    document.getElementById(
-        "reviewTitle"
-    ).textContent = title;
-
-
-    document.getElementById(
-        "reviewSubject"
-    ).textContent = subject;
-
-
-    document.getElementById(
-        "reviewGrade"
-    ).textContent = grade;
-
-
-    document.getElementById(
-        "reviewDuration"
-    ).textContent = duration;
-
-
-    document.getElementById(
-        "reviewDifficulty"
-    ).textContent = difficulty;
-
-
-    document.getElementById(
-        "reviewQuestionCount"
-    ).textContent =
-        `${questionsContainer.children.length} سؤال`;
-
-
-    reviewQuestions.innerHTML = "";
-
-
-    const questionCards =
-        document.querySelectorAll(".question-card");
-
-
-    questionCards.forEach(
-        (question, index) => {
-
-            const questionText =
-                question.querySelector(".question-text")
-                .value;
-
-
-            const options =
-                question.querySelectorAll(
-                    '.option-item input[type="text"]'
-                );
-
-
-            const correctIndex =
-                Array.from(
-                    question.querySelectorAll(
-                        'input[type="radio"]'
-                    )
-                ).findIndex(
-                    radio => radio.checked
-                );
-
-
-            const letters =
-                ["الف", "ب", "ج", "د"];
-
-
-            let optionsHTML = "";
-
-
-            options.forEach(
-                (option, optionIndex) => {
-
-                    const correctClass =
-                        optionIndex === correctIndex
-                            ? "correct"
-                            : "";
-
-
-                    optionsHTML += `
-
-                        <div
-                            class="review-option ${correctClass}">
-
-                            ${letters[optionIndex]}.
-                            ${option.value}
-
-                        </div>
-
-                    `;
-
-                }
-            );
-
-
-            reviewQuestions.innerHTML += `
-
-                <div class="review-question">
-
-                    <div class="review-question-title">
-
-                        <span
-                            class="review-question-number">
-
-                            سؤال ${index + 1}
-
-                        </span>
-
-                        <span>
-
-                            ${questionText}
-
-                        </span>
-
-                    </div>
-
-
-                    <div class="review-options">
-
-                        ${optionsHTML}
-
-                    </div>
-
-                </div>
-
-            `;
-
-        }
-    );
-
-
-    questionsSection.classList.remove("active");
-
-    reviewSection.classList.add("active");
-
-}
-/* ===========================
-   Edit Questions
-=========================== */
-
-editQuestionsBtn.addEventListener("click", () => {
-
-    reviewSection.classList.remove("active");
-
-    questionsSection.classList.add("active");
-
-});
-/* ===========================
-   Save Exam
-=========================== */
-
-saveExamBtn.addEventListener("click", () => {
-
-    const questions = [];
-
-
-    document
-        .querySelectorAll(".question-card")
-        .forEach(question => {
-
-            const questionText =
-                question.querySelector(".question-text")
-                .value
-                .trim();
-
-
-            const options = Array.from(
-                question.querySelectorAll(
-                    '.option-item input[type="text"]'
-                )
-            ).map(option => option.value.trim());
-
-
-            const correctIndex = Array.from(
-                question.querySelectorAll(
-                    'input[type="radio"]'
-                )
-            ).findIndex(
-                radio => radio.checked
-            );
-
-
-            questions.push({
-
-                question:questionText,
-
-                options:options,
-
-                correctAnswer:correctIndex
-
-            });
-
-        });
-
-
-    const exam = {
-
-        id:Date.now(),
-
-        title:
-            document.getElementById("examTitle")
-            .value
-            .trim(),
-
-        subject:
-            document.getElementById("examSubject")
-            .value,
-
-        grade:
-            document.getElementById("examGrade")
-            .value,
-
-        duration:
-            document.getElementById("examDuration")
-            .value,
-
-        difficulty:
-            document.getElementById("examDifficulty")
-            .value,
-
-        description:
-            document.getElementById("examDescription")
-            .value
-            .trim(),
-
-        questions:questions
-
+// ============================================
+// create-exam.js
+// مدیریت کامل ساخت آزمون (اطلاعات، سوالات، بررسی)
+// با مودال اختصاصی درس‌بیم
+// ============================================
+
+document.addEventListener('DOMContentLoaded', function() {
+    'use strict';
+
+    // ============================================
+    // 1. المان‌ها
+    // ============================================
+    const sections = {
+        info: document.getElementById('examInfoSection'),
+        questions: document.getElementById('questionsSection'),
+        review: document.getElementById('reviewSection')
     };
 
+    const btns = {
+        nextToQuestions: document.getElementById('nextToQuestions'),
+        backToInfo: document.getElementById('backToInfo'),
+        reviewExam: document.getElementById('reviewExamBtn'),
+        editQuestions: document.getElementById('editQuestionsBtn'),
+        saveExam: document.getElementById('saveExamBtn'),
+        addQuestion: document.getElementById('addQuestionBtn')
+    };
 
-    const savedExams =
-        JSON.parse(
-            localStorage.getItem("teacherExams")
-        ) || [];
+    const questionsContainer = document.getElementById('questionsContainer');
+    const reviewQuestionsContainer = document.getElementById('reviewQuestions');
 
+    // ============================================
+    // 2. داده‌های آزمون (آبجکت اصلی)
+    // ============================================
+    const examData = {
+        title: '',
+        subject: '',
+        grade: '',
+        duration: '',
+        difficulty: '',
+        description: '',
+        questions: []
+    };
 
-    savedExams.push(exam);
+    let questionCounter = 0;
 
+    // ============================================
+    // 3. توابع کمکی (UI)
+    // ============================================
 
-    localStorage.setItem(
-        "teacherExams",
-        JSON.stringify(savedExams)
-    );
+    // نمایش/مخفی کردن بخش‌ها
+    function showSection(sectionId) {
+        Object.keys(sections).forEach(key => {
+            sections[key].classList.remove('active');
+        });
+        if (sections[sectionId]) {
+            sections[sectionId].classList.add('active');
+        }
+        updateProgress(sectionId);
+    }
 
+    // به‌روزرسانی مرحله‌بندی
+    function updateProgress(sectionId) {
+        const steps = document.querySelectorAll('.progress-step');
+        const lines = document.querySelectorAll('.progress-line');
+        const stepMap = { info: 0, questions: 1, review: 2 };
+        const activeIndex = stepMap[sectionId] || 0;
 
-    saveExamBtn.disabled = true;
+        steps.forEach((step, index) => {
+            step.classList.toggle('active', index <= activeIndex);
+            step.classList.toggle('completed', index < activeIndex);
+        });
 
-    saveExamBtn.innerHTML = `
-        <span
-            class="spinner-border spinner-border-sm">
-        </span>
+        lines.forEach((line, index) => {
+            line.classList.toggle('completed', index < activeIndex);
+        });
+    }
 
-        در حال ذخیره...
-    `;
+    // ============================================
+    // 4. مدیریت سؤال‌ها
+    // ============================================
 
+    // ساختن المان یک سؤال
+    function createQuestionHTML(index) {
+        return `
+            <div class="question-card" data-index="${index}">
+                <div class="question-header">
+                    <span class="question-number">سؤال ${index + 1}</span>
+                    <button type="button" class="remove-question-btn" data-index="${index}">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </div>
+
+                <div class="question-body">
+                    <div class="form-group full-width">
+                        <label>متن سؤال</label>
+                        <textarea class="question-text" rows="2" placeholder="متن سؤال را وارد کنید..."></textarea>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label>نوع سؤال</label>
+                        <div class="input-box">
+                            <i class="bi bi-list-ul"></i>
+                            <select class="question-type">
+                                <option value="multiple">تستی (چهار گزینه‌ای)</option>
+                                <option value="descriptive">تشریحی</option>
+                                <option value="truefalse">صحیح/غلط</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="options-container">
+                        <div class="form-group">
+                            <label>گزینه ۱</label>
+                            <div class="input-box">
+                                <i class="bi bi-1-circle"></i>
+                                <input type="text" class="option-input" placeholder="گزینه ۱">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>گزینه ۲</label>
+                            <div class="input-box">
+                                <i class="bi bi-2-circle"></i>
+                                <input type="text" class="option-input" placeholder="گزینه ۲">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>گزینه ۳</label>
+                            <div class="input-box">
+                                <i class="bi bi-3-circle"></i>
+                                <input type="text" class="option-input" placeholder="گزینه ۳">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>گزینه ۴</label>
+                            <div class="input-box">
+                                <i class="bi bi-4-circle"></i>
+                                <input type="text" class="option-input" placeholder="گزینه ۴">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label>پاسخ صحیح</label>
+                        <div class="input-box">
+                            <i class="bi bi-check-circle"></i>
+                            <select class="correct-answer">
+                                <option value="0">گزینه ۱</option>
+                                <option value="1">گزینه ۲</option>
+                                <option value="2">گزینه ۳</option>
+                                <option value="3">گزینه ۴</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    // اضافه کردن سؤال جدید
+    function addQuestion() {
+        const index = questionCounter;
+        const html = createQuestionHTML(index);
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = html;
+        const questionElement = tempDiv.firstElementChild;
+
+        // رویداد حذف
+        const removeBtn = questionElement.querySelector('.remove-question-btn');
+        removeBtn.addEventListener('click', function() {
+            if (document.querySelectorAll('.question-card').length <= 1) {
+                showError('حداقل یک سؤال باید باشد!');
+                return;
+            }
+            this.closest('.question-card').remove();
+            renumberQuestions();
+        });
+
+        // رویداد تغییر نوع سؤال (نمایش/مخفی کردن گزینه‌ها)
+        const typeSelect = questionElement.querySelector('.question-type');
+        const optionsContainer = questionElement.querySelector('.options-container');
+        const correctAnswer = questionElement.querySelector('.correct-answer').closest('.form-group');
+
+        typeSelect.addEventListener('change', function() {
+            const isMultiple = this.value === 'multiple';
+            optionsContainer.style.display = isMultiple ? 'grid' : 'none';
+            correctAnswer.style.display = isMultiple ? 'block' : 'none';
+        });
+
+        questionsContainer.appendChild(questionElement);
+        questionCounter++;
+    }
+
+    // شماره‌گذاری مجدد سؤال‌ها
+    function renumberQuestions() {
+        const cards = document.querySelectorAll('.question-card');
+        cards.forEach((card, index) => {
+            const numberSpan = card.querySelector('.question-number');
+            numberSpan.textContent = `سؤال ${index + 1}`;
+            card.dataset.index = index;
+        });
+    }
+
+    // جمع‌آوری داده‌های سؤال‌ها
+    function collectQuestions() {
+        const cards = document.querySelectorAll('.question-card');
+        const questions = [];
+
+        for (const card of cards) {
+            const text = card.querySelector('.question-text').value.trim();
+            const type = card.querySelector('.question-type').value;
+            const options = card.querySelectorAll('.option-input');
+            const correct = card.querySelector('.correct-answer');
+
+            if (!text) {
+                showError('لطفاً متن همه‌ی سؤال‌ها را وارد کنید.');
+                throw new Error('متن سؤال خالی');
+            }
+
+            const questionData = {
+                text: text,
+                type: type,
+                options: Array.from(options).map(opt => opt.value.trim()),
+                correctAnswer: parseInt(correct.value)
+            };
+
+            // برای تستی، بررسی پر بودن گزینه‌ها
+            if (type === 'multiple') {
+                const emptyOptions = questionData.options.some(opt => opt === '');
+                if (emptyOptions) {
+                    showError('لطفاً همه‌ی گزینه‌های سؤال "' + text.substring(0, 20) + '..." را پر کنید.');
+                    throw new Error('گزینه خالی');
+                }
+            }
+
+            questions.push(questionData);
+        }
+
+        return questions;
+    }
+
+    // ============================================
+    // 5. جمع‌آوری اطلاعات از فرم
+    // ============================================
+
+    function collectExamInfo() {
+        const title = document.getElementById('examTitle').value.trim();
+        const subject = document.getElementById('examSubject').value;
+        const grade = document.getElementById('examGrade').value;
+        const duration = document.getElementById('examDuration').value;
+        const difficulty = document.getElementById('examDifficulty').value;
+        const description = document.getElementById('examDescription').value.trim();
+
+        if (!title || !subject || !grade || !duration || !difficulty) {
+            showError('لطفاً همه‌ی فیلدهای اجباری را پر کنید.');
+            return null;
+        }
+
+        return { title, subject, grade, duration, difficulty, description };
+    }
+
+    // ============================================
+    // 6. نمایش در بخش بررسی
+    // ============================================
+
+    function populateReview() {
+        // اطلاعات
+        document.getElementById('reviewTitle').textContent = examData.title;
+        document.getElementById('reviewSubject').textContent = examData.subject;
+        document.getElementById('reviewGrade').textContent = examData.grade;
+        document.getElementById('reviewDuration').textContent = examData.duration;
+        document.getElementById('reviewDifficulty').textContent = examData.difficulty;
+        document.getElementById('reviewQuestionCount').textContent = examData.questions.length;
+
+        // سؤال‌ها
+        reviewQuestionsContainer.innerHTML = '';
+        examData.questions.forEach((q, index) => {
+            const div = document.createElement('div');
+            div.className = 'review-question-item';
+            div.style.cssText = 'padding: 12px 0; border-bottom: 1px solid var(--border-color);';
+            
+            const typeLabel = q.type === 'multiple' ? 'تستی' : q.type === 'descriptive' ? 'تشریحی' : 'صحیح/غلط';
+            
+            let optionsHTML = '';
+            if (q.type === 'multiple') {
+                optionsHTML = `
+                    <div class="review-q-options" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;">
+                        ${q.options.map((opt, i) => `
+                            <span style="background:var(--bg-body);padding:4px 12px;border-radius:6px;font-size:14px;color:var(--text-secondary);${i === q.correctAnswer ? 'border:2px solid #10b981;color:#10b981;' : ''}">
+                                ${i + 1}. ${opt}
+                            </span>
+                        `).join('')}
+                    </div>
+                `;
+            }
+
+            div.innerHTML = `
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+                    <strong style="color:var(--text-primary);">سؤال ${index + 1}</strong>
+                    <span style="background:var(--bg-body);padding:2px 12px;border-radius:12px;font-size:12px;color:var(--text-secondary);">${typeLabel}</span>
+                </div>
+                <p style="color:var(--text-primary);margin:0 0 4px;">${q.text}</p>
+                ${optionsHTML}
+            `;
+            reviewQuestionsContainer.appendChild(div);
+        });
+    }
+
+    // ============================================
+    // 7. نمایش پیام‌ها با مودال
+    // ============================================
+
+    async function showError(message) {
+        await darsbeamConfirm({
+            title: '❌ خطا',
+            text: message,
+            icon: 'x-circle',
+            confirmText: 'باشه',
+            cancelText: '',
+            type: 'danger'
+        });
+    }
+
+    async function showSuccess(message, title = '✅ موفقیت') {
+        await darsbeamConfirm({
+            title: title,
+            text: message,
+            icon: 'check-circle',
+            confirmText: 'باشه',
+            cancelText: '',
+            type: 'success'
+        });
+    }
+
+    async function showInfo(message, title = 'ℹ️ اطلاعات') {
+        await darsbeamConfirm({
+            title: title,
+            text: message,
+            icon: 'info-circle',
+            confirmText: 'باشه',
+            cancelText: '',
+            type: 'info'
+        });
+    }
+
+    // ============================================
+    // 8. ذخیره‌سازی
+    // ============================================
+
+    async function saveExam() {
+        try {
+            // جمع‌آوری سؤال‌ها
+            const questions = collectQuestions();
+            examData.questions = questions;
+
+            // ذخیره در LocalStorage
+            const exams = JSON.parse(localStorage.getItem('darsbeam_exams')) || [];
+            const newExam = {
+                id: Date.now(),
+                ...examData,
+                createdAt: new Date().toISOString(),
+                students: 0
+            };
+            exams.push(newExam);
+            localStorage.setItem('darsbeam_exams', JSON.stringify(exams));
+
+            await showSuccess(`"${examData.title}" با موفقیت ذخیره شد.`, '✅ آزمون ذخیره شد!');
+            window.location.href = 'teacher-dashboard.html';
+        } catch (error) {
+            // خطاها قبلاً در collectQuestions مدیریت شده
+            console.error('خطا در ذخیره‌سازی:', error);
+        }
+    }
+
+    // ============================================
+    // 9. رویدادها (Event Listeners)
+    // ============================================
+
+    // مرحله ۱ → ۲: رفتن به بخش سؤال‌ها
+    btns.nextToQuestions.addEventListener('click', function() {
+        const info = collectExamInfo();
+        if (info) {
+            Object.assign(examData, info);
+            showSection('questions');
+
+            if (document.querySelectorAll('.question-card').length === 0) {
+                addQuestion();
+            }
+        }
+    });
+
+    // مرحله ۲ → ۱: بازگشت به اطلاعات
+    btns.backToInfo.addEventListener('click', function() {
+        showSection('info');
+    });
+
+    // مرحله ۲ → ۳: رفتن به بررسی
+    btns.reviewExam.addEventListener('click', function() {
+        try {
+            const questions = collectQuestions();
+            examData.questions = questions;
+            populateReview();
+            showSection('review');
+        } catch (error) {
+            // خطا قبلاً نمایش داده شده
+        }
+    });
+
+    // مرحله ۳ → ۲: برگشت به سؤال‌ها
+    btns.editQuestions.addEventListener('click', function() {
+        showSection('questions');
+    });
+
+    // ذخیره نهایی
+    btns.saveExam.addEventListener('click', async function() {
+        const confirmResult = await darsbeamConfirm({
+            title: '💾 ذخیره آزمون',
+            text: `آیا از ذخیره‌ی این آزمون مطمئنی؟\nعنوان: "${examData.title}"\nتعداد سؤال: ${document.querySelectorAll('.question-card').length}`,
+            icon: 'save',
+            confirmText: 'بله، ذخیره کن',
+            cancelText: 'انصراف',
+            type: 'info'
+        });
+
+        if (confirmResult) {
+            await saveExam();
+        }
+    });
+
+    // افزودن سؤال جدید
+    btns.addQuestion.addEventListener('click', function() {
+        addQuestion();
+    });
+
+    // ============================================
+    // 10. مقداردهی اولیه
+    // ============================================
+
+    showSection('info');
 
     setTimeout(() => {
+        if (document.querySelectorAll('.question-card').length === 0) {
+            addQuestion();
+        }
+    }, 100);
 
-        window.location.href =
-            "teacher-dashboard.html";
-
-    }, 700);
-
+    console.log('🚀 ایجاد آزمون با موفقیت بارگذاری شد!');
 });

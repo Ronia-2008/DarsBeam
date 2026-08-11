@@ -1,730 +1,324 @@
 <!DOCTYPE html>
-
 <html lang="fa" dir="rtl">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ساخت آزمون | درس‌بیم</title>
 
-
     <!-- Bootstrap -->
-
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-        rel="stylesheet">
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-    <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- ===== CSS ===== -->
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/settings.css">
+    <link rel="stylesheet" href="css/modal.css">
+    <link rel="stylesheet" href="css/create-exam.css">
 
+    <style>
+        .settings-btn-wrapper {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+        }
 
-    <!-- Create Exam CSS -->
+        .settings-btn-wrapper button {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            padding: 10px 14px;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 18px;
+            box-shadow: var(--shadow-sm);
+        }
 
-    <link
-        rel="stylesheet"
-        href="css/create-exam.css">
+        .settings-btn-wrapper button:hover {
+            transform: rotate(60deg);
+            box-shadow: var(--shadow-md);
+        }
 
+        .create-exam-page {
+            background: var(--bg-body) !important;
+        }
+    </style>
 </head>
-
 
 <body>
 
-
-<!-- ===========================
-        Header
-=========================== -->
-
-<header class="exam-header">
-
-    <a
-        href="teacher-dashboard.html"
-        class="back-dashboard">
-
-        <i class="bi bi-arrow-right"></i>
-
-        بازگشت به داشبورد
-
-    </a>
-
-
-    <div class="exam-logo">
-
-        <i class="bi bi-book-half"></i>
-
-        DarsBeam
-
-    </div>
-
-</header>
-
-
-
-<!-- ===========================
-        Main
-=========================== -->
-
-<main class="create-exam-page">
-
-
-    <div class="create-exam-container">
-
-
-        <!-- Title -->
-
-        <div class="page-title">
-
-            <div class="page-title-icon">
-
-                <i class="bi bi-file-earmark-plus"></i>
-
-            </div>
-
-
-            <div>
-
-                <h1>
-                    ساخت آزمون جدید
-                </h1>
-
-                <p>
-                    اطلاعات آزمونت رو وارد کن و شروع کن به ساخت سؤال‌ها.
-                </p>
-
-            </div>
-
-         
-        </div>
-
-
-
-        <!-- Progress -->
-
-        <div class="exam-progress">
-
-
-            <div class="progress-step active">
-
-                <span>1</span>
-
-                <p>
-                    اطلاعات آزمون
-                </p>
-
-            </div>
-
-
-            <div class="progress-line"></div>
-
-
-            <div class="progress-step">
-
-                <span>2</span>
-
-                <p>
-                    سؤال‌ها
-                </p>
-
-            </div>
-
-
-            <div class="progress-line"></div>
-
-
-            <div class="progress-step">
-
-                <span>3</span>
-
-                <p>
-                    بررسی و ذخیره
-                </p>
-
-            </div>
-
-
-        </div>
-
-         <!-- ===========================
-        Exam Info Section
-=========================== -->
-
-<section
-    class="exam-info-section active"
-    id="examInfoSection">
-
-
-        <!-- Form Card -->
-
-         <section
-    class="exam-info-section active"
-    id="examInfoSection">
-
-    <div class="exam-form-card">
-
-
-            <div class="form-card-header">
-
-                <h2>
-                    اطلاعات آزمون
-                </h2>
-
-                <span>
-                    مرحله ۱ از ۳
-                </span>
-
-            </div>
-
-
-            <form>
-
-
-                <!-- Exam Title -->
-
-                <div class="form-group full-width">
-
-                    <label for="examTitle">
-
-                        عنوان آزمون
-
-                    </label>
-
-                    <div class="input-box">
-
-                        <i class="bi bi-pencil"></i>
-
-                        <input
-                            type="text"
-                            id="examTitle"
-                            placeholder="مثلاً آزمون فصل اول ریاضی">
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- Subject -->
-
-                <div class="form-grid">
-
-
-                    <div class="form-group">
-
-                        <label for="examSubject">
-
-                            درس
-
-                        </label>
-
-                        <div class="input-box">
-
-                            <i class="bi bi-book"></i>
-
-                            <select id="examSubject">
-
-                                <option value="">
-                                    انتخاب درس
-                                </option>
-
-                                <option>
-                                    ریاضی
-                                </option>
-
-                                <option>
-                                    علوم
-                                </option>
-
-                                <option>
-                                    فارسی
-                                </option>
-
-                                <option>
-                                    زبان انگلیسی
-                                </option>
-
-                                <option>
-                                    مطالعات اجتماعی
-                                </option>
-
-                            </select>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <!-- Grade -->
-
-                    <div class="form-group">
-
-                        <label for="examGrade">
-
-                            پایه تحصیلی
-
-                        </label>
-
-                        <div class="input-box">
-
-                            <i class="bi bi-mortarboard"></i>
-
-                            <select id="examGrade">
-
-                                <option value="">
-                                    انتخاب پایه
-                                </option>
-
-                                <option>
-                                    اول
-                                </option>
-
-                                <option>
-                                    دوم
-                                </option>
-
-                                <option>
-                                    سوم
-                                </option>
-
-                                <option>
-                                    چهارم
-                                </option>
-
-                                <option>
-                                    پنجم
-                                </option>
-
-                                <option>
-                                    ششم
-                                </option>
-
-                                <option>
-                                    هفتم
-                                </option>
-
-                                <option>
-                                    هشتم
-                                </option>
-
-                                <option>
-                                    نهم
-                                </option>
-
-                                <option>
-                                    دهم
-                                </option>
-
-                                <option>
-                                    یازدهم
-                                </option>
-
-                                <option>
-                                    دوازدهم
-                                </option>
-
-                            </select>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <!-- Duration -->
-
-                    <div class="form-group">
-
-                        <label for="examDuration">
-
-                            مدت آزمون
-
-                        </label>
-
-                        <div class="input-box">
-
-                            <i class="bi bi-clock"></i>
-
-                            <select id="examDuration">
-
-                                <option value="">
-                                    انتخاب مدت
-                                </option>
-
-                                <option>
-                                    ۱۰ دقیقه
-                                </option>
-
-                                <option>
-                                    ۲۰ دقیقه
-                                </option>
-
-                                <option>
-                                    ۳۰ دقیقه
-                                </option>
-
-                                <option>
-                                    ۴۵ دقیقه
-                                </option>
-
-                                <option>
-                                    ۶۰ دقیقه
-                                </option>
-
-                            </select>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <!-- Difficulty -->
-
-                    <div class="form-group">
-
-                        <label for="examDifficulty">
-
-                            سطح آزمون
-
-                        </label>
-
-                        <div class="input-box">
-
-                            <i class="bi bi-bar-chart"></i>
-
-                            <select id="examDifficulty">
-
-                                <option value="">
-                                    انتخاب سطح
-                                </option>
-
-                                <option>
-                                    آسان
-                                </option>
-
-                                <option>
-                                    متوسط
-                                </option>
-
-                                <option>
-                                    سخت
-                                </option>
-
-                            </select>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- Description -->
-
-                <div class="form-group full-width">
-
-                    <label for="examDescription">
-
-                        توضیحات آزمون
-
-                    </label>
-
-                    <textarea
-                        id="examDescription"
-                        rows="5"
-                        placeholder="توضیحات یا قوانین آزمون را اینجا بنویس..."></textarea>
-
-                </div>
-
-
-
-                <!-- Actions -->
-
-                <div class="form-actions">
-
-                    <a
-                        href="teacher-dashboard.html"
-                        class="cancel-btn">
-
-                        انصراف
-
-                    </a>
-
-
-                    <button
-    type="button"
-    class="next-btn"
-    id="nextToQuestions">
-
-    ادامه
-
-    <i class="bi bi-arrow-left"></i>
-
-</button>
-
-                </div>
-
-
-            </form>
-
-    </div>
-
-         </section>
-
-        </section>
-
-           <!-- ===========================
-        Questions Section
-=========================== -->
-
-<section
-    class="questions-section"
-    id="questionsSection">
-
-
-    <div class="questions-header">
-
-        <div>
-
-            <h2>
-                ساخت سؤال‌ها
-            </h2>
-
-            <p>
-                سؤال‌های آزمونت را اضافه کن.
-            </p>
-
-        </div>
-
-
-        <button
-            type="button"
-            class="add-question-btn"
-            id="addQuestionBtn">
-
-            <i class="bi bi-plus-lg"></i>
-
-            افزودن سؤال
-
+    <!-- ===== دکمه‌ی تنظیمات ===== -->
+    <div class="settings-btn-wrapper">
+        <button id="settingsToggleBtn">
+            <i class="bi bi-gear-fill"></i>
         </button>
-
     </div>
 
-
-    <!-- Questions Container -->
-
-    <div
-        class="questions-container"
-        id="questionsContainer">
-
-
-        <!-- اولین سؤال توسط JS ساخته می‌شود -->
-
-
+    <!-- ===== پنل تنظیمات ===== -->
+    <div class="settings-panel" id="settingsPanel">
+        <div class="settings-header">
+            <h4><i class="bi bi-sliders"></i> تنظیمات</h4>
+            <button id="closeSettings"><i class="bi bi-x-lg"></i></button>
+        </div>
+        <hr>
+        <div class="setting-item">
+            <label for="darkMode">🌙 حالت روشن / تیره</label>
+            <input type="checkbox" id="darkMode">
+        </div>
+        <div class="setting-item">
+            <label>🎨 رنگ اصلی سایت</label>
+            <div class="theme-colors">
+                <button class="theme-color blue" data-color="#2563EB"></button>
+                <button class="theme-color purple" data-color="#7C3AED"></button>
+                <button class="theme-color green" data-color="#10B981"></button>
+                <button class="theme-color orange" data-color="#F97316"></button>
+            </div>
+        </div>
     </div>
 
-
-    <!-- Question Actions -->
-
-    <div class="question-actions">
-
-        <button
-            type="button"
-            class="back-to-info-btn"
-            id="backToInfo">
-
+    <!-- ===========================
+            Header
+    =========================== -->
+    <header class="exam-header">
+        <a href="teacher-dashboard.html" class="back-dashboard">
             <i class="bi bi-arrow-right"></i>
+            بازگشت به داشبورد
+        </a>
+        <div class="exam-logo">
+            <i class="bi bi-book-half"></i>
+            DarsBeam
+        </div>
+    </header>
 
-            بازگشت
+    <!-- ===========================
+            Main
+    =========================== -->
+    <main class="create-exam-page">
 
-        </button>
+        <div class="create-exam-container">
 
+            <!-- Title -->
+            <div class="page-title">
+                <div class="page-title-icon">
+                    <i class="bi bi-file-earmark-plus"></i>
+                </div>
+                <div>
+                    <h1>ساخت آزمون جدید</h1>
+                    <p>اطلاعات آزمونت رو وارد کن و شروع کن به ساخت سؤال‌ها.</p>
+                </div>
+            </div>
 
-        <button
-    type="button"
-    class="review-exam-btn"
-    id="reviewExamBtn">
+            <!-- Progress -->
+            <div class="exam-progress">
+                <div class="progress-step active">
+                    <span>1</span>
+                    <p>اطلاعات آزمون</p>
+                </div>
+                <div class="progress-line"></div>
+                <div class="progress-step">
+                    <span>2</span>
+                    <p>سؤال‌ها</p>
+                </div>
+                <div class="progress-line"></div>
+                <div class="progress-step">
+                    <span>3</span>
+                    <p>بررسی و ذخیره</p>
+                </div>
+            </div>
 
-            ادامه به بررسی
+            <!-- ===========================
+            Exam Info Section
+            =========================== -->
+            <section class="exam-info-section active" id="examInfoSection">
 
-            <i class="bi bi-arrow-left"></i>
+                <div class="exam-form-card">
+                    <div class="form-card-header">
+                        <h2>اطلاعات آزمون</h2>
+                        <span>مرحله ۱ از ۳</span>
+                    </div>
 
-        </button>
+                    <form>
+                        <!-- Exam Title -->
+                        <div class="form-group full-width">
+                            <label for="examTitle">عنوان آزمون</label>
+                            <div class="input-box">
+                                <i class="bi bi-pencil"></i>
+                                <input type="text" id="examTitle" placeholder="مثلاً آزمون فصل اول ریاضی">
+                            </div>
+                        </div>
 
-    </div>
+                        <!-- Subject -->
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="examSubject">درس</label>
+                                <div class="input-box">
+                                    <i class="bi bi-book"></i>
+                                    <select id="examSubject">
+                                        <option value="">انتخاب درس</option>
+                                        <option>ریاضی</option>
+                                        <option>علوم</option>
+                                        <option>فارسی</option>
+                                        <option>زبان انگلیسی</option>
+                                        <option>مطالعات اجتماعی</option>
+                                    </select>
+                                </div>
+                            </div>
 
+                            <!-- Grade -->
+                            <div class="form-group">
+                                <label for="examGrade">پایه تحصیلی</label>
+                                <div class="input-box">
+                                    <i class="bi bi-mortarboard"></i>
+                                    <select id="examGrade">
+                                        <option value="">انتخاب پایه</option>
+                                        <option>اول</option><option>دوم</option><option>سوم</option>
+                                        <option>چهارم</option><option>پنجم</option><option>ششم</option>
+                                        <option>هفتم</option><option>هشتم</option><option>نهم</option>
+                                        <option>دهم</option><option>یازدهم</option><option>دوازدهم</option>
+                                    </select>
+                                </div>
+                            </div>
 
-</section>
+                            <!-- Duration -->
+                            <div class="form-group">
+                                <label for="examDuration">مدت آزمون</label>
+                                <div class="input-box">
+                                    <i class="bi bi-clock"></i>
+                                    <select id="examDuration">
+                                        <option value="">انتخاب مدت</option>
+                                        <option>۱۰ دقیقه</option>
+                                        <option>۲۰ دقیقه</option>
+                                        <option>۳۰ دقیقه</option>
+                                        <option>۴۵ دقیقه</option>
+                                        <option>۶۰ دقیقه</option>
+                                    </select>
+                                </div>
+                            </div>
 
-        <!-- ===========================
-        Review Exam
-=========================== -->
+                            <!-- Difficulty -->
+                            <div class="form-group">
+                                <label for="examDifficulty">سطح آزمون</label>
+                                <div class="input-box">
+                                    <i class="bi bi-bar-chart"></i>
+                                    <select id="examDifficulty">
+                                        <option value="">انتخاب سطح</option>
+                                        <option>آسان</option>
+                                        <option>متوسط</option>
+                                        <option>سخت</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
 
-<section
-    class="review-section"
-    id="reviewSection">
+                        <!-- Description -->
+                        <div class="form-group full-width">
+                            <label for="examDescription">توضیحات آزمون</label>
+                            <textarea id="examDescription" rows="5" placeholder="توضیحات یا قوانین آزمون را اینجا بنویس..."></textarea>
+                        </div>
 
+                        <!-- Actions -->
+                        <div class="form-actions">
+                            <a href="teacher-dashboard.html" class="cancel-btn">انصراف</a>
+                            <button type="button" class="next-btn" id="nextToQuestions">
+                                ادامه
+                                <i class="bi bi-arrow-left"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
 
-    <div class="review-header">
+            </section>
 
-        <div>
+            <!-- ===========================
+            Questions Section
+            =========================== -->
+            <section class="questions-section" id="questionsSection">
 
-            <h2>
-                بررسی آزمون
-            </h2>
+                <div class="questions-header">
+                    <div>
+                        <h2>ساخت سؤال‌ها</h2>
+                        <p>سؤال‌های آزمونت را اضافه کن.</p>
+                    </div>
+                    <button type="button" class="add-question-btn" id="addQuestionBtn">
+                        <i class="bi bi-plus-lg"></i>
+                        افزودن سؤال
+                    </button>
+                </div>
 
-            <p>
-                قبل از ذخیره، اطلاعات آزمون را بررسی کن.
-            </p>
+                <div class="questions-container" id="questionsContainer">
+                    <!-- توسط JS پر میشه -->
+                </div>
+
+                <div class="question-actions">
+                    <button type="button" class="back-to-info-btn" id="backToInfo">
+                        <i class="bi bi-arrow-right"></i>
+                        بازگشت
+                    </button>
+                    <button type="button" class="review-exam-btn" id="reviewExamBtn">
+                        ادامه به بررسی
+                        <i class="bi bi-arrow-left"></i>
+                    </button>
+                </div>
+
+            </section>
+
+            <!-- ===========================
+            Review Exam
+            =========================== -->
+            <section class="review-section" id="reviewSection">
+
+                <div class="review-header">
+                    <div>
+                        <h2>بررسی آزمون</h2>
+                        <p>قبل از ذخیره، اطلاعات آزمون را بررسی کن.</p>
+                    </div>
+                    <div class="review-badge">مرحله ۳ از ۳</div>
+                </div>
+
+                <div class="review-card">
+                    <h3><i class="bi bi-file-earmark-text"></i> اطلاعات آزمون</h3>
+                    <div class="review-info-grid">
+                        <div><span>عنوان آزمون</span><strong id="reviewTitle"></strong></div>
+                        <div><span>درس</span><strong id="reviewSubject"></strong></div>
+                        <div><span>پایه</span><strong id="reviewGrade"></strong></div>
+                        <div><span>مدت</span><strong id="reviewDuration"></strong></div>
+                        <div><span>سطح</span><strong id="reviewDifficulty"></strong></div>
+                        <div><span>تعداد سؤال</span><strong id="reviewQuestionCount"></strong></div>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <h3><i class="bi bi-question-circle"></i> سؤال‌ها</h3>
+                    <div id="reviewQuestions"></div>
+                </div>
+
+                <div class="review-actions">
+                    <button type="button" class="edit-exam-btn" id="editQuestionsBtn">
+                        <i class="bi bi-pencil"></i>
+                        ویرایش سؤال‌ها
+                    </button>
+                    <button type="button" class="save-exam-btn" id="saveExamBtn">
+                        <i class="bi bi-check-lg"></i>
+                        ذخیره آزمون
+                    </button>
+                </div>
+
+            </section>
 
         </div>
 
-        <div class="review-badge">
+    </main>
 
-            مرحله ۳ از ۳
+    <!-- ===== اسکریپت‌ها ===== -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/settings.js"></script>
+    <script src="js/modal.js"></script>
+    <script src="js/create-exam.js"></script>
 
-        </div>
-
-    </div>
-
-
-    <!-- Exam Summary -->
-
-    <div class="review-card">
-
-        <h3>
-
-            <i class="bi bi-file-earmark-text"></i>
-
-            اطلاعات آزمون
-
-        </h3>
-
-
-        <div class="review-info-grid">
-
-            <div>
-
-                <span>عنوان آزمون</span>
-
-                <strong id="reviewTitle"></strong>
-
-            </div>
-
-
-            <div>
-
-                <span>درس</span>
-
-                <strong id="reviewSubject"></strong>
-
-            </div>
-
-
-            <div>
-
-                <span>پایه</span>
-
-                <strong id="reviewGrade"></strong>
-
-            </div>
-
-
-            <div>
-
-                <span>مدت</span>
-
-                <strong id="reviewDuration"></strong>
-
-            </div>
-
-
-            <div>
-
-                <span>سطح</span>
-
-                <strong id="reviewDifficulty"></strong>
-
-            </div>
-
-
-            <div>
-
-                <span>تعداد سؤال</span>
-
-                <strong id="reviewQuestionCount"></strong>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- Questions Review -->
-
-    <div class="review-card">
-
-        <h3>
-
-            <i class="bi bi-question-circle"></i>
-
-            سؤال‌ها
-
-        </h3>
-
-
-        <div id="reviewQuestions"></div>
-
-    </div>
-
-
-    <!-- Review Actions -->
-
-    <div class="review-actions">
-
-        <button
-            type="button"
-            class="edit-exam-btn"
-            id="editQuestionsBtn">
-
-            <i class="bi bi-pencil"></i>
-
-            ویرایش سؤال‌ها
-
-        </button>
-
-
-        <button
-            type="button"
-            class="save-exam-btn"
-            id="saveExamBtn">
-
-            <i class="bi bi-check-lg"></i>
-
-            ذخیره آزمون
-
-        </button>
-
-    </div>
-
-
-</section>
-
-    </div>
-
-</main>
-
-<script src="js/create-exam.js"></script>
 </body>
 
 </html>

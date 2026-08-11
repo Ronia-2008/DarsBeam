@@ -1,111 +1,275 @@
-:root{
+/* ============================================
+   theme.css - نسخه‌ی کامل با سایه‌های نورانی
+   ============================================ */
 
-    /* Colors */
-
-    --bg:#0f172a;
-
-    --text:#ffffff;
-
-    --card:rgba(255,255,255,.08);
-
-    --primary:#2563EB;
-
-    --bg:#0F172A;
-
-    --bg-secondary:#111827;
-
-    --surface:#1E293B;
-
-    --surface-light:#334155;
-
-    --text:#F8FAFC;
-
-    --text-secondary:#CBD5E1;
-
-    --border:#334155;
-
-    --shadow:rgba(0,0,0,.2);
-
-    /* Radius */
-
-    --radius:22px;
-
-    /* Shadow */
-
-    --shadow:0 20px 45px rgba(0,0,0,.35);
-
-    /* Transition */
-
-    --transition:.35s;
-}
-/* ===========================
-   Light Mode
-=========================== */
-
-body.light {
-
-    background: #f8fafc;
-
-    color: #0f172a;
-
-    --bg:#F8FAFC;
-
-    --bg-secondary:#FFFFFF;
-
-    --surface:#FFFFFF;
-
-    --surface-light:#F1F5F9;
-
-    --text:#0F172A;
-
-    --text-secondary:#64748B;
-
-    --border:#E2E8F0;
-
-    --shadow:rgba(15,23,42,.08);
-
+/* ===== متغیرهای اصلی ===== */
+:root {
+    --primary-color: #2563eb;
+    --primary-hover: #1d4ed8;
+    --primary-light: #dbeafe;
 }
 
-
-/* Paragraph */
-
-body.light p {
-
-    color: #475569;
-
+/* ============================================
+   لایت مود (پیش‌فرض)
+   ============================================ */
+body {
+    background: #f8fafc !important;
+    color: #0f172a !important;
+    transition: all 0.3s ease;
 }
 
-
-/* Cards */
-
-body.light .path-card,
-body.light .quiz-card,
-body.light .advantage-card {
-
-    background: rgba(255, 255, 255, 0.85);
-
-    border-color: rgba(15, 23, 42, 0.1);
-
+/* ===== سایه‌های نورانی لایت مود ===== */
+body .course-card,
+body .path-card,
+body .quiz-card,
+body .feature-card,
+body .exam-card,
+body .stat-card {
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.06),
+        0 0 0 1px rgba(37, 99, 235, 0.02) !important;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+    position: relative !important;
 }
 
-
-/* Card Titles */
-
-body.light .path-card h3,
-body.light .quiz-card h3,
-body.light .advantage-card h3 {
-
-    color: #0f172a;
-
+body .course-card::before,
+body .path-card::before,
+body .quiz-card::before,
+body .feature-card::before,
+body .exam-card::before,
+body .stat-card::before {
+    content: '' !important;
+    position: absolute !important;
+    top: -2px !important;
+    left: -2px !important;
+    right: -2px !important;
+    bottom: -2px !important;
+    border-radius: inherit !important;
+    background: linear-gradient(135deg, 
+        rgba(37, 99, 235, 0.05), 
+        rgba(124, 58, 237, 0.03),
+        rgba(16, 185, 129, 0.02)
+    ) !important;
+    opacity: 0 !important;
+    transition: opacity 0.4s ease !important;
+    z-index: -1 !important;
+    filter: blur(8px) !important;
 }
 
-
-/* Card Text */
-
-body.light .path-card p,
-body.light .quiz-card p,
-body.light .advantage-card p {
-
-    color: #475569;
-
+body .course-card:hover::before,
+body .path-card:hover::before,
+body .quiz-card:hover::before,
+body .feature-card:hover::before,
+body .exam-card:hover::before,
+body .stat-card:hover::before {
+    opacity: 1 !important;
 }
+
+body .course-card:hover,
+body .path-card:hover,
+body .quiz-card:hover,
+body .feature-card:hover,
+body .exam-card:hover,
+body .stat-card:hover {
+    box-shadow: 
+        0 8px 30px rgba(37, 99, 235, 0.12),
+        0 0 40px rgba(37, 99, 235, 0.04) !important;
+    transform: translateY(-6px) !important;
+    border-color: var(--primary-color) !important;
+}
+
+/* ===== نوشته‌های لایت مود ===== */
+body .section-title { color: #0f172a !important; }
+body .section-text { color: #475569 !important; }
+body .hero-title { color: #0f172a !important; }
+body .hero-description { color: #475569 !important; }
+body .hero-badge {
+    background: var(--primary-light) !important;
+    color: var(--primary-color) !important;
+}
+body .course-card h3,
+body .path-card h3,
+body .quiz-card h3,
+body .feature-card h4 { color: #0f172a !important; }
+body .course-card p,
+body .path-card p,
+body .quiz-card p,
+body .feature-card p { color: #475569 !important; }
+body .footer h3,
+body .footer h5 { color: #0f172a !important; }
+body .footer p,
+body .footer li { color: #475569 !important; }
+body .footer .copyright { color: #94a3b8 !important; }
+body .navbar .nav-link { color: #475569 !important; }
+body .navbar .nav-link.active { color: var(--primary-color) !important; }
+body .navbar-brand { color: #0f172a !important; }
+
+/* ============================================
+   دارک مود
+   ============================================ */
+body.dark-theme {
+    background: #0f172a !important;
+    color: #f1f5f9 !important;
+}
+
+/* ===== سایه‌های نورانی دارک مود ===== */
+body.dark-theme .course-card,
+body.dark-theme .path-card,
+body.dark-theme .quiz-card,
+body.dark-theme .feature-card,
+body.dark-theme .exam-card,
+body.dark-theme .stat-card {
+    background: #1e293b !important;
+    border: 1px solid #334155 !important;
+    box-shadow: 
+        0 4px 16px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(37, 99, 235, 0.05) !important;
+}
+
+body.dark-theme .course-card::before,
+body.dark-theme .path-card::before,
+body.dark-theme .quiz-card::before,
+body.dark-theme .feature-card::before,
+body.dark-theme .exam-card::before,
+body.dark-theme .stat-card::before {
+    content: '' !important;
+    position: absolute !important;
+    top: -2px !important;
+    left: -2px !important;
+    right: -2px !important;
+    bottom: -2px !important;
+    border-radius: inherit !important;
+    background: linear-gradient(135deg, 
+        rgba(37, 99, 235, 0.15), 
+        rgba(124, 58, 237, 0.08),
+        rgba(16, 185, 129, 0.05)
+    ) !important;
+    opacity: 0 !important;
+    transition: opacity 0.4s ease !important;
+    z-index: -1 !important;
+    filter: blur(12px) !important;
+}
+
+body.dark-theme .course-card:hover::before,
+body.dark-theme .path-card:hover::before,
+body.dark-theme .quiz-card:hover::before,
+body.dark-theme .feature-card:hover::before,
+body.dark-theme .exam-card:hover::before,
+body.dark-theme .stat-card:hover::before {
+    opacity: 1 !important;
+}
+
+body.dark-theme .course-card:hover,
+body.dark-theme .path-card:hover,
+body.dark-theme .quiz-card:hover,
+body.dark-theme .feature-card:hover,
+body.dark-theme .exam-card:hover,
+body.dark-theme .stat-card:hover {
+    box-shadow: 
+        0 8px 40px rgba(37, 99, 235, 0.2),
+        0 0 60px rgba(37, 99, 235, 0.08) !important;
+    transform: translateY(-6px) !important;
+    border-color: var(--primary-color) !important;
+}
+
+/* ===== نوشته‌های دارک مود ===== */
+body.dark-theme .section-title { color: #f1f5f9 !important; }
+body.dark-theme .section-text { color: #94a3b8 !important; }
+body.dark-theme .hero-title { color: #f1f5f9 !important; }
+body.dark-theme .hero-description { color: #94a3b8 !important; }
+body.dark-theme .hero-badge {
+    background: rgba(37, 99, 235, 0.2) !important;
+    color: #60a5fa !important;
+}
+body.dark-theme .course-card h3,
+body.dark-theme .path-card h3,
+body.dark-theme .quiz-card h3,
+body.dark-theme .feature-card h4 { color: #f1f5f9 !important; }
+body.dark-theme .course-card p,
+body.dark-theme .path-card p,
+body.dark-theme .quiz-card p,
+body.dark-theme .feature-card p { color: #94a3b8 !important; }
+body.dark-theme .footer h3,
+body.dark-theme .footer h5 { color: #f1f5f9 !important; }
+body.dark-theme .footer p,
+body.dark-theme .footer li { color: #94a3b8 !important; }
+body.dark-theme .footer .copyright { color: #64748b !important; }
+body.dark-theme .navbar .nav-link { color: #94a3b8 !important; }
+body.dark-theme .navbar .nav-link.active { color: #60a5fa !important; }
+body.dark-theme .navbar-brand { color: #f1f5f9 !important; }
+
+/* ============================================
+   رنگ‌های اصلی
+   ============================================ */
+.btn-primary {
+    background: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+    color: white !important;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3) !important;
+}
+.btn-primary:hover {
+    background: var(--primary-hover) !important;
+    border-color: var(--primary-hover) !important;
+    box-shadow: 0 4px 16px rgba(37, 99, 235, 0.4) !important;
+    transform: translateY(-2px) !important;
+}
+a { color: var(--primary-color) !important; }
+a:hover { color: var(--primary-hover) !important; }
+body .navbar {
+    border-bottom: 2px solid var(--primary-color) !important;
+}
+body.dark-theme .navbar {
+    border-bottom: 2px solid var(--primary-color) !important;
+}
+.course-card .progress span { background: var(--primary-color) !important; }
+.path-btn { color: var(--primary-color) !important; }
+.path-btn:hover { color: var(--primary-hover) !important; }
+.feature-card i { color: var(--primary-color) !important; }
+.footer .socials i:hover { color: var(--primary-color) !important; }
+
+/* ============================================
+   پنل تنظیمات
+   ============================================ */
+body .settings-panel {
+    background: #ffffff !important;
+    border-right: 1px solid #e2e8f0 !important;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.12) !important;
+}
+body .settings-panel .settings-header h4 { color: #0f172a !important; }
+body .settings-panel .setting-item label { color: #0f172a !important; }
+
+body.dark-theme .settings-panel {
+    background: #1e293b !important;
+    border-right: 1px solid #334155 !important;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6) !important;
+}
+body.dark-theme .settings-panel .settings-header h4 { color: #f1f5f9 !important; }
+body.dark-theme .settings-panel .setting-item label { color: #f1f5f9 !important; }
+
+/* ============================================
+   رنگ‌های تم
+   ============================================ */
+.theme-color.blue { background: #2563EB !important; }
+.theme-color.purple { background: #7C3AED !important; }
+.theme-color.green { background: #10B981 !important; }
+.theme-color.orange { background: #F97316 !important; }
+.theme-color.active {
+    border-color: #0f172a !important;
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.2) !important;
+}
+body.dark-theme .theme-color.active { border-color: #f1f5f9 !important; }
+
+/* ============================================
+   اسکرول بار
+   ============================================ */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #e2e8f0; }
+::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--primary-hover); }
+body.dark-theme ::-webkit-scrollbar-track { background: #1e293b; }
+body.dark-theme ::-webkit-scrollbar-thumb { background: var(--primary-color); }
