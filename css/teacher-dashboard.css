@@ -1,9 +1,8 @@
 /* ============================================
    teacher-dashboard.css
-   با پشتیبانی کامل از تم
    ============================================ */
 
-/* ===== لایه‌بندی کلی ===== */
+/* ===== سایدبار ===== */
 .teacher-sidebar {
     position: fixed;
     right: 0;
@@ -15,12 +14,14 @@
     flex-direction: column;
     z-index: 100;
     transition: var(--transition);
+    background: var(--bg-sidebar);
+    border-left: 1px solid var(--border-color);
 }
 
 .dashboard-logo {
     font-size: 22px;
     font-weight: 700;
-    color: var(--primary);
+    color: var(--primary-color);
     padding: 8px 12px;
     margin-bottom: 32px;
 }
@@ -42,7 +43,7 @@
     gap: 12px;
     padding: 12px 16px;
     border-radius: var(--radius-sm);
-    color: var(--text-secondary);
+    color: var(--text-secondary) !important;
     text-decoration: none;
     transition: var(--transition);
     font-weight: 500;
@@ -51,22 +52,38 @@
 .dashboard-nav a i {
     font-size: 20px;
     width: 24px;
+    color: var(--text-muted) !important;
+    transition: var(--transition);
 }
 
 .dashboard-nav a:hover {
     background: var(--bg-card-hover);
-    color: var(--text-primary);
+    color: var(--text-primary) !important;
+}
+
+.dashboard-nav a:hover i {
+    color: var(--primary-color) !important;
 }
 
 .dashboard-nav a.active {
-    background: var(--primary);
-    color: white;
+    background: var(--primary-color);
+    color: white !important;
 }
 
+.dashboard-nav a.active i {
+    color: white !important;
+}
+
+/* ============================================
+   پایین سایدبار (تنظیمات + خروج)
+   ============================================ */
 .sidebar-bottom {
     margin-top: auto;
     border-top: 1px solid var(--border-color);
-    padding-top: 16px;
+    padding-top: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
 }
 
 .sidebar-bottom a {
@@ -75,24 +92,113 @@
     gap: 12px;
     padding: 12px 16px;
     border-radius: var(--radius-sm);
-    color: var(--text-secondary);
+    color: var(--text-secondary) !important;
     text-decoration: none;
+    transition: var(--transition);
+    font-weight: 500;
+}
+
+.sidebar-bottom a i {
+    font-size: 20px;
+    width: 24px;
+    color: var(--text-muted) !important;
     transition: var(--transition);
 }
 
 .sidebar-bottom a:hover {
     background: var(--bg-card-hover);
-    color: var(--text-primary);
+    color: var(--text-primary) !important;
 }
 
-/* ===== بخش اصلی ===== */
+.sidebar-bottom a:hover i {
+    color: var(--primary-color) !important;
+}
+
+/* ===== دکمه‌ی تنظیمات (هایلایت شده) ===== */
+.sidebar-bottom a:first-child {
+    color: var(--primary-color) !important;
+    font-weight: 600;
+}
+
+.sidebar-bottom a:first-child i {
+    color: var(--primary-color) !important;
+}
+
+.sidebar-bottom a:first-child:hover {
+    background: rgba(37, 99, 235, 0.08);
+    color: var(--primary-hover) !important;
+}
+
+.sidebar-bottom a:first-child:hover i {
+    color: var(--primary-hover) !important;
+}
+
+/* ============================================
+   دارک مود برای سایدبار
+   ============================================ */
+body.dark-theme .teacher-sidebar {
+    background: #0f172a !important;
+    border-color: #334155 !important;
+}
+
+body.dark-theme .dashboard-nav a {
+    color: #94a3b8 !important;
+}
+
+body.dark-theme .dashboard-nav a i {
+    color: #64748b !important;
+}
+
+body.dark-theme .dashboard-nav a:hover {
+    color: #f1f5f9 !important;
+    background: #1e293b !important;
+}
+
+body.dark-theme .dashboard-nav a:hover i {
+    color: #60a5fa !important;
+}
+
+body.dark-theme .dashboard-nav a.active {
+    background: var(--primary-color) !important;
+    color: white !important;
+}
+
+body.dark-theme .sidebar-bottom a {
+    color: #94a3b8 !important;
+}
+
+body.dark-theme .sidebar-bottom a i {
+    color: #64748b !important;
+}
+
+body.dark-theme .sidebar-bottom a:hover {
+    color: #f1f5f9 !important;
+    background: #1e293b !important;
+}
+
+body.dark-theme .sidebar-bottom a:hover i {
+    color: #60a5fa !important;
+}
+
+body.dark-theme .sidebar-bottom a:first-child {
+    color: #60a5fa !important;
+}
+
+body.dark-theme .sidebar-bottom a:first-child i {
+    color: #60a5fa !important;
+}
+
+body.dark-theme .sidebar-bottom a:first-child:hover {
+    background: rgba(37, 99, 235, 0.15) !important;
+    color: #93bbfc !important;
+}
+
 .dashboard-main {
     margin-right: 260px;
     padding: 24px 32px;
     min-height: 100vh;
 }
 
-/* ===== هدر ===== */
 .dashboard-header {
     display: flex;
     justify-content: space-between;
@@ -101,6 +207,8 @@
     border-radius: var(--radius);
     margin-bottom: 24px;
     transition: var(--transition);
+    background: var(--bg-header);
+    border-bottom: 1px solid var(--border-color);
 }
 
 .dashboard-header h1 {
@@ -119,7 +227,7 @@
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 8px 16px;
+    padding: 8px 16px 8px 20px;
     background: var(--bg-card-hover);
     border-radius: var(--radius-sm);
 }
@@ -127,7 +235,7 @@
 .profile-icon {
     width: 40px;
     height: 40px;
-    background: var(--primary);
+    background: var(--primary-color);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -137,8 +245,9 @@
 }
 
 .teacher-profile span {
-    font-weight: 500;
+    font-weight: 600;
     color: var(--text-primary);
+    font-size: 14px;
 }
 
 /* ===== آمار ===== */
@@ -153,10 +262,10 @@
     background: var(--bg-card);
     border: 1px solid var(--border-color);
     border-radius: var(--radius);
-    padding: 20px 24px;
+    padding: 18px 20px;
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 14px;
     transition: var(--transition);
 }
 
@@ -166,15 +275,16 @@
 }
 
 .stat-icon {
-    width: 48px;
-    height: 48px;
-    background: var(--primary);
+    width: 44px;
+    height: 44px;
+    background: var(--primary-color);
     border-radius: var(--radius-sm);
     display: flex;
     align-items: center;
     justify-content: center;
     color: white;
-    font-size: 24px;
+    font-size: 20px;
+    flex-shrink: 0;
 }
 
 .stat-card div {
@@ -183,17 +293,59 @@
 }
 
 .stat-card span {
-    font-size: 14px;
-    color: var(--text-secondary);
+    font-size: 13px;
+    color: var(--text-secondary) !important;
+    font-weight: 500;
 }
 
 .stat-card strong {
-    font-size: 28px;
+    font-size: 24px;
     font-weight: 700;
-    color: var(--text-primary);
+    color: var(--text-primary) !important;
 }
 
-/* ===== آزمون‌ها ===== */
+body.dark-theme .stat-card span {
+    color: #94a3b8 !important;
+}
+
+body.dark-theme .stat-card strong {
+    color: #f1f5f9 !important;
+}
+
+/* ===== دکمه‌ی تنظیمات ===== */
+.settings-fab {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    z-index: 1000;
+}
+
+.settings-fab button {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 0 4px 16px rgba(37, 99, 235, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.settings-fab button:hover {
+    transform: rotate(60deg) scale(1.05);
+    box-shadow: 0 6px 24px rgba(37, 99, 235, 0.4);
+}
+
+body.dark-theme .settings-fab button {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+/* ===== بخش‌ها ===== */
 .section-header {
     display: flex;
     justify-content: space-between;
@@ -218,7 +370,7 @@
     align-items: center;
     gap: 8px;
     padding: 10px 20px;
-    background: var(--primary);
+    background: var(--primary-color);
     color: white;
     border-radius: var(--radius-sm);
     text-decoration: none;
@@ -227,13 +379,12 @@
 }
 
 .create-exam-btn:hover {
-    background: var(--primary-dark);
+    background: var(--primary-hover);
     color: white;
     transform: translateY(-2px);
     box-shadow: var(--shadow-md);
 }
 
-/* ===== لیست آزمون‌ها ===== */
 .exam-list {
     display: flex;
     flex-direction: column;
@@ -248,6 +399,7 @@
     border-radius: var(--radius);
     border: 1px solid var(--border-color);
     transition: var(--transition);
+    background: var(--bg-card);
 }
 
 .exam-card:hover {
@@ -258,7 +410,7 @@
 .exam-icon {
     width: 44px;
     height: 44px;
-    background: var(--primary);
+    background: var(--primary-color);
     border-radius: var(--radius-sm);
     display: flex;
     align-items: center;
@@ -287,7 +439,7 @@
 
 .exam-action {
     padding: 8px 16px;
-    background: var(--primary);
+    background: var(--primary-color);
     color: white;
     border: none;
     border-radius: var(--radius-sm);
@@ -300,68 +452,68 @@
 }
 
 .exam-action:hover {
-    background: var(--primary-dark);
+    background: var(--primary-hover);
     transform: translateY(-2px);
 }
 
-/* ===== پیام خالی ===== */
-.empty-exams {
-    text-align: center;
-    padding: 60px 20px;
-    color: var(--text-muted);
+.exam-action.delete {
+    background: #ef4444;
 }
 
-.empty-exams i {
-    font-size: 48px;
-    display: block;
-    margin-bottom: 12px;
+.exam-action.delete:hover {
+    background: #dc2626;
 }
 
-.empty-exams p {
-    font-size: 18px;
-    font-weight: 500;
-    color: var(--text-secondary);
+body.dark-theme .exam-card {
+    background: #1e293b !important;
+    border-color: #334155 !important;
 }
 
-/* ===== ریسپانسیو ===== */
+body.dark-theme .exam-card:hover {
+    background: #334155 !important;
+}
+
+/* ============================================
+   ریسپانسیو
+   ============================================ */
 @media (max-width: 992px) {
     .teacher-sidebar {
         width: 80px;
         padding: 16px 8px;
     }
-    
+
     .dashboard-logo {
         font-size: 0;
         text-align: center;
     }
-    
+
     .dashboard-logo i {
         font-size: 28px;
         margin: 0;
     }
-    
+
     .dashboard-nav a span {
         display: none;
     }
-    
+
     .dashboard-nav a {
         justify-content: center;
         padding: 12px;
     }
-    
+
     .sidebar-bottom a span {
         display: none;
     }
-    
+
     .sidebar-bottom a {
         justify-content: center;
     }
-    
+
     .dashboard-main {
         margin-right: 80px;
         padding: 16px;
     }
-    
+
     .stats-grid {
         grid-template-columns: 1fr 1fr;
     }
@@ -371,33 +523,88 @@
     .stats-grid {
         grid-template-columns: 1fr;
     }
-    
+
+    .dashboard-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+        text-align: center;
+    }
+
+    .teacher-profile {
+        justify-content: center;
+    }
+
     .section-header {
         flex-direction: column;
         align-items: stretch;
         gap: 12px;
     }
-    
+
     .create-exam-btn {
         justify-content: center;
     }
-}
 
-@media (max-width: 576px) {
-    .dashboard-header {
-        flex-direction: column;
-        gap: 12px;
-        align-items: stretch;
-        text-align: center;
-    }
-    
-    .teacher-profile {
-        justify-content: center;
-    }
-    
     .exam-card {
         flex-wrap: wrap;
         justify-content: center;
         text-align: center;
+    }
+
+    .settings-fab {
+        bottom: 16px;
+        left: 16px;
+    }
+
+    .settings-fab button {
+        width: 48px;
+        height: 48px;
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 576px) {
+    .dashboard-main {
+        padding: 12px;
+        margin-right: 0;
+    }
+
+    .teacher-sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        padding: 12px 16px;
+        flex-direction: row;
+        align-items: center;
+        gap: 16px;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .dashboard-logo {
+        font-size: 18px;
+        margin-bottom: 0;
+    }
+
+    .dashboard-nav {
+        flex-direction: row;
+        gap: 4px;
+        flex: 1;
+    }
+
+    .dashboard-nav a {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+
+    .dashboard-nav a span {
+        display: none;
+    }
+
+    .sidebar-bottom {
+        display: none;
+    }
+
+    .dashboard-main {
+        margin-right: 0;
     }
 }

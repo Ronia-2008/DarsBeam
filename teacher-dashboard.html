@@ -118,12 +118,12 @@
 
 <body>
 
-    <!-- ===== دکمه‌ی تنظیمات ===== -->
-    <div class="settings-btn-wrapper">
-        <button id="settingsToggleBtn">
-            <i class="bi bi-gear-fill"></i>
-        </button>
-    </div>
+    <!-- ===== دکمه‌ی تنظیمات (پایین سمت راست) ===== -->
+<!--<div class="settings-fab">-->
+    <button id="settingsToggleBtn">
+        <i class="bi bi-gear-fill"></i>
+    </button>
+</div>
 
     <!-- ===== پنل تنظیمات ===== -->
     <div class="settings-panel" id="settingsPanel">
@@ -147,45 +147,44 @@
         </div>
     </div>
 
-    <!-- ===========================
-            Sidebar
-    =========================== -->
-    <aside class="teacher-sidebar">
-        <div class="dashboard-logo">
-            <i class="bi bi-book-half"></i>
-            DarsBeam
-        </div>
+    <!-- ===== سایدبار ===== -->
+<aside class="teacher-sidebar">
+    <div class="dashboard-logo">
+        <i class="bi bi-book-half"></i>
+        DarsBeam
+    </div>
 
-        <nav class="dashboard-nav">
-            <a href="#" class="active">
-                <i class="bi bi-grid-1x2"></i>
-                <span>داشبورد</span>
-            </a>
-            <a href="#">
-                <i class="bi bi-file-earmark-text"></i>
-                <span>آزمون‌های من</span>
-            </a>
-            <a href="#">
-                <i class="bi bi-people"></i>
-                <span>دانش‌آموزان</span>
-            </a>
-            <a href="#">
-                <i class="bi bi-bar-chart"></i>
-                <span>گزارش‌ها</span>
-            </a>
-        </nav>
+    <nav class="dashboard-nav">
+        <a href="#" class="active">
+            <i class="bi bi-grid-1x2"></i>
+            <span>داشبورد</span>
+        </a>
+        <a href="#">
+            <i class="bi bi-file-earmark-text"></i>
+            <span>آزمون‌های من</span>
+        </a>
+        <a href="#">
+            <i class="bi bi-people"></i>
+            <span>دانش‌آموزان</span>
+        </a>
+        <a href="#">
+            <i class="bi bi-bar-chart"></i>
+            <span>گزارش‌ها</span>
+        </a>
+    </nav>
 
-        <div class="sidebar-bottom">
-            <a href="#">
-                <i class="bi bi-gear"></i>
-                <span>تنظیمات</span>
-            </a>
-            <a href="index.html">
-                <i class="bi bi-box-arrow-right"></i>
-                <span>خروج</span>
-            </a>
-        </div>
-    </aside>
+    <!-- ===== پایین سایدبار با دکمه‌ی تنظیمات ===== -->
+    <div class="sidebar-bottom">
+        <a href="#" id="settingsToggleBtn">
+            <i class="bi bi-gear-fill"></i>
+            <span>تنظیمات</span>
+        </a>
+        <a href="index.html">
+            <i class="bi bi-box-arrow-right"></i>
+            <span>خروج</span>
+        </a>
+    </div>
+</aside>
 
     <!-- ===========================
             Main

@@ -1,5 +1,5 @@
 // ============================================
-// settings.js - نسخه‌ی نهایی با پشتیبانی از رنگ تم
+// settings.js - مدیریت تنظیمات و پنل
 // ============================================
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -14,11 +14,18 @@ document.addEventListener('DOMContentLoaded', function() {
     const settingsPanel = document.getElementById('settingsPanel');
     const closeSettingsBtn = document.getElementById('closeSettings');
 
+    console.log('🔍 دکمه تنظیمات:', settingsBtn);
+    console.log('🔍 پنل تنظیمات:', settingsPanel);
+
     if (settingsBtn) {
         settingsBtn.addEventListener('click', function(e) {
+            e.preventDefault();  // جلوگیری از رفتن به # در لینک
             e.stopPropagation();
             settingsPanel.classList.toggle('open');
+            console.log('🔘 پنل باز/بسته شد');
         });
+    } else {
+        console.log('❌ دکمه تنظیمات پیدا نشد!');
     }
 
     if (closeSettingsBtn) {
@@ -27,6 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // بستن با کلیک خارج از پنل
     document.addEventListener('click', function(e) {
         if (settingsPanel && settingsPanel.classList.contains('open')) {
             if (!settingsPanel.contains(e.target) && e.target !== settingsBtn) {
@@ -35,6 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    // بستن با کلید ESC
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
             settingsPanel.classList.remove('open');
@@ -72,7 +81,6 @@ document.addEventListener('DOMContentLoaded', function() {
     function loadTheme() {
         const savedTheme = localStorage.getItem('darsbeam-theme');
         console.log('📂 تم ذخیره‌شده:', savedTheme);
-        
         if (savedTheme === 'dark') {
             enableDarkMode();
         } else {
@@ -82,37 +90,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (darkModeToggle) {
         darkModeToggle.addEventListener('change', function() {
-            console.log('🔄 وضعیت چک‌باکس:', this.checked);
             toggleDarkMode(this.checked);
         });
     }
 
     // ============================================
-    // 3. تغییر رنگ اصلی (با پشتیبانی از رنگ‌های تم)
+    // 3. تغییر رنگ اصلی
     // ============================================
     const themeColors = document.querySelectorAll('.theme-color');
 
     function changePrimaryColor(color) {
-        console.log('🎨 تغییر رنگ به:', color);
-        
-        // تغییر متغیرهای CSS
         document.documentElement.style.setProperty('--primary-color', color);
-        
-        // محاسبه‌ی رنگ تیره‌تر برای hover
         const r = parseInt(color.slice(1,3), 16);
         const g = parseInt(color.slice(3,5), 16);
         const b = parseInt(color.slice(5,7), 16);
-        const darkColor = `rgb(${Math.max(0, r-30)}, ${Math.max(0, g-30)}, ${Math.max(0, b-30)})`;
-        document.documentElement.style.setProperty('--primary-hover', darkColor);
-        
-        // محاسبه‌ی رنگ روشن‌تر برای بج‌ها
-        const lightColor = `rgba(${r}, ${g}, ${b}, 0.15)`;
-        document.documentElement.style.setProperty('--primary-light', lightColor);
-        
-        // ذخیره در localStorage
+        document.documentElement.style.setProperty('--primary-hover', `rgb(${Math.max(0, r-30)}, ${Math.max(0, g-30)}, ${Math.max(0, b-30)})`);
         localStorage.setItem('darsbeam-color', color);
         
-        // فعال کردن دکمه‌ی انتخاب‌شده
         themeColors.forEach(btn => {
             btn.classList.remove('active');
             if (btn.dataset.color === color) {
@@ -125,20 +119,13 @@ document.addEventListener('DOMContentLoaded', function() {
         const savedColor = localStorage.getItem('darsbeam-color');
         if (savedColor) {
             changePrimaryColor(savedColor);
-        } else {
-            // پیش‌فرض: آبی
-            document.querySelector('.theme-color.blue')?.classList.add('active');
-            document.documentElement.style.setProperty('--primary-color', '#2563eb');
-            document.documentElement.style.setProperty('--primary-hover', '#1d4ed8');
-            document.documentElement.style.setProperty('--primary-light', 'rgba(37, 99, 235, 0.15)');
         }
     }
 
     if (themeColors.length > 0) {
         themeColors.forEach(btn => {
             btn.addEventListener('click', function() {
-                const color = this.dataset.color;
-                changePrimaryColor(color);
+                changePrimaryColor(this.dataset.color);
             });
         });
     }
