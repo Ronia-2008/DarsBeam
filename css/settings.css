@@ -176,3 +176,9 @@ body.dark-theme .theme-color.active {
         padding: 20px 16px;
     }
 }
+@media (max-width: 576px) {
+    .settings-panel {
+        width: 100% !important;
+        right: -100% !important;
+    }
+}

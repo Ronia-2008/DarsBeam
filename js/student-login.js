@@ -1,38 +1,28 @@
-/* ===========================
-   Password Show / Hide
-=========================== */
+// ============================================
+// student-login.js
+// مدیریت فرم ورود دانش‌آموز و چشمک
+// ============================================
 
-const passwordInput =
-    document.getElementById("studentPassword");
+document.addEventListener('DOMContentLoaded', function() {
+    'use strict';
 
-const passwordToggle =
-    document.querySelector(".password-toggle");
+    // ===== چشمک (نمایش/مخفی کردن رمز) =====
+    const toggleBtn = document.querySelector('.password-toggle');
+    const passwordInput = document.getElementById('studentPassword');
 
-
-if (passwordInput && passwordToggle) {
-
-    passwordToggle.addEventListener("click", () => {
-
-        const icon =
-            passwordToggle.querySelector("i");
-
-        if (passwordInput.type === "password") {
-
-            passwordInput.type = "text";
-
-            icon.className = "bi bi-eye-slash";
-
-        } else {
-
-            passwordInput.type = "password";
-
-            icon.className = "bi bi-eye";
-
-        }
-
-    });
-
-}
+    if (toggleBtn && passwordInput) {
+        toggleBtn.addEventListener('click', function() {
+            const icon = this.querySelector('i');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.className = 'bi bi-eye-slash';
+            } else {
+                passwordInput.type = 'password';
+                icon.className = 'bi bi-eye';
+            }
+        });
+    }
+});
 
 
 /* ===========================
