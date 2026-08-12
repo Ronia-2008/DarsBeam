@@ -240,6 +240,36 @@
 
 <body>
 
+    <!-- لودینگ ساده -->
+<div id="pageLoader" style="
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: var(--bg-body); z-index: 99999;
+    display: flex; align-items: center; justify-content: center;
+    transition: opacity 0.5s ease;
+">
+    <div style="text-align: center;">
+        <i class="bi bi-book-half" style="font-size: 48px; color: var(--primary-color); animation: spin 1s linear infinite;"></i>
+        <p style="margin-top: 12px; color: var(--text-secondary);">در حال بارگذاری...</p>
+    </div>
+</div>
+
+<style>
+    @keyframes spin {
+        100% { transform: rotate(360deg); }
+    }
+</style>
+
+<script>
+    window.addEventListener('load', function() {
+        setTimeout(function() {
+            document.getElementById('pageLoader').style.opacity = '0';
+            setTimeout(function() {
+                document.getElementById('pageLoader').style.display = 'none';
+            }, 500);
+        }, 500);
+    });
+</script>
+
     <!-- ===== دکمه‌ی تنظیمات ===== -->
     <div class="settings-btn-wrapper">
         <button id="settingsToggleBtn">
@@ -279,26 +309,26 @@
                 <div class="profile-avatar">
                     <i class="bi bi-person-fill"></i>
                 </div>
-                <h2 class="profile-name">علی رضایی</h2>
-                <p class="profile-role">🎓 دانش‌آموز پایه هشتم</p>
+                <h2 class="profile-name">خورشید سوری</h2>
+                <p class="profile-role">🎓 دانش‌آموز پایه دوازدهم</p>
 
                 <hr class="profile-divider">
 
                 <div class="info-row">
                     <span class="info-label">📧 ایمیل</span>
-                    <span class="info-value">ali.rezaei@email.com</span>
+                    <span class="info-value">Khorshid@email.com</span>
                 </div>
                 <div class="info-row">
                     <span class="info-label">📱 شماره موبایل</span>
-                    <span class="info-value">۰۹۱۲ ۳۴۵ ۶۷۸۹</span>
+                    <span class="info-value">09022501421</span>
                 </div>
                 <div class="info-row">
                     <span class="info-label">🏫 مدرسه</span>
-                    <span class="info-value">دبیرستان نمونه ۱</span>
+                    <span class="info-value">دبیرستان کبری زرگران</span>
                 </div>
                 <div class="info-row">
                     <span class="info-label">📚 پایه تحصیلی</span>
-                    <span class="info-value">هشتم</span>
+                    <span class="info-value">دوازدهم</span>
                 </div>
                 <div class="info-row">
                     <span class="info-label">📅 تاریخ عضویت</span>

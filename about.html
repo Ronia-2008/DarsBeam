@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>درباره ما | درس‌بیم</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/settings.css">
+    <link rel="stylesheet" href="css/modal.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        .about-page {
+            background: var(--bg-body);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .about-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .about-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .about-header .logo-icon {
+            font-size: 64px;
+            color: var(--primary-color);
+            margin-bottom: 12px;
+        }
+
+        .about-header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .about-header p {
+            color: var(--text-secondary);
+            font-size: 16px;
+        }
+
+        .about-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 28px 24px;
+            margin-bottom: 20px;
+            transition: var(--transition);
+        }
+
+        .about-card h2 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .about-card h2 i {
+            color: var(--primary-color);
+        }
+
+        .about-card p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            font-size: 15px;
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- لودینگ ساده -->
+<div id="pageLoader" style="
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: var(--bg-body); z-index: 99999;
+    display: flex; align-items: center; justify-content: center;
+    transition: opacity 0.5s ease;
+">
+    <div style="text-align: center;">
+        <i class="bi bi-book-half" style="font-size: 48px; color: var(--primary-color); animation: spin 1s linear infinite;"></i>
+        <p style="margin-top: 12px; color: var(--text-secondary);">در حال بارگذاری...</p>
+    </div>
+</div>
+
+<style>
+    @keyframes spin {
+        100% { transform: rotate(360deg); }
+    }
+</style>
+
+<script>
+    window.addEventListener('load', function() {
+        setTimeout(function() {
+            document.getElementById('pageLoader').style.opacity = '0';
+            setTimeout(function() {
+                document.getElementById('pageLoader').style.display = 'none';
+            }, 500);
+        }, 500);
+    });
+</script>
+
+    <!-- ===== پنل تنظیمات ===== -->
+    <div class="settings-panel" id="settingsPanel">
+        <div class="settings-header">
+            <h4><i class="bi bi-sliders"></i> تنظیمات</h4>
+            <button id="closeSettings"><i class="bi bi-x-lg"></i></button>
+        </div>
+        <hr>
+        <div class="setting-item">
+            <label for="darkMode">🌙 حالت روشن / تیره</label>
+            <input type="checkbox" id="darkMode">
+        </div>
+        <div class="setting-item">
+            <label>🎨 رنگ اصلی سایت</label>
+            <div class="theme-colors">
+                <button class="theme-color blue" data-color="#2563EB"></button>
+                <button class="theme-color purple" data-color="#7C3AED"></button>
+                <button class="theme-color green" data-color="#10B981"></button>
+                <button class="theme-color orange" data-color="#F97316"></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===========================
+            درباره ما
+    =========================== -->
+    <main class="about-page">
+        <div class="about-container">
+
+            <div class="about-header">
+                <div class="logo-icon"><i class="bi bi-book-half"></i></div>
+                <h1>درباره درس‌بیم</h1>
+                <p>پلتفرم هوشمند آموزش آنلاین برای دانش‌آموزان و معلمان</p>
+            </div>
+
+            <div class="about-card">
+                <h2><i class="bi bi-rocket"></i> مأموریت ما</h2>
+                <p>
+                    درس‌بیم با هدف ایجاد یک محیط یادگیری هوشمند، تعاملی و در دسترس برای همه‌ی دانش‌آموزان
+                    ساخته شده است. ما معتقدیم که هر دانش‌آموزی شایسته‌ی بهترین امکانات آموزشی است.
+                </p>
+            </div>
+
+            <div class="about-card">
+                <h2><i class="bi bi-eye"></i> چشم‌انداز</h2>
+                <p>
+                    تبدیل شدن به بزرگ‌ترین و معتبرترین پلتفرم آموزشی آنلاین در ایران، با ارائه‌ی محتوای
+                    باکیفیت و ابزارهای پیشرفته برای معلمان و دانش‌آموزان.
+                </p>
+            </div>
+
+            <div class="about-card">
+                <h2><i class="bi bi-heart"></i> ارزش‌های ما</h2>
+                <p>
+                    🤝 احترام به همه‌ی کاربران<br>
+                    📚 کیفیت بالای محتوا<br>
+                    🔒 امنیت و حریم خصوصی<br>
+                    💡 نوآوری و خلاقیت در آموزش
+                </p>
+            </div>
+
+            <div class="about-card">
+                <h2><i class="bi bi-person-arms-up"></i> تیم ما</h2>
+                <p>
+                    درس‌بیم توسط یک تیم جوان و متخصص در حوزه‌ی آموزش و فناوری اطلاعات ساخته شده است.
+                    ما عاشق یادگیری هستیم و می‌خواهیم این عشق را به همه‌ی دانش‌آموزان منتقل کنیم.
+                </p>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/settings.js"></script>
+    <script src="js/modal.js"></script>
+
+</body>
+
+</html>
