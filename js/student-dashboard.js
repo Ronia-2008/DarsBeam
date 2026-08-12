@@ -1,13 +1,13 @@
 // ============================================
 // student-dashboard.js
-// پنل دانش‌آموز - نمایش درس‌ها و آزمون‌ها
+// پنل دانش‌آموز - با لینک‌ها و نویگیشن کامل
 // ============================================
 
 document.addEventListener('DOMContentLoaded', function() {
     'use strict';
 
     // ============================================
-    // داده‌های نمونه (بعداً از API میاد)
+    // داده‌های نمونه
     // ============================================
     const studentData = {
         name: 'علی رضایی',
@@ -21,10 +21,42 @@ document.addEventListener('DOMContentLoaded', function() {
             { id: 6, name: 'آموزش قرآن', icon: '🕌', teacher: 'آقای طاهری', progress: 70 }
         ],
         exams: [
-            { id: 1, title: 'آزمون ریاضی فصل اول', subject: 'ریاضی', status: 'pending', questions: 12, deadline: '۲ روز دیگر' },
-            { id: 2, title: 'آزمون علوم فصل دوم', subject: 'علوم', status: 'done', questions: 10, deadline: 'انجام شده' },
-            { id: 3, title: 'آزمون فارسی نوبت اول', subject: 'فارسی', status: 'overdue', questions: 15, deadline: '۳ روز گذشته' },
-            { id: 4, title: 'آزمون زبان واحد ۳', subject: 'زبان انگلیسی', status: 'pending', questions: 8, deadline: '۵ روز دیگر' }
+            { 
+                id: 1, 
+                title: 'آزمون ریاضی فصل اول', 
+                subject: 'ریاضی', 
+                status: 'pending', 
+                questions: 12, 
+                deadline: '۲ روز دیگر',
+                link: 'exam-detail.html?id=1'
+            },
+            { 
+                id: 2, 
+                title: 'آزمون علوم فصل دوم', 
+                subject: 'علوم', 
+                status: 'done', 
+                questions: 10, 
+                deadline: 'انجام شده',
+                link: 'exam-detail.html?id=2'
+            },
+            { 
+                id: 3, 
+                title: 'آزمون فارسی نوبت اول', 
+                subject: 'فارسی', 
+                status: 'overdue', 
+                questions: 15, 
+                deadline: '۳ روز گذشته',
+                link: 'exam-detail.html?id=3'
+            },
+            { 
+                id: 4, 
+                title: 'آزمون زبان واحد ۳', 
+                subject: 'زبان انگلیسی', 
+                status: 'pending', 
+                questions: 8, 
+                deadline: '۵ روز دیگر',
+                link: 'exam-detail.html?id=4'
+            }
         ],
         stats: {
             courseCount: 6,
@@ -67,6 +99,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     <span class="progress-text">${course.progress}% پیشرفت</span>
                 </div>
             `;
+            
+            // کلیک روی کارت درس → رفتن به صفحه‌ی جزئیات درس
+            card.style.cursor = 'pointer';
+            card.addEventListener('click', function() {
+                window.location.href = `course-detail.html?id=${course.id}`;
+            });
+            
             container.appendChild(card);
         });
     }
@@ -115,7 +154,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <p>📚 ${exam.subject} • ${exam.questions} سؤال • ⏱ ${exam.deadline}</p>
                 </div>
                 <span class="exam-status ${status.class}">${status.label}</span>
-                <button class="exam-action start-exam" data-id="${exam.id}">
+                <button class="exam-action start-exam" data-link="${exam.link}">
                     شروع آزمون
                     <i class="bi bi-arrow-left"></i>
                 </button>
@@ -123,11 +162,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
             container.appendChild(card);
 
-            // رویداد شروع آزمون
+            // رویداد شروع آزمون → رفتن به صفحه‌ی آزمون
             const startBtn = card.querySelector('.start-exam');
             startBtn.addEventListener('click', async function(e) {
                 e.stopPropagation();
-                await darsbeamConfirm({
+                const link = this.dataset.link;
+                
+                const confirm = await darsbeamConfirm({
                     title: '📝 شروع آزمون',
                     text: `آماده‌ای برای شروع "${exam.title}"؟\n⏱ ${exam.deadline}\n📝 ${exam.questions} سؤال`,
                     icon: 'play-circle',
@@ -135,13 +176,47 @@ document.addEventListener('DOMContentLoaded', function() {
                     cancelText: 'انصراف',
                     type: 'info'
                 });
-                // بعداً به صفحه‌ی آزمون هدایت میشه
+                
+                if (confirm) {
+                    window.location.href = link;
+                }
             });
         });
     }
 
     // ============================================
-    // 4. بارگذاری اولیه
+    // 4. توابع نویگیشن (برای سایدبار)
+    // ============================================
+    window.showCourses = function() {
+        document.getElementById('coursesSection').scrollIntoView({ behavior: 'smooth' });
+        // هایلایت کردن منو
+        document.querySelectorAll('.dashboard-nav a').forEach(el => el.classList.remove('active'));
+        document.querySelector('.dashboard-nav a:nth-child(2)').classList.add('active');
+    };
+
+    window.showExams = function() {
+        document.getElementById('examsSection').scrollIntoView({ behavior: 'smooth' });
+        document.querySelectorAll('.dashboard-nav a').forEach(el => el.classList.remove('active'));
+        document.querySelector('.dashboard-nav a:nth-child(3)').classList.add('active');
+    };
+
+    window.showProgress = function() {
+        // می‌تونه به صفحه‌ی پیشرفت هدایت کنه یا بخشی از صفحه
+        darsbeamConfirm({
+            title: '📊 پیشرفت شما',
+            text: `میانگین نمره: ${studentData.stats.avgScore}%\nآزمون‌های انجام شده: ${studentData.stats.examDone}\nساعت مطالعه: ${studentData.stats.studyTime} ساعت`,
+            icon: 'trophy',
+            confirmText: 'باشه',
+            cancelText: '',
+            type: 'info'
+        });
+        
+        document.querySelectorAll('.dashboard-nav a').forEach(el => el.classList.remove('active'));
+        document.querySelector('.dashboard-nav a:nth-child(4)').classList.add('active');
+    };
+
+    // ============================================
+    // 5. بارگذاری اولیه
     // ============================================
     updateStats();
     renderCourses();

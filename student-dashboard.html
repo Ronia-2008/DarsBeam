@@ -20,123 +20,20 @@
     <link rel="stylesheet" href="css/style.css">
 
     <style>
-        /* ===== دکمه‌ی تنظیمات ===== */
-        .settings-btn-wrapper {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            z-index: 1000;
-        }
-
-        .settings-btn-wrapper button {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-sm);
-            padding: 10px 14px;
-            color: var(--text-primary);
+        /* ===== دکمه‌های سایدبار ===== */
+        .student-sidebar .dashboard-nav a {
             cursor: pointer;
-            transition: var(--transition);
-            font-size: 18px;
-            box-shadow: var(--shadow-sm);
         }
 
-        .settings-btn-wrapper button:hover {
-            transform: rotate(60deg);
-            box-shadow: var(--shadow-md);
-        }
-
-        /* ===== هماهنگی تم ===== */
-        .dashboard-main {
-            background: var(--bg-body) !important;
-        }
-
-        .student-sidebar {
-            background: var(--bg-sidebar) !important;
-            border-left: 1px solid var(--border-color) !important;
-        }
-
-        .dashboard-header {
-            background: var(--bg-header) !important;
-            border-bottom: 1px solid var(--border-color) !important;
-        }
-
-        .stat-card {
-            background: var(--bg-card) !important;
-            border: 1px solid var(--border-color) !important;
-        }
-
-        .course-card {
-            background: var(--bg-card) !important;
-            border: 1px solid var(--border-color) !important;
-        }
-
-        .course-card:hover {
-            background: var(--bg-card-hover) !important;
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .exam-card {
-            background: var(--bg-card) !important;
-            border: 1px solid var(--border-color) !important;
-        }
-
-        .exam-card:hover {
-            background: var(--bg-card-hover) !important;
-        }
-
-        .exam-action {
-            background: var(--primary-color) !important;
-        }
-
-        .exam-action:hover {
-            background: var(--primary-hover) !important;
-        }
-
-        /* ===== دارک مود ===== */
-        body.dark-theme .student-sidebar {
-            background: #0f172a !important;
-            border-color: #334155 !important;
-        }
-
-        body.dark-theme .dashboard-header {
-            background: #1e293b !important;
-            border-color: #334155 !important;
-        }
-
-        body.dark-theme .stat-card {
-            background: #1e293b !important;
-            border-color: #334155 !important;
-        }
-
-        body.dark-theme .course-card {
-            background: #1e293b !important;
-            border-color: #334155 !important;
-        }
-
-        body.dark-theme .course-card:hover {
-            background: #334155 !important;
-        }
-
-        body.dark-theme .exam-card {
-            background: #1e293b !important;
-            border-color: #334155 !important;
-        }
-
-        body.dark-theme .exam-card:hover {
-            background: #334155 !important;
+        /* ===== کارت درس با لینک ===== */
+        .course-card-link {
+            text-decoration: none;
+            display: block;
         }
     </style>
 </head>
 
 <body>
-
-<!-- ===== دکمه‌ی تنظیمات (پایین سمت راست) ===== -->
-<!--<div class="settings-fab">-->
-    <button id="settingsToggleBtn">
-        <i class="bi bi-gear-fill"></i>
-    </button>
-</div>
 
     <!-- ===== پنل تنظیمات ===== -->
     <div class="settings-panel" id="settingsPanel">
@@ -160,44 +57,45 @@
         </div>
     </div>
 
-    <!-- ===== سایدبار ===== -->
-<aside class="student-sidebar">
-    <div class="dashboard-logo">
-        <i class="bi bi-book-half"></i>
-        DarsBeam
-    </div>
+    <!-- ===========================
+            Sidebar
+    =========================== -->
+    <aside class="student-sidebar">
+        <div class="dashboard-logo">
+            <i class="bi bi-book-half"></i>
+            DarsBeam
+        </div>
 
-    <nav class="dashboard-nav">
-        <a href="#" class="active">
-            <i class="bi bi-grid-1x2"></i>
-            <span>داشبورد</span>
-        </a>
-        <a href="#">
-            <i class="bi bi-book"></i>
-            <span>درس‌های من</span>
-        </a>
-        <a href="#">
-            <i class="bi bi-file-earmark-text"></i>
-            <span>آزمون‌ها</span>
-        </a>
-        <a href="#">
-            <i class="bi bi-trophy"></i>
-            <span>پیشرفت</span>
-        </a>
-    </nav>
+        <nav class="dashboard-nav">
+            <a href="student-dashboard.html" class="active">
+                <i class="bi bi-grid-1x2"></i>
+                <span>داشبورد</span>
+            </a>
+            <a href="#" onclick="showCourses()">
+                <i class="bi bi-book"></i>
+                <span>درس‌های من</span>
+            </a>
+            <a href="#" onclick="showExams()">
+                <i class="bi bi-file-earmark-text"></i>
+                <span>آزمون‌ها</span>
+            </a>
+            <a href="#" onclick="showProgress()">
+                <i class="bi bi-trophy"></i>
+                <span>پیشرفت</span>
+            </a>
+        </nav>
 
-    <!-- ===== پایین سایدبار با دکمه‌ی تنظیمات ===== -->
-    <div class="sidebar-bottom">
-        <a href="#" id="settingsToggleBtn">
-            <i class="bi bi-gear-fill"></i>
-            <span>تنظیمات</span>
-        </a>
-        <a href="index.html">
-            <i class="bi bi-box-arrow-right"></i>
-            <span>خروج</span>
-        </a>
-    </div>
-</aside>
+        <div class="sidebar-bottom">
+    <a href="#" id="settingsToggleBtn" onclick="toggleSettingsPanel(event)" class="settings-link">
+        <i class="bi bi-gear-fill"></i>
+        <span>تنظیمات</span>
+    </a>
+    <a href="index.html">
+        <i class="bi bi-box-arrow-right"></i>
+        <span>خروج</span>
+    </a>
+</div>
+    </aside>
 
     <!-- ===========================
             Main
@@ -215,9 +113,12 @@
                     <i class="bi bi-person"></i>
                 </div>
                 <div>
-                    <span class="profile-name">خورشید سوری</span>
-                    <span class="profile-grade">پایه دوازدهم</span>
+                    <span class="profile-name">علی رضایی</span>
+                    <span class="profile-grade">پایه هشتم</span>
                 </div>
+                <a href="profile.html" class="profile-link" style="color: var(--text-secondary); text-decoration: none; padding: 4px 8px; border-radius: 6px; transition: all 0.3s;">
+                    <i class="bi bi-pencil-square"></i>
+                </a>
             </div>
         </header>
 
@@ -229,7 +130,7 @@
                 </div>
                 <div>
                     <span>درس‌های فعال</span>
-                    <strong id="courseCount">8</strong>
+                    <strong id="courseCount">6</strong>
                 </div>
             </div>
 
@@ -267,13 +168,13 @@
         <!-- ===========================
                 دروس من
         =========================== -->
-        <section class="courses-section">
+        <section class="courses-section" id="coursesSection">
             <div class="section-header">
                 <div>
                     <h2>📚 درس‌های من</h2>
                     <p>درس‌هایی که در حال یادگیری آنها هستی.</p>
                 </div>
-                <span class="badge-count">۸ درس</span>
+                <span class="badge-count">۶ درس</span>
             </div>
 
             <div class="courses-grid" id="coursesContainer">
@@ -284,13 +185,13 @@
         <!-- ===========================
                 آخرین آزمون‌ها
         =========================== -->
-        <section class="exams-section">
+        <section class="exams-section" id="examsSection">
             <div class="section-header">
                 <div>
                     <h2>📝 آخرین آزمون‌ها</h2>
                     <p>آزمون‌هایی که باید انجام بدی.</p>
                 </div>
-                <a href="#" class="view-all-btn">
+                <a href="#" class="view-all-btn" onclick="showExams()">
                     مشاهده همه
                     <i class="bi bi-arrow-left"></i>
                 </a>

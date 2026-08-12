@@ -1,0 +1,310 @@
+/* ============================================
+   course-detail.css
+   استایل‌های صفحه‌ی جزئیات درس
+   ============================================ */
+
+.course-detail-page {
+    background: var(--bg-body);
+    min-height: 100vh;
+    padding: 24px 20px 60px;
+}
+
+.course-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: var(--transition);
+    margin-bottom: 20px;
+}
+
+.back-btn:hover {
+    color: var(--primary-color);
+}
+
+.course-header-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 32px 28px;
+    margin-bottom: 24px;
+    transition: var(--transition);
+}
+
+.course-header-card .course-icon-big {
+    font-size: 48px;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.course-header-card h1 {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0 0 4px;
+}
+
+.course-header-card .course-teacher {
+    color: var(--text-secondary);
+    font-size: 15px;
+}
+
+.course-header-card .course-progress-big {
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.course-header-card .progress-track-big {
+    flex: 1;
+    height: 10px;
+    background: var(--bg-body);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.course-header-card .progress-fill-big {
+    height: 100%;
+    border-radius: 10px;
+    background: var(--primary-color);
+    transition: width 0.6s ease;
+}
+
+.course-header-card .progress-text-big {
+    font-weight: 600;
+    color: var(--text-secondary);
+    min-width: 40px;
+}
+
+.content-section {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    padding: 24px 28px;
+    margin-bottom: 20px;
+    transition: var(--transition);
+}
+
+.content-section h2 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0 0 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.content-section h2 i {
+    color: var(--primary-color);
+}
+
+.content-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-color);
+    margin-bottom: 10px;
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.content-item:last-child {
+    margin-bottom: 0;
+}
+
+.content-item:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--primary-color);
+}
+
+.content-item .content-icon {
+    font-size: 22px;
+    color: var(--primary-color);
+}
+
+.content-item .content-info {
+    flex: 1;
+}
+
+.content-item .content-info h4 {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.content-item .content-info p {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin: 2px 0 0;
+}
+
+.content-item .content-status {
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 20px;
+}
+
+.content-item .content-status.done {
+    background: rgba(16, 185, 129, 0.15);
+    color: #10b981;
+}
+
+.content-item .content-status.pending {
+    background: rgba(245, 158, 11, 0.15);
+    color: #f59e0b;
+}
+
+.content-item .content-status.locked {
+    background: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+}
+
+.exam-mini-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-color);
+    margin-bottom: 10px;
+    transition: var(--transition);
+    cursor: default;
+}
+
+.exam-mini-card:last-child {
+    margin-bottom: 0;
+}
+
+.exam-mini-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--primary-color);
+}
+
+.exam-mini-card .exam-icon {
+    font-size: 20px;
+    color: var(--primary-color);
+}
+
+.exam-mini-card .exam-info {
+    flex: 1;
+}
+
+.exam-mini-card .exam-info h4 {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.exam-mini-card .exam-info p {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin: 2px 0 0;
+}
+
+.exam-mini-card .exam-start-btn {
+    padding: 6px 16px;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.exam-mini-card .exam-start-btn:hover {
+    background: var(--primary-hover);
+    transform: translateY(-2px);
+}
+
+/* ===== دارک مود ===== */
+body.dark-theme .course-header-card {
+    background: #1e293b;
+    border-color: #334155;
+}
+
+body.dark-theme .content-section {
+    background: #1e293b;
+    border-color: #334155;
+}
+
+body.dark-theme .content-item {
+    border-color: #334155;
+}
+
+body.dark-theme .content-item:hover {
+    background: #0f172a;
+}
+
+body.dark-theme .exam-mini-card {
+    border-color: #334155;
+}
+
+body.dark-theme .exam-mini-card:hover {
+    background: #0f172a;
+}
+
+/* ===== ریسپانسیو ===== */
+@media (max-width: 768px) {
+    .course-header-card {
+        padding: 24px 18px;
+    }
+
+    .course-header-card h1 {
+        font-size: 22px;
+    }
+
+    .content-section {
+        padding: 18px 16px;
+    }
+
+    .content-item {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .exam-mini-card {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .course-detail-page {
+        padding: 12px 10px 40px;
+    }
+
+    .course-header-card .course-icon-big {
+        font-size: 36px;
+    }
+
+    .course-header-card h1 {
+        font-size: 18px;
+    }
+
+    .content-item .content-status {
+        font-size: 10px;
+        padding: 2px 10px;
+    }
+
+    .exam-mini-card .exam-start-btn {
+        width: 100%;
+        text-align: center;
+        padding: 8px;
+    }
+}

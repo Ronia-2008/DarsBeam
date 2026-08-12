@@ -1,0 +1,177 @@
+/* ============================================
+   profile.css
+   استایل‌های صفحه‌ی پروفایل
+   ============================================ */
+
+.profile-page {
+    background: var(--bg-body);
+    min-height: 100vh;
+    padding: 40px 20px;
+}
+
+.profile-container {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.profile-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 40px 32px;
+    transition: var(--transition);
+}
+
+.profile-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+    font-size: 40px;
+    color: white;
+    box-shadow: 0 4px 20px rgba(37, 99, 235, 0.2);
+}
+
+.profile-name {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.profile-role {
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 14px;
+    margin-bottom: 24px;
+}
+
+.profile-divider {
+    border: none;
+    border-top: 1px solid var(--border-color);
+    margin: 20px 0;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.info-row:last-child {
+    border-bottom: none;
+}
+
+.info-label {
+    color: var(--text-secondary);
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.info-value {
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 14px;
+}
+
+/* ============================================
+   دکمه‌ها
+   ============================================ */
+
+/* ===== دکمه‌ی بازگشت ===== */
+.btn-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 24px;
+    background: #2563eb;
+    color: #ffffff !important;
+    border: none;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.btn-back:hover {
+    background: #1d4ed8;
+    color: #ffffff !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(37, 99, 235, 0.3);
+    text-decoration: none;
+}
+
+/* ===== دکمه‌ی ویرایش پروفایل ===== */
+.btn-edit {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 24px;
+    background: transparent;
+    color: #2563eb;
+    border: 2px solid #2563eb;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-edit:hover {
+    background: #2563eb;
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(37, 99, 235, 0.2);
+}
+
+/* ============================================
+   دارک مود
+   ============================================ */
+body.dark-theme .btn-back {
+    background: #2563eb;
+    color: #ffffff !important;
+}
+
+body.dark-theme .btn-back:hover {
+    background: #1d4ed8;
+    color: #ffffff !important;
+}
+
+body.dark-theme .btn-edit {
+    color: #60a5fa;
+    border-color: #60a5fa;
+}
+
+body.dark-theme .btn-edit:hover {
+    background: #60a5fa;
+    color: #0f172a;
+}
+/* ===== ریسپانسیو ===== */
+@media (max-width: 480px) {
+    .profile-card {
+        padding: 24px 16px;
+    }
+    
+    .profile-avatar {
+        width: 72px;
+        height: 72px;
+        font-size: 28px;
+    }
+    
+    .profile-name {
+        font-size: 20px;
+    }
+    
+    .info-row {
+        flex-direction: column;
+        gap: 4px;
+    }
+}
