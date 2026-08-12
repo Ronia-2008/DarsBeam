@@ -339,6 +339,13 @@
                         <input type="password" id="studentPassword" placeholder="رمز عبور" required>
                     </div>
                 </div>
+                <div class="input-box">
+    <i class="bi bi-lock"></i>
+    <input type="password" id="studentPassword" placeholder="رمز عبور" required>
+    <button type="button" class="password-toggle" onclick="togglePassword()" style="background: transparent; border: none; padding: 0 12px; color: var(--text-muted); cursor: pointer;">
+        <i class="bi bi-eye"></i>
+    </button>
+</div>
 
                 <div class="login-options">
                     <label>
@@ -394,6 +401,20 @@
             window.location.href = 'student-dashboard.html';
         }
     </script>
+
+<script>
+    function togglePassword() {
+        const input = document.getElementById('studentPassword');
+        const icon = document.querySelector('.password-toggle i');
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.className = 'bi bi-eye-slash';
+        } else {
+            input.type = 'password';
+            icon.className = 'bi bi-eye';
+        }
+    }
+</script>
 
 </body>
 

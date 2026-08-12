@@ -10,7 +10,6 @@ window.toggleSettingsPanel = function(e) {
         e.preventDefault();
         e.stopPropagation();
     }
-    
     const settingsPanel = document.getElementById('settingsPanel');
     if (settingsPanel) {
         settingsPanel.classList.toggle('open');
