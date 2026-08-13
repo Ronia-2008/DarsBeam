@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پروفایل معلم | درس‌بیم</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/settings.css">
+    <link rel="stylesheet" href="css/notifications.css">
+
+    <style>
+        /* ===== تنظیمات کلی ===== */
+        .profile-page {
+            background: var(--bg-body);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .profile-container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .profile-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 40px 32px;
+            transition: all 0.3s ease;
+        }
+
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            font-size: 40px;
+            color: white;
+            box-shadow: 0 4px 20px rgba(37, 99, 235, 0.2);
+        }
+
+        .profile-name {
+            text-align: center;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        .profile-role {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-bottom: 24px;
+        }
+
+        .profile-divider {
+            border: none;
+            border-top: 1px solid var(--border-color);
+            margin: 20px 0;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .info-value {
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 24px;
+            background: var(--primary-color);
+            color: white !important;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .btn-back:hover {
+            background: var(--primary-hover);
+            color: white !important;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(37, 99, 235, 0.3);
+            text-decoration: none;
+        }
+
+        .btn-edit {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 24px;
+            background: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-edit:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(37, 99, 235, 0.2);
+        }
+
+        body.dark-theme .profile-card {
+            background: #1e293b;
+            border-color: #334155;
+        }
+
+        body.dark-theme .info-row {
+            border-color: #334155;
+        }
+
+        body.dark-theme .btn-edit {
+            color: #60a5fa;
+            border-color: #60a5fa;
+        }
+
+        body.dark-theme .btn-edit:hover {
+            background: #60a5fa;
+            color: #0f172a;
+        }
+
+        @media (max-width: 480px) {
+            .profile-card {
+                padding: 24px 16px;
+            }
+            .profile-avatar {
+                width: 72px;
+                height: 72px;
+                font-size: 28px;
+            }
+            .profile-name {
+                font-size: 20px;
+            }
+            .info-row {
+                flex-direction: column;
+                gap: 4px;
+            }
+            .btn-back,
+            .btn-edit {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* ===== دکمه تنظیمات ===== */
+        .settings-btn-wrapper {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+        }
+
+        .settings-btn-wrapper button {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 10px 14px;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 18px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .settings-btn-wrapper button:hover {
+            transform: rotate(60deg);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+
+   <!-- ===== دکمه چرخ‌دنده (تنظیمات) ===== -->
+<div class="settings-fab">
+    <button onclick="window.location.href='settings-page.html'">
+        <i class="bi bi-gear-fill"></i>
+    </button>
+</div>
+
+<!-- استایل دکمه -->
+<style>
+    .settings-fab {
+        position: fixed;
+        bottom: 30px;
+        left: 30px;
+        z-index: 1000;
+    }
+
+    .settings-fab button {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background: var(--primary-color);
+        border: none;
+        color: white;
+        font-size: 24px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 16px rgba(37, 99, 235, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .settings-fab button:hover {
+        transform: rotate(60deg) scale(1.05);
+        box-shadow: 0 6px 24px rgba(37, 99, 235, 0.4);
+    }
+
+    body.dark-theme .settings-fab button {
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+    }
+
+    @media (max-width: 576px) {
+        .settings-fab {
+            bottom: 16px;
+            left: 16px;
+        }
+        .settings-fab button {
+            width: 48px;
+            height: 48px;
+            font-size: 20px;
+        }
+    }
+</style>
+
+    <!-- ===========================
+            پروفایل معلم
+    =========================== -->
+    <main class="profile-page">
+        <div class="profile-container">
+
+            <div class="profile-card">
+                <div class="profile-avatar">
+                    <i class="bi bi-person-badge"></i>
+                </div>
+                <h2 class="profile-name">خانم محمدی</h2>
+                <p class="profile-role">👨‍🏫 معلم ریاضی</p>
+
+                <hr class="profile-divider">
+
+                <div class="info-row">
+                    <span class="info-label">📧 ایمیل</span>
+                    <span class="info-value">mohammadi@school.com</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">📱 شماره موبایل</span>
+                    <span class="info-value">۰۹۱۲ ۳۴۵ ۶۷۸۹</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">🏫 مدرسه</span>
+                    <span class="info-value">دبیرستان نمونه ۱</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">📚 تخصص</span>
+                    <span class="info-value">ریاضیات</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">📅 تاریخ عضویت</span>
+                    <span class="info-value">۱۴۰۴/۰۲/۱۵</span>
+                </div>
+
+                <hr class="profile-divider">
+
+                <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+                    <a href="teacher-dashboard.html" class="btn-back">
+                        <i class="bi bi-arrow-right"></i>
+                        بازگشت به داشبورد
+                    </a>
+                    <button onclick="editProfile()" class="btn-edit">
+                        <i class="bi bi-pencil-square"></i>
+                        ویرایش پروفایل
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- ===== اسکریپت‌ها ===== -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/notifications.js"></script>
+    <script src="js/theme-manager.js"></script>
+    <script>
+        // ============================================
+        // 1. پنل تنظیمات
+        // ============================================
+        function toggleSettingsPanel(e) {
+            if (e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            const panel = document.getElementById('settingsPanel');
+            if (panel) {
+                panel.classList.toggle('open');
+            }
+        }
+
+        function closeSettingsPanel() {
+            const panel = document.getElementById('settingsPanel');
+            if (panel) {
+                panel.classList.remove('open');
+            }
+        }
+
+        // ============================================
+        // 2. تم دارک/لایت
+        // ============================================
+        function toggleDarkMode(isDark) {
+            if (isDark) {
+                document.body.classList.add('dark-theme');
+                localStorage.setItem('darsbeam-theme', 'dark');
+            } else {
+                document.body.classList.remove('dark-theme');
+                localStorage.setItem('darsbeam-theme', 'light');
+            }
+        }
+
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('darsbeam-theme');
+            const darkModeCheckbox = document.getElementById('darkMode');
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-theme');
+                if (darkModeCheckbox) darkModeCheckbox.checked = true;
+            } else {
+                document.body.classList.remove('dark-theme');
+                if (darkModeCheckbox) darkModeCheckbox.checked = false;
+            }
+        }
+
+        // ============================================
+        // 3. تغییر رنگ اصلی
+        // ============================================
+        function changeThemeColor(color) {
+            document.documentElement.style.setProperty('--primary-color', color);
+            localStorage.setItem('darsbeam-color', color);
+            document.querySelectorAll('.theme-color').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.color === color) {
+                    btn.classList.add('active');
+                }
+            });
+        }
+
+        function loadColor() {
+            const savedColor = localStorage.getItem('darsbeam-color');
+            if (savedColor) {
+                changeThemeColor(savedColor);
+            } else {
+                const defaultBlue = document.querySelector('.theme-color.blue');
+                if (defaultBlue) defaultBlue.classList.add('active');
+            }
+        }
+
+        // ============================================
+        // 4. ویرایش پروفایل
+        // ============================================
+        function editProfile() {
+            darsbeamConfirm({
+                title: '✏️ ویرایش پروفایل',
+                text: 'این بخش در حال توسعه است!\nبه زودی می‌تونی اطلاعاتت رو ویرایش کنی.',
+                icon: 'pencil-square',
+                confirmText: 'باشه',
+                cancelText: '',
+                type: 'info'
+            });
+        }
+
+        // ============================================
+        // 5. بارگذاری اولیه
+        // ============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            loadTheme();
+            loadColor();
+
+            // بستن پنل با کلیک خارج
+            document.addEventListener('click', function(e) {
+                const panel = document.getElementById('settingsPanel');
+                const btn = document.querySelector('.settings-btn-wrapper button');
+                if (panel && panel.classList.contains('open')) {
+                    if (!panel.contains(e.target) && !btn.contains(e.target)) {
+                        panel.classList.remove('open');
+                    }
+                }
+            });
+
+            // بستن پنل با ESC
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeSettingsPanel();
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>

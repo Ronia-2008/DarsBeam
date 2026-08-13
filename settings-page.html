@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تنظیمات پیشرفته | درس‌بیم</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- ===== CSS ===== -->
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/notifications.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        /* ===== دکمه بازگشت ===== */
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: var(--bg-card-hover);
+            color: var(--text-primary);
+        }
+
+        /* ===== صفحه‌ی تنظیمات ===== */
+        .settings-page {
+            background: var(--bg-body);
+            min-height: 100vh;
+            padding: 40px 20px;
+            transition: all 0.3s ease;
+        }
+
+        .settings-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .settings-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .settings-header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        .settings-header h1 i {
+            color: var(--primary-color);
+            margin-left: 10px;
+        }
+
+        /* ===== کارت‌های تنظیمات ===== */
+        .settings-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px 28px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .settings-card:hover {
+            box-shadow: var(--shadow-md);
+        }
+
+        .settings-card .card-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 0 0 4px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .settings-card .card-title i {
+            color: var(--primary-color);
+            font-size: 22px;
+        }
+
+        .settings-card .card-subtitle {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        /* ===== تنظیمات فردی ===== */
+        .setting-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .setting-row:last-child {
+            border-bottom: none;
+        }
+
+        .setting-row .setting-label {
+            font-weight: 500;
+            color: var(--text-primary);
+            font-size: 15px;
+        }
+
+        .setting-row .setting-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+            display: block;
+        }
+
+        .setting-row .setting-control {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* ===== دکمه‌های کوچک ===== */
+        .btn-sm-custom {
+            padding: 6px 16px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-body);
+            color: var(--text-primary);
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-sm-custom:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--primary-color);
+        }
+
+        .btn-sm-custom.primary {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .btn-sm-custom.primary:hover {
+            background: var(--primary-hover);
+            border-color: var(--primary-hover);
+        }
+
+        .btn-sm-custom.danger {
+            background: transparent;
+            color: #ef4444;
+            border-color: #ef4444;
+        }
+
+        .btn-sm-custom.danger:hover {
+            background: #ef4444;
+            color: white;
+        }
+
+        .btn-sm-custom.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        /* ===== سوییچ (Toggle Switch) ===== */
+        .toggle-switch {
+            position: relative;
+            width: 44px;
+            height: 24px;
+            flex-shrink: 0;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--border-color);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-slider::before {
+            content: '';
+            position: absolute;
+            left: 3px;
+            bottom: 3px;
+            width: 18px;
+            height: 18px;
+            background: white;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+        }
+
+        .toggle-switch input:checked+.toggle-slider {
+            background: var(--primary-color);
+        }
+
+        .toggle-switch input:checked+.toggle-slider::before {
+            transform: translateX(-20px);
+        }
+
+        /* ===== انتخاب رنگ ===== */
+        .color-options {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .color-options .color-dot {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .color-options .color-dot:hover {
+            transform: scale(1.1);
+        }
+
+        .color-options .color-dot.active {
+            border-color: var(--text-primary);
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
+        }
+
+        body.dark-theme .color-options .color-dot.active {
+            border-color: #f1f5f9;
+        }
+
+        /* ===== ریسپانسیو ===== */
+        @media (max-width: 768px) {
+            .settings-header {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 12px;
+            }
+
+            .settings-header h1 {
+                font-size: 22px;
+            }
+
+            .settings-card {
+                padding: 18px 16px;
+            }
+
+            .setting-row {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 8px;
+            }
+
+            .setting-row .setting-control {
+                justify-content: flex-start;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .settings-page {
+                padding: 20px 12px;
+            }
+
+            .settings-card .card-title {
+                font-size: 16px;
+            }
+
+            .color-options .color-dot {
+                width: 28px;
+                height: 28px;
+            }
+
+            .btn-sm-custom {
+                padding: 4px 12px;
+                font-size: 12px;
+            }
+        }
+
+        /* ===== دکمه تنظیمات (چرخ‌دنده) ===== */
+        .settings-fab {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            z-index: 1000;
+        }
+
+        .settings-fab button {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 16px rgba(37, 99, 235, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .settings-fab button:hover {
+            transform: rotate(60deg) scale(1.05);
+            box-shadow: 0 6px 24px rgba(37, 99, 235, 0.4);
+        }
+
+        body.dark-theme .settings-fab button {
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+        }
+
+        @media (max-width: 576px) {
+            .settings-fab {
+                bottom: 16px;
+                left: 16px;
+            }
+            .settings-fab button {
+                width: 48px;
+                height: 48px;
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ===== دکمه چرخ‌دنده (تنظیمات) ===== -->
+    <div class="settings-fab">
+        <button onclick="window.location.href='settings-page.html'">
+            <i class="bi bi-gear-fill"></i>
+        </button>
+    </div>
+
+    <!-- ===========================
+            صفحه‌ی تنظیمات پیشرفته
+    =========================== -->
+    <main class="settings-page">
+        <div class="settings-container">
+
+            <!-- ===== هدر ===== -->
+            <div class="settings-header">
+                <a href="#" onclick="history.back()" class="back-btn">
+                    <i class="bi bi-arrow-right"></i>
+                    بازگشت
+                </a>
+                <h1><i class="bi bi-sliders2"></i> تنظیمات پیشرفته</h1>
+            </div>
+
+            <!-- ===== کارت ۱: ظاهر ===== -->
+            <div class="settings-card">
+                <div class="card-title">
+                    <i class="bi bi-palette"></i>
+                    ظاهر سایت
+                </div>
+                <p class="card-subtitle">تنظیمات مربوط به ظاهر و رنگ‌بندی سایت</p>
+
+                <div class="setting-row">
+                    <div>
+                        <span class="setting-label">🌙 حالت شب</span>
+                        <span class="setting-desc">فعال‌سازی حالت تیره برای سایت</span>
+                    </div>
+                    <div class="setting-control">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="darkModeAdvanced" onchange="toggleDarkMode(this.checked)">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="setting-row">
+                    <div>
+                        <span class="setting-label">🎨 رنگ اصلی</span>
+                        <span class="setting-desc">انتخاب رنگ اصلی سایت</span>
+                    </div>
+                    <div class="setting-control">
+                        <div class="color-options">
+                            <div class="color-dot blue" style="background:#2563EB" onclick="changeThemeColor('#2563EB')" data-color="#2563EB"></div>
+                            <div class="color-dot purple" style="background:#7C3AED" onclick="changeThemeColor('#7C3AED')" data-color="#7C3AED"></div>
+                            <div class="color-dot green" style="background:#10B981" onclick="changeThemeColor('#10B981')" data-color="#10B981"></div>
+                            <div class="color-dot orange" style="background:#F97316" onclick="changeThemeColor('#F97316')" data-color="#F97316"></div>
+                            <div class="color-dot red" style="background:#EF4444" onclick="changeThemeColor('#EF4444')" data-color="#EF4444"></div>
+                            <div class="color-dot pink" style="background:#EC4899" onclick="changeThemeColor('#EC4899')" data-color="#EC4899"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== کارت ۲: نمایش ===== -->
+            <div class="settings-card">
+                <div class="card-title">
+                    <i class="bi bi-eye"></i>
+                    نمایش
+                </div>
+                <p class="card-subtitle">تنظیمات نمایشی و خوانایی</p>
+
+                <div class="setting-row">
+                    <div>
+                        <span class="setting-label">🔤 اندازه فونت</span>
+                        <span class="setting-desc">تغییر اندازه متن‌ها</span>
+                    </div>
+                    <div class="setting-control" id="fontSizeControls">
+                        <button class="btn-sm-custom" onclick="changeFontSize(-1)">A-</button>
+                        <button class="btn-sm-custom primary" onclick="changeFontSize(0)">A</button>
+                        <button class="btn-sm-custom" onclick="changeFontSize(1)">A+</button>
+                        <span style="font-size:13px;color:var(--text-muted);" id="fontSizeDisplay">16px</span>
+                    </div>
+                </div>
+
+                <div class="setting-row">
+                    <div>
+                        <span class="setting-label">📐 فاصله خطوط</span>
+                        <span class="setting-desc">افزایش/کاهش فاصله بین خطوط</span>
+                    </div>
+                    <div class="setting-control" id="lineHeightControls">
+                        <button class="btn-sm-custom" onclick="changeLineHeight(-0.1)">کم</button>
+                        <button class="btn-sm-custom primary" onclick="changeLineHeight(0)">متوسط</button>
+                        <button class="btn-sm-custom" onclick="changeLineHeight(0.1)">زیاد</button>
+                        <span style="font-size:13px;color:var(--text-muted);" id="lineHeightDisplay">1.6</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== کارت ۳: اعلان‌ها ===== -->
+            <div class="settings-card">
+                <div class="card-title">
+                    <i class="bi bi-bell"></i>
+                    اعلان‌ها
+                </div>
+                <p class="card-subtitle">تنظیمات مربوط به اعلان‌ها</p>
+
+                <div class="setting-row">
+                    <div>
+                        <span class="setting-label">🔔 اعلان‌های سیستمی</span>
+                        <span class="setting-desc">دریافت اعلان‌های سیستمی</span>
+                    </div>
+                    <div class="setting-control">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="notifSystem" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="setting-row">
+                    <div>
+                        <span class="setting-label">📨 اعلان‌های پیام</span>
+                        <span class="setting-desc">دریافت اعلان برای پیام‌های جدید</span>
+                    </div>
+                    <div class="setting-control">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="notifMessages" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="setting-row">
+                    <div>
+                        <span class="setting-label">📊 اعلان‌های آموزشی</span>
+                        <span class="setting-desc">اعلان برای آزمون‌ها و پیشرفت</span>
+                    </div>
+                    <div class="setting-control">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="notifEducation" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== کارت ۴: حریم خصوصی ===== -->
+            <div class="settings-card">
+                <div class="card-title">
+                    <i class="bi bi-shield-lock"></i>
+                    حریم خصوصی
+                </div>
+                <p class="card-subtitle">تنظیمات امنیت و حریم خصوصی</p>
+
+                <div class="setting-row">
+                    <div>
+                        <span class="setting-label">👤 نمایش پروفایل</span>
+                        <span class="setting-desc">نمایش اطلاعات پروفایل به دیگران</span>
+                    </div>
+                    <div class="setting-control">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="privacyProfile" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="setting-row">
+                    <div>
+                        <span class="setting-label">📊 نمایش پیشرفت</span>
+                        <span class="setting-desc">نمایش آمار پیشرفت به معلم</span>
+                    </div>
+                    <div class="setting-control">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="privacyProgress" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== کارت ۵: داده‌ها ===== -->
+            <div class="settings-card">
+                <div class="card-title">
+                    <i class="bi bi-database"></i>
+                    داده‌ها
+                </div>
+                <p class="card-subtitle">مدیریت داده‌های ذخیره‌شده</p>
+
+                <div class="setting-row">
+                    <div>
+                        <span class="setting-label">💾 پاک کردن کش</span>
+                        <span class="setting-desc">حذف فایل‌های ذخیره‌شده در مرورگر</span>
+                    </div>
+                    <div class="setting-control">
+                        <button class="btn-sm-custom danger" onclick="clearCache()">
+                            <i class="bi bi-trash"></i>
+                            پاک کردن
+                        </button>
+                    </div>
+                </div>
+
+                <div class="setting-row">
+                    <div>
+                        <span class="setting-label">📋 پاک کردن داده‌های درس‌بیم</span>
+                        <span class="setting-desc">حذف تمام داده‌های ذخیره‌شده</span>
+                    </div>
+                    <div class="setting-control">
+                        <button class="btn-sm-custom danger" onclick="clearAllData()">
+                            <i class="bi bi-exclamation-triangle"></i>
+                            حذف همه
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== کارت ۶: درباره ===== -->
+            <div class="settings-card" style="text-align: center; padding: 20px;">
+                <p style="color: var(--text-muted); margin: 0; font-size: 14px;">
+                    <i class="bi bi-book-half" style="color: var(--primary-color);"></i>
+                    درس‌بیم نسخه ۱.۰
+                    <br>
+                    ساخته شده با ❤️ برای آموزش بهتر
+                </p>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- ===== اسکریپت‌ها ===== -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/notifications.js"></script>
+    <script src="js/theme-manager.js"></script>
+
+    <script>
+        // ============================================
+        // 1. اندازه فونت
+        // ============================================
+        function changeFontSize(direction) {
+            const root = document.documentElement;
+            const currentSize = parseFloat(getComputedStyle(root).fontSize) || 16;
+            let newSize = currentSize + direction;
+            if (newSize < 12) newSize = 12;
+            if (newSize > 22) newSize = 22;
+            root.style.fontSize = newSize + 'px';
+            localStorage.setItem('darsbeam-font-size', newSize);
+
+            const display = document.getElementById('fontSizeDisplay');
+            if (display) display.textContent = Math.round(newSize) + 'px';
+
+            // به‌روزرسانی دکمه‌های فعال
+            document.querySelectorAll('#fontSizeControls .btn-sm-custom').forEach(btn => {
+                btn.classList.remove('active', 'primary');
+            });
+            const btns = document.querySelectorAll('#fontSizeControls .btn-sm-custom');
+            if (direction === -1) btns[0]?.classList.add('active', 'primary');
+            else if (direction === 0) btns[1]?.classList.add('active', 'primary');
+            else if (direction === 1) btns[2]?.classList.add('active', 'primary');
+
+            if (window.notifyInfo) {
+                notifyInfo('🔤 تغییر فونت', `اندازه فونت به ${Math.round(newSize)} تغییر کرد`);
+            }
+        }
+
+        function loadFontSize() {
+            const savedSize = localStorage.getItem('darsbeam-font-size');
+            if (savedSize) {
+                document.documentElement.style.fontSize = savedSize + 'px';
+                const display = document.getElementById('fontSizeDisplay');
+                if (display) display.textContent = Math.round(parseFloat(savedSize)) + 'px';
+            }
+        }
+
+        // ============================================
+        // 2. فاصله خطوط
+        // ============================================
+        function changeLineHeight(direction) {
+            const root = document.documentElement;
+            const currentHeight = parseFloat(getComputedStyle(root).lineHeight) || 1.6;
+            let newHeight = currentHeight + direction;
+            if (newHeight < 1.2) newHeight = 1.2;
+            if (newHeight > 2.2) newHeight = 2.2;
+            root.style.lineHeight = newHeight;
+            localStorage.setItem('darsbeam-line-height', newHeight);
+
+            const display = document.getElementById('lineHeightDisplay');
+            if (display) display.textContent = newHeight.toFixed(1);
+
+            document.querySelectorAll('#lineHeightControls .btn-sm-custom').forEach(btn => {
+                btn.classList.remove('active', 'primary');
+            });
+            const btns = document.querySelectorAll('#lineHeightControls .btn-sm-custom');
+            if (direction === -0.1) btns[0]?.classList.add('active', 'primary');
+            else if (direction === 0) btns[1]?.classList.add('active', 'primary');
+            else if (direction === 0.1) btns[2]?.classList.add('active', 'primary');
+
+            if (window.notifyInfo) {
+                notifyInfo('📐 تغییر فاصله', `فاصله خطوط به ${newHeight.toFixed(1)} تغییر کرد`);
+            }
+        }
+
+        function loadLineHeight() {
+            const savedHeight = localStorage.getItem('darsbeam-line-height');
+            if (savedHeight) {
+                document.documentElement.style.lineHeight = savedHeight;
+                const display = document.getElementById('lineHeightDisplay');
+                if (display) display.textContent = parseFloat(savedHeight).toFixed(1);
+            }
+        }
+
+        // ============================================
+        // 3. پاک کردن داده‌ها
+        // ============================================
+        async function clearCache() {
+            const confirm = await darsbeamConfirm({
+                title: '💾 پاک کردن کش',
+                text: 'آیا از پاک کردن کش مرورگر مطمئنی؟',
+                icon: 'trash',
+                confirmText: 'بله، پاک کن',
+                cancelText: 'انصراف',
+                type: 'warning'
+            });
+            if (confirm) {
+                if ('caches' in window) {
+                    caches.keys().then(keys => {
+                        keys.forEach(key => caches.delete(key));
+                    });
+                }
+                if (window.notifySuccess) {
+                    notifySuccess('✅ کش پاک شد', 'فایل‌های کش شده با موفقیت حذف شدند');
+                }
+            }
+        }
+
+        async function clearAllData() {
+            const confirm = await darsbeamConfirm({
+                title: '⚠️ هشدار!',
+                text: 'آیا از پاک کردن تمام داده‌های درس‌بیم مطمئنی؟ این کار غیرقابل بازگشت است.',
+                icon: 'exclamation-triangle',
+                confirmText: 'بله، همه رو پاک کن',
+                cancelText: 'انصراف',
+                type: 'danger'
+            });
+            if (confirm) {
+                localStorage.removeItem('darsbeam-theme');
+                localStorage.removeItem('darsbeam-color');
+                localStorage.removeItem('darsbeam-font-size');
+                localStorage.removeItem('darsbeam-line-height');
+                localStorage.removeItem('darsbeam_exams');
+                localStorage.removeItem('darsbeam_exam_results');
+                if (window.notifySuccess) {
+                    notifySuccess('🗑️ داده‌ها پاک شد', 'تمامی داده‌های درس‌بیم حذف شدند');
+                }
+                setTimeout(() => location.reload(), 1500);
+            }
+        }
+
+        // ============================================
+        // 4. بارگذاری اولیه
+        // ============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            loadFontSize();
+            loadLineHeight();
+
+            // هماهنگ‌سازی چک‌باکس دارک مود
+            const isDark = document.body.classList.contains('dark-theme');
+            const darkCheckbox = document.getElementById('darkModeAdvanced');
+            if (darkCheckbox) darkCheckbox.checked = isDark;
+
+            console.log('⚙️ تنظیمات پیشرفته با موفقیت بارگذاری شد!');
+        });
+    </script>
+
+</body>
+
+</html>

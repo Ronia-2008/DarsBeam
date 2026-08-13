@@ -1,0 +1,178 @@
+/* ============================================
+   notifications.css
+   استایل‌های سیستم اعلان‌ها
+   ============================================ */
+
+/* ===== کانتینر اصلی اعلان‌ها ===== */
+.notification-container {
+    position: fixed;
+    top: 80px;
+    left: 20px;
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 400px;
+    width: 100%;
+    pointer-events: none;
+}
+
+/* ===== هر اعلان ===== */
+.notification-item {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    box-shadow: var(--shadow-lg);
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    pointer-events: auto;
+    animation: notificationSlideIn 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.notification-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 4px;
+    height: 100%;
+    border-radius: 0 2px 2px 0;
+}
+
+.notification-item.hiding {
+    animation: notificationSlideOut 0.3s ease forwards;
+}
+
+/* ===== انواع اعلان ===== */
+.notification-item.success::before {
+    background: #10b981;
+}
+
+.notification-item.success .notification-icon {
+    color: #10b981;
+}
+
+.notification-item.error::before {
+    background: #ef4444;
+}
+
+.notification-item.error .notification-icon {
+    color: #ef4444;
+}
+
+.notification-item.warning::before {
+    background: #f59e0b;
+}
+
+.notification-item.warning .notification-icon {
+    color: #f59e0b;
+}
+
+.notification-item.info::before {
+    background: #3b82f6;
+}
+
+.notification-item.info .notification-icon {
+    color: #3b82f6;
+}
+
+/* ===== آیکون ===== */
+.notification-icon {
+    font-size: 22px;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+/* ===== محتوا ===== */
+.notification-content {
+    flex: 1;
+}
+
+.notification-title {
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 15px;
+    margin: 0 0 2px;
+}
+
+.notification-message {
+    color: var(--text-secondary);
+    font-size: 14px;
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* ===== دکمه بستن ===== */
+.notification-close {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 18px;
+    padding: 0;
+    transition: var(--transition);
+    flex-shrink: 0;
+    margin-top: -2px;
+}
+
+.notification-close:hover {
+    color: var(--text-primary);
+    transform: rotate(90deg);
+}
+
+/* ===== انیمیشن‌ها ===== */
+@keyframes notificationSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(100px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes notificationSlideOut {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(100px);
+    }
+}
+
+/* ===== دارک مود ===== */
+body.dark-theme .notification-item {
+    background: #1e293b;
+    border-color: #334155;
+}
+
+/* ===== ریسپانسیو ===== */
+@media (max-width: 576px) {
+    .notification-container {
+        top: 70px;
+        left: 12px;
+        right: 12px;
+        max-width: none;
+        width: auto;
+    }
+
+    .notification-item {
+        padding: 14px 16px;
+    }
+
+    .notification-title {
+        font-size: 14px;
+    }
+
+    .notification-message {
+        font-size: 13px;
+    }
+}

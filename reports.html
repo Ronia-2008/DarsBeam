@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>گزارش‌ها | درس‌بیم</title>
+    <!-- ... لینک‌های CSS ... -->
+     <link rel="stylesheet" href="css/notifications.css">
+</head>
+<body>
+
+    <!-- ===== سایدبار معلم ===== -->
+    <!-- ... -->
+
+    <main class="dashboard-main">
+        <h1>📊 گزارش‌های عملکرد</h1>
+
+        <div class="reports-grid">
+            <div class="report-card">
+                <h3>میانگین نمرات</h3>
+                <div class="report-value">۷۸%</div>
+                <p>از ۱۲ آزمون</p>
+            </div>
+
+            <div class="report-card">
+                <h3>تعداد دانش‌آموزان</h3>
+                <div class="report-value">۲۴</div>
+                <p>دانش‌آموز فعال</p>
+            </div>
+
+            <div class="report-card">
+                <h3>نمره‌ی برتر</h3>
+                <div class="report-value">۹۶%</div>
+                <p>خورشید سوری</p>
+            </div>
+        </div>
+
+        <div class="report-table">
+            <h2>📋 لیست نمرات</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>دانش‌آموز</th>
+                        <th>آزمون</th>
+                        <th>نمره</th>
+                        <th>وضعیت</th>
+                    </tr>
+                </thead>
+                <tbody id="reportTableBody">
+                    <!-- توسط JS پر میشه -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+<script src="js/notifications.js"></script>
+    <script>
+        // ===== بارگذاری نمرات از localStorage =====
+        function loadReports() {
+            const results = JSON.parse(localStorage.getItem('darsbeam_exam_results')) || [];
+            const tbody = document.getElementById('reportTableBody');
+            if (!tbody) return;
+
+            if (results.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="4" style="text-align:center;padding:40px;color:var(--text-muted);">
+                            هنوز آزمونی ثبت نشده!
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = results.map(r => `
+                <tr>
+                    <td>علی رضایی</td>
+                    <td>${r.examTitle}</td>
+                    <td>${r.score}%</td>
+                    <td>
+                        <span style="color: ${r.passed ? '#10b981' : '#ef4444'}; font-weight: 600;">
+                            ${r.passed ? '✅ قبول' : '❌ مردود'}
+                        </span>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        document.addEventListener('DOMContentLoaded', loadReports);
+    </script>
+</body>
+</html>

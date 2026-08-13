@@ -252,57 +252,58 @@ document.addEventListener('DOMContentLoaded', function() {
     // ============================================
     // 7. ثبت آزمون
     // ============================================
-    async function submitExam(auto = false) {
-        if (isSubmitted) return;
+    // ===== توی exam-detail.js =====
 
-        // بررسی پاسخ‌ها
-        const total = examData.questions.length;
-        const answered = Object.keys(answers).length;
+async function submitExam(auto = false) {
+    if (isSubmitted) return;
 
-        if (!auto && answered < total) {
-            const confirm = await darsbeamConfirm({
-                title: '⚠️ هنوز کامل نکردی!',
-                text: `از ${total} سؤال، فقط ${answered} تا رو پاسخ دادی. آیا مطمئنی می‌خوای ثبت کنی؟`,
-                icon: 'exclamation-triangle',
-                confirmText: 'بله، ثبت کن',
-                cancelText: 'بازگشت',
-                type: 'warning'
-            });
-            if (!confirm) return;
-        }
+    const total = examData.questions.length;
+    const answered = Object.keys(answers).length;
 
-        if (auto) {
-            await darsbeamConfirm({
-                title: '⏰ زمان تمام شد!',
-                text: 'متأسفانه زمان آزمون به پایان رسید. آزمون به صورت خودکار ثبت شد.',
-                icon: 'clock',
-                confirmText: 'باشه',
-                cancelText: '',
-                type: 'danger'
-            });
-        }
-
-        // محاسبه نمره
-        let correct = 0;
-        examData.questions.forEach((q, index) => {
-            if (answers[index] === q.correct) {
-                correct++;
-            }
+    if (!auto && answered < total) {
+        const confirm = await darsbeamConfirm({
+            title: '⚠️ هنوز کامل نکردی!',
+            text: `از ${total} سؤال، فقط ${answered} تا رو پاسخ دادی. آیا مطمئنی می‌خوای ثبت کنی؟`,
+            icon: 'exclamation-triangle',
+            confirmText: 'بله، ثبت کن',
+            cancelText: 'بازگشت',
+            type: 'warning'
         });
-
-        const score = Math.round((correct / total) * 100);
-        const passed = score >= 60;
-
-        // نمایش نتیجه
-        showResult(correct, total, score, passed);
-
-        // پاک کردن پیشرفت
-        localStorage.removeItem(`exam_progress_${examData.id}`);
-
-        // توقف تایمر
-        clearInterval(timerInterval);
-        isSubmitted = true;
+        if (!confirm) return;
     }
+
+    // ===== محاسبه نمره =====
+    let correct = 0;
+    examData.questions.forEach((q, index) => {
+        if (answers[index] === q.correct) {
+            correct++;
+        }
+    });
+
+    const score = Math.round((correct / total) * 100);
+    const passed = score >= 60;
+
+    // ===== ذخیره نمره در localStorage =====
+    const examResult = {
+        examId: examData.id,
+        examTitle: examData.title,
+        score: score,
+        correct: correct,
+        total: total,
+        passed: passed,
+        date: new Date().toISOString()
+    };
+
+    // ذخیره در localStorage
+    const results = JSON.parse(localStorage.getItem('darsbeam_exam_results')) || [];
+    results.push(examResult);
+    localStorage.setItem('darsbeam_exam_results', JSON.stringify(results));
+
+    // ===== نمایش نتیجه =====
+    showResult(correct, total, score, passed);
+    clearInterval(timerInterval);
+    isSubmitted = true;
+}
 
     // ============================================
     // 8. نمایش نتیجه
