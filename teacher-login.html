@@ -180,34 +180,36 @@
     });
 </script>
 
-    <!-- ===== دکمه‌ی تنظیمات ===== -->
-    <div class="settings-btn-wrapper">
-        <button id="settingsToggleBtn">
-            <i class="bi bi-gear-fill"></i>
+    <!-- دکمه تنظیمات (چرخ‌دنده) -->
+<div class="settings-btn-wrapper">
+    <button onclick="toggleSettingsPanel(event)" aria-label="تنظیمات">
+        <i class="bi bi-gear-fill"></i>
+    </button>
+</div>
+
+<!-- پنل تنظیمات -->
+<div class="settings-panel" id="settingsPanel">
+    <div class="settings-header">
+        <h4><i class="bi bi-sliders"></i> تنظیمات</h4>
+        <button onclick="closeSettingsPanel()" aria-label="بستن تنظیمات">
+            <i class="bi bi-x-lg"></i>
         </button>
     </div>
-
-    <!-- ===== پنل تنظیمات ===== -->
-    <div class="settings-panel" id="settingsPanel">
-        <div class="settings-header">
-            <h4><i class="bi bi-sliders"></i> تنظیمات</h4>
-            <button id="closeSettings"><i class="bi bi-x-lg"></i></button>
-        </div>
-        <hr>
-        <div class="setting-item">
-            <label for="darkMode">🌙 حالت روشن / تیره</label>
-            <input type="checkbox" id="darkMode">
-        </div>
-        <div class="setting-item">
-            <label>🎨 رنگ اصلی سایت</label>
-            <div class="theme-colors">
-                <button class="theme-color blue" data-color="#2563EB"></button>
-                <button class="theme-color purple" data-color="#7C3AED"></button>
-                <button class="theme-color green" data-color="#10B981"></button>
-                <button class="theme-color orange" data-color="#F97316"></button>
-            </div>
+    <hr>
+    <div class="setting-item">
+        <label for="darkMode">🌙 حالت روشن / تیره</label>
+        <input type="checkbox" id="darkMode" onchange="toggleDarkMode(this.checked)">
+    </div>
+    <div class="setting-item">
+        <label>🎨 رنگ اصلی سایت</label>
+        <div class="theme-colors">
+            <button class="theme-color blue" onclick="changeThemeColor('#2563EB')" data-color="#2563EB" aria-label="رنگ آبی"></button>
+            <button class="theme-color purple" onclick="changeThemeColor('#7C3AED')" data-color="#7C3AED" aria-label="رنگ بنفش"></button>
+            <button class="theme-color green" onclick="changeThemeColor('#10B981')" data-color="#10B981" aria-label="رنگ سبز"></button>
+            <button class="theme-color orange" onclick="changeThemeColor('#F97316')" data-color="#F97316" aria-label="رنگ نارنجی"></button>
         </div>
     </div>
+</div>
 
     <!-- ===========================
             Teacher Login
@@ -288,9 +290,136 @@
 
     <!-- ===== اسکریپت‌ها ===== -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="js/settings.js"></script>
+    <!--<script src="js/settings.js"></script>-->
     <script src="js/teacher-login.js"></script>
 
+    <script>
+    // ============================================
+    // 1. پنل تنظیمات
+    // ============================================
+    function toggleSettingsPanel(e) {
+        if (e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        const panel = document.getElementById('settingsPanel');
+        if (panel) {
+            panel.classList.toggle('open');
+            console.log('🔘 پنل تنظیمات باز/بسته شد');
+        }
+    }
+
+    function closeSettingsPanel() {
+        const panel = document.getElementById('settingsPanel');
+        if (panel) {
+            panel.classList.remove('open');
+            console.log('🔘 پنل تنظیمات بسته شد');
+        }
+    }
+
+    // ============================================
+    // 2. تم دارک/لایت
+    // ============================================
+    function toggleDarkMode(isDark) {
+        if (isDark) {
+            document.body.classList.add('dark-theme');
+            localStorage.setItem('darsbeam-theme', 'dark');
+            console.log('🌙 دارک مود فعال شد');
+        } else {
+            document.body.classList.remove('dark-theme');
+            localStorage.setItem('darsbeam-theme', 'light');
+            console.log('☀️ لایت مود فعال شد');
+        }
+    }
+
+    function loadTheme() {
+        const savedTheme = localStorage.getItem('darsbeam-theme');
+        const darkModeCheckbox = document.getElementById('darkMode');
+        if (savedTheme === 'dark') {
+            document.body.classList.add('dark-theme');
+            if (darkModeCheckbox) darkModeCheckbox.checked = true;
+        } else {
+            document.body.classList.remove('dark-theme');
+            if (darkModeCheckbox) darkModeCheckbox.checked = false;
+        }
+        console.log('📂 تم بارگذاری شد:', savedTheme || 'light');
+    }
+
+    // ============================================
+    // 3. تغییر رنگ اصلی
+    // ============================================
+    function changeThemeColor(color) {
+        document.documentElement.style.setProperty('--primary-color', color);
+        localStorage.setItem('darsbeam-color', color);
+        
+        // به‌روزرسانی دکمه‌های فعال
+        document.querySelectorAll('.theme-color').forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.dataset.color === color) {
+                btn.classList.add('active');
+            }
+        });
+        console.log('🎨 رنگ تغییر کرد به:', color);
+    }
+
+    function loadColor() {
+        const savedColor = localStorage.getItem('darsbeam-color');
+        if (savedColor) {
+            changeThemeColor(savedColor);
+        } else {
+            const defaultBlue = document.querySelector('.theme-color.blue');
+            if (defaultBlue) defaultBlue.classList.add('active');
+        }
+        console.log('🎨 رنگ بارگذاری شد:', savedColor || 'blue');
+    }
+
+    // ============================================
+    // 4. چشمک (نمایش رمز) - فقط برای صفحات لاگین
+    // ============================================
+    function togglePasswordVisibility() {
+        const input = document.getElementById('studentPassword');
+        const icon = document.querySelector('.password-toggle i');
+        if (!input) return;
+        
+        if (input.type === 'password') {
+            input.type = 'text';
+            if (icon) icon.className = 'bi bi-eye-slash';
+        } else {
+            input.type = 'password';
+            if (icon) icon.className = 'bi bi-eye';
+        }
+    }
+
+    // ============================================
+    // 5. بارگذاری اولیه
+    // ============================================
+    document.addEventListener('DOMContentLoaded', function() {
+        loadTheme();
+        loadColor();
+
+        // بستن پنل با کلیک خارج از آن
+        document.addEventListener('click', function(e) {
+            const panel = document.getElementById('settingsPanel');
+            const btn = document.querySelector('.settings-btn-wrapper button');
+            if (panel && panel.classList.contains('open')) {
+                const isClickInside = panel.contains(e.target);
+                const isClickOnBtn = btn && btn.contains(e.target);
+                if (!isClickInside && !isClickOnBtn) {
+                    panel.classList.remove('open');
+                }
+            }
+        });
+
+        // بستن پنل با کلید ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeSettingsPanel();
+            }
+        });
+
+        console.log('⚙️ تنظیمات با موفقیت بارگذاری شد!');
+    });
+</script>
 </body>
 
 </html>
