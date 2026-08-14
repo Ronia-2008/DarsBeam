@@ -745,89 +745,69 @@
     }
 
     // ============================================
-    // 2. تم دارک/لایت
-    // ============================================
-    function toggleDarkMode(isDark) {
-        if (isDark) {
-            document.body.classList.add('dark-theme');
-            localStorage.setItem('darsbeam-theme', 'dark');
-            console.log('🌙 دارک مود فعال شد');
-        } else {
-            document.body.classList.remove('dark-theme');
-            localStorage.setItem('darsbeam-theme', 'light');
-            console.log('☀️ لایت مود فعال شد');
+        // 1. تم دارک/لایت
+        // ============================================
+        function toggleDarkMode(isDark) {
+            if (isDark) {
+                document.body.classList.add('dark-theme');
+                localStorage.setItem('darsbeam-theme', 'dark');
+            } else {
+                document.body.classList.remove('dark-theme');
+                localStorage.setItem('darsbeam-theme', 'light');
+            }
+            // ===== ارسال رویداد به صفحات دیگه =====
+            window.dispatchEvent(new Event('storage'));
         }
-    }
 
-    function loadTheme() {
-        const savedTheme = localStorage.getItem('darsbeam-theme');
-        const darkModeCheckbox = document.getElementById('darkMode');
-        if (savedTheme === 'dark') {
-            document.body.classList.add('dark-theme');
-            if (darkModeCheckbox) darkModeCheckbox.checked = true;
-        } else {
-            document.body.classList.remove('dark-theme');
-            if (darkModeCheckbox) darkModeCheckbox.checked = false;
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('darsbeam-theme');
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-theme');
+            } else {
+                document.body.classList.remove('dark-theme');
+            }
         }
-        console.log('📂 تم بارگذاری شد:', savedTheme || 'light');
-    }
 
-    // ============================================
-    // 3. تغییر رنگ اصلی
-    // ============================================
-    function changeThemeColor(color) {
-        document.documentElement.style.setProperty('--primary-color', color);
-        localStorage.setItem('darsbeam-color', color);
-        
-        // به‌روزرسانی دکمه‌های فعال
-        document.querySelectorAll('.theme-color').forEach(btn => {
-            btn.classList.remove('active');
-            if (btn.dataset.color === color) {
-                btn.classList.add('active');
+        // ============================================
+        // 2. تغییر رنگ اصلی
+        // ============================================
+        function changeThemeColor(color) {
+            document.documentElement.style.setProperty('--primary-color', color);
+            localStorage.setItem('darsbeam-color', color);
+            // ===== ارسال رویداد به صفحات دیگه =====
+            window.dispatchEvent(new Event('storage'));
+        }
+
+        function loadColor() {
+            const savedColor = localStorage.getItem('darsbeam-color');
+            if (savedColor) {
+                document.documentElement.style.setProperty('--primary-color', savedColor);
+            }
+        }
+
+        // ============================================
+        // 3. به‌روزرسانی خودکار هنگام تغییر در صفحه دیگه
+        // ============================================
+        function applySettings() {
+            loadTheme();
+            loadColor();
+            console.log('🔄 تنظیمات به‌روزرسانی شد!');
+        }
+
+        // گوش دادن به رویداد storage (وقتی صفحه دیگه تغییری میده)
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'darsbeam-theme' || e.key === 'darsbeam-color') {
+                applySettings();
+                console.log('📥 تغییرات از صفحه دیگه دریافت شد!');
             }
         });
-        console.log('🎨 رنگ تغییر کرد به:', color);
-    }
-
-    function loadColor() {
-        const savedColor = localStorage.getItem('darsbeam-color');
-        if (savedColor) {
-            changeThemeColor(savedColor);
-        } else {
-            const defaultBlue = document.querySelector('.theme-color.blue');
-            if (defaultBlue) defaultBlue.classList.add('active');
-        }
-        console.log('🎨 رنگ بارگذاری شد:', savedColor || 'blue');
-    }
-// ============================================
-    // 5. بارگذاری اولیه
-    // ============================================
-    document.addEventListener('DOMContentLoaded', function() {
-        loadTheme();
-        loadColor();
-
-        // بستن پنل با کلیک خارج از آن
-        document.addEventListener('click', function(e) {
-            const panel = document.getElementById('settingsPanel');
-            const btn = document.querySelector('.settings-btn-wrapper button');
-            if (panel && panel.classList.contains('open')) {
-                const isClickInside = panel.contains(e.target);
-                const isClickOnBtn = btn && btn.contains(e.target);
-                if (!isClickInside && !isClickOnBtn) {
-                    panel.classList.remove('open');
-                }
-            }
+        // ============================================
+        // 6. بارگذاری اولیه
+        // ============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            applySettings();
+            console.log('🎨 تنظیمات اولیه بارگذاری شدند!');
         });
-
-        // بستن پنل با کلید ESC
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                closeSettingsPanel();
-            }
-        });
-
-        console.log('⚙️ تنظیمات با موفقیت بارگذاری شد!');
-    });
 </script>
 </body>
 

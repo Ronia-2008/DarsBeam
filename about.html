@@ -224,6 +224,72 @@
     <script src="js/modal.js"></script>
     <script src="js/notifications.js"></script>
     <script src="js/theme-manager.js"></script>
+    <script>
+    // ============================================
+        // 1. تم دارک/لایت
+        // ============================================
+        function toggleDarkMode(isDark) {
+            if (isDark) {
+                document.body.classList.add('dark-theme');
+                localStorage.setItem('darsbeam-theme', 'dark');
+            } else {
+                document.body.classList.remove('dark-theme');
+                localStorage.setItem('darsbeam-theme', 'light');
+            }
+            // ===== ارسال رویداد به صفحات دیگه =====
+            window.dispatchEvent(new Event('storage'));
+        }
+
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('darsbeam-theme');
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-theme');
+            } else {
+                document.body.classList.remove('dark-theme');
+            }
+        }
+
+        // ============================================
+        // 2. تغییر رنگ اصلی
+        // ============================================
+        function changeThemeColor(color) {
+            document.documentElement.style.setProperty('--primary-color', color);
+            localStorage.setItem('darsbeam-color', color);
+            // ===== ارسال رویداد به صفحات دیگه =====
+            window.dispatchEvent(new Event('storage'));
+        }
+
+        function loadColor() {
+            const savedColor = localStorage.getItem('darsbeam-color');
+            if (savedColor) {
+                document.documentElement.style.setProperty('--primary-color', savedColor);
+            }
+        }
+
+        // ============================================
+        // 3. به‌روزرسانی خودکار هنگام تغییر در صفحه دیگه
+        // ============================================
+        function applySettings() {
+            loadTheme();
+            loadColor();
+            console.log('🔄 تنظیمات به‌روزرسانی شد!');
+        }
+
+        // گوش دادن به رویداد storage (وقتی صفحه دیگه تغییری میده)
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'darsbeam-theme' || e.key === 'darsbeam-color') {
+                applySettings();
+                console.log('📥 تغییرات از صفحه دیگه دریافت شد!');
+            }
+        });
+        // ============================================
+        // 6. بارگذاری اولیه
+        // ============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            applySettings();
+            console.log('🎨 تنظیمات اولیه بارگذاری شدند!');
+        });
+</script>
 
 </body>
 

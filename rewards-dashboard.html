@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>داشبورد جایزه و گزارش | درس‌بیم</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/notifications.css">
+    <link rel="stylesheet" href="css/modal.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        .rewards-page {
+            background: var(--bg-body);
+            min-height: 100vh;
+            padding: 30px 20px;
+        }
+        .rewards-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+        .back-btn:hover {
+            background: var(--bg-card-hover);
+            color: var(--text-primary);
+        }
+        .profile-header {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 30px 28px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+        .profile-header .avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: white;
+            flex-shrink: 0;
+        }
+        .profile-header .info h2 {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 0;
+        }
+        .profile-header .info .title-badge {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        .profile-header .info .level-badge {
+            display: inline-block;
+            background: var(--primary-color);
+            color: white;
+            padding: 2px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-top: 4px;
+        }
+        .profile-header .stats {
+            display: flex;
+            gap: 24px;
+            margin-right: auto;
+            flex-wrap: wrap;
+        }
+        .profile-header .stats .stat-item {
+            text-align: center;
+        }
+        .profile-header .stats .stat-item .number {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        .profile-header .stats .stat-item .label {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+        .role-badge {
+            display: inline-block;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            background: var(--primary-color);
+            color: white;
+        }
+        .role-badge.teacher {
+            background: #7c3aed;
+        }
+
+        .xp-bar-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px 24px;
+            margin-bottom: 24px;
+        }
+        .xp-bar-section .xp-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+        }
+        .xp-bar-section .xp-track {
+            width: 100%;
+            height: 10px;
+            background: var(--bg-body);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .xp-bar-section .xp-track .xp-fill {
+            height: 100%;
+            border-radius: 10px;
+            background: linear-gradient(90deg, var(--primary-color), #8b5cf6);
+            transition: width 0.6s ease;
+        }
+
+        .rewards-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+        .reward-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px 24px;
+            transition: all 0.3s ease;
+        }
+        .reward-card:hover {
+            box-shadow: var(--shadow-md);
+        }
+        .reward-card .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 0 0 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .badges-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .badge-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            background: var(--bg-body);
+            border-radius: 20px;
+            font-size: 13px;
+            color: var(--text-primary);
+        }
+        .badge-item.locked {
+            opacity: 0.3;
+            filter: grayscale(1);
+        }
+        .chart-container {
+            grid-column: 1 / -1;
+        }
+        .chart-bars {
+            display: flex;
+            align-items: flex-end;
+            gap: 8px;
+            height: 120px;
+            padding-top: 10px;
+        }
+        .chart-bar {
+            flex: 1;
+            background: var(--primary-color);
+            border-radius: 4px 4px 0 0;
+            min-height: 4px;
+            transition: height 0.6s ease;
+            position: relative;
+        }
+        .chart-bar .bar-label {
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 10px;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+        .history-list {
+            grid-column: 1 / -1;
+        }
+        .history-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-light);
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        .history-item .exam-name {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+        .history-item .exam-score {
+            font-weight: 600;
+        }
+        .history-item .exam-score.high {
+            color: var(--success);
+        }
+        .history-item .exam-score.medium {
+            color: var(--warning);
+        }
+        .history-item .exam-score.low {
+            color: var(--danger);
+        }
+
+        /* دانش‌آموزان */
+        .students-list {
+            grid-column: 1 / -1;
+        }
+        .student-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .student-item .student-name {
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+        .student-item .student-stats {
+            display: flex;
+            gap: 16px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        .student-item .student-stats span {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        @media (max-width: 768px) {
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            .profile-header .stats {
+                margin-right: 0;
+                justify-content: center;
+            }
+            .rewards-grid {
+                grid-template-columns: 1fr;
+            }
+            .chart-bars {
+                height: 80px;
+            }
+            .student-item {
+                flex-direction: column;
+                gap: 8px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="rewards-page">
+        <div class="rewards-container">
+
+            <!-- ===== دکمه بازگشت ===== -->
+            <a href="student-dashboard.html" class="back-btn" id="backToDashboard">
+                <i class="bi bi-arrow-right"></i>
+                بازگشت به داشبورد
+            </a>
+
+            <!-- ===== هدر پروفایل ===== -->
+            <div class="profile-header" id="profileHeader">
+                <div class="avatar">
+                    <i class="bi bi-person-fill"></i>
+                </div>
+                <div class="info">
+                    <h2 id="userName">خورشید سوری</h2>
+                    <span class="title-badge" id="userTitle">🌱 تازه‌کار</span>
+                    <span class="level-badge" id="userLevel">سطح ۱</span>
+                    <span class="role-badge" id="userRoleBadge"></span>
+                </div>
+                <div class="stats">
+                    <div class="stat-item">
+                        <div class="number" id="totalPoints">0</div>
+                        <div class="label">⭐ امتیاز</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="number" id="badgesCount">0</div>
+                        <div class="label">🏅 بج</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="number" id="streakCount">0</div>
+                        <div class="label">🔥 استریک</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="number" id="examsCount">0</div>
+                        <div class="label">📝 آزمون</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== نوار تجربه ===== -->
+            <div class="xp-bar-section">
+                <div class="xp-header">
+                    <span>تجربه: <strong id="userXp">0</strong> XP</span>
+                    <span>تا سطح بعدی: <strong id="xpToNext">100</strong> XP</span>
+                </div>
+                <div class="xp-track">
+                    <div class="xp-fill" id="xpProgress" style="width: 0%;"></div>
+                </div>
+            </div>
+
+            <!-- ===== کارت‌ها ===== -->
+            <div class="rewards-grid">
+
+                <!-- بج‌ها -->
+                <div class="reward-card">
+                    <div class="card-title"><i class="bi bi-award"></i> بج‌های من</div>
+                    <div class="badges-grid" id="badgesContainer">
+                        <!-- توسط JS پر میشه -->
+                    </div>
+                </div>
+
+                <!-- آمار -->
+                <div class="reward-card">
+                    <div class="card-title"><i class="bi bi-graph-up"></i> آمار کلی</div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+                        <div><span style="color:var(--text-muted);">میانگین نمره</span><br><strong id="avgScore">--</strong></div>
+                        <div><span style="color:var(--text-muted);">بهترین نمره</span><br><strong id="bestScore">--</strong></div>
+                        <div><span style="color:var(--text-muted);">ضعیف‌ترین</span><br><strong id="worstScore">--</strong></div>
+                        <div><span style="color:var(--text-muted);">پیشرفت</span><br><strong id="progressPercent">--</strong></div>
+                    </div>
+                </div>
+
+                <!-- نمودار -->
+                <div class="reward-card chart-container">
+                    <div class="card-title"><i class="bi bi-bar-chart"></i> نمرات اخیر</div>
+                    <div class="chart-bars" id="chartBars">
+                        <!-- توسط JS پر میشه -->
+                    </div>
+                </div>
+
+                <!-- تاریخچه -->
+                <div class="reward-card history-list">
+                    <div class="card-title"><i class="bi bi-clock-history"></i> تاریخچه آزمون‌ها</div>
+                    <div id="historyContainer">
+                        <!-- توسط JS پر میشه -->
+                    </div>
+                </div>
+
+                <!-- ===== دانش‌آموزان (فقط برای معلم) ===== -->
+                <div class="reward-card students-list" id="studentsSection" style="display:none;">
+                    <div class="card-title"><i class="bi bi-people"></i> دانش‌آموزان</div>
+                    <div id="studentsContainer">
+                        <!-- توسط JS پر میشه -->
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ===== اسکریپت‌ها ===== -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/notifications.js"></script>
+    <script src="js/modal.js"></script>
+    <script src="js/role-manager.js"></script>
+    <script src="js/rewards-system.js"></script>
+    <script src="js/theme-manager.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // ===== دریافت نقش از RoleManager =====
+            const userRole = RoleManager.getRole();
+            console.log('👤 نقش کاربر:', userRole);
+
+            // ===== تغییر لینک بازگشت =====
+            const backBtn = document.getElementById('backToDashboard');
+            if (backBtn) {
+                backBtn.href = userRole === 'teacher' ? 'teacher-dashboard.html' : 'student-dashboard.html';
+            }
+
+            // ===== نمایش نقش =====
+            const roleBadge = document.getElementById('userRoleBadge');
+            if (roleBadge) {
+                const roleText = userRole === 'teacher' ? '👨‍🏫 معلم' : '🎓 دانش‌آموز';
+                roleBadge.textContent = roleText;
+                roleBadge.className = userRole === 'teacher' ? 'role-badge teacher' : 'role-badge';
+            }
+
+            // ===== نمایش بخش دانش‌آموزان (فقط برای معلم) =====
+            if (userRole === 'teacher') {
+                document.getElementById('studentsSection').style.display = 'block';
+            }
+
+            // ===== مقداردهی سیستم جایزه =====
+            const userId = userRole === 'teacher' ? 'teacher_1' : 'student_1';
+            const rewards = initRewards(userId);
+            
+            if (!rewards) {
+                console.error('❌ سیستم جایزه بارگذاری نشده!');
+                return;
+            }
+
+            // ===== به‌روزرسانی UI =====
+            function updateDashboard() {
+                const data = rewards.data;
+                const reports = rewards.getReports();
+
+                // اطلاعات کاربر
+                document.getElementById('userName').textContent = data.userName || 'خورشید سوری';
+                document.getElementById('userTitle').textContent = data.title || '🌱 تازه‌کار';
+                document.getElementById('userLevel').textContent = `سطح ${data.level}`;
+                document.getElementById('totalPoints').textContent = data.totalPoints;
+                document.getElementById('badgesCount').textContent = data.badges.length;
+                document.getElementById('streakCount').textContent = data.dailyStreak || 0;
+                document.getElementById('examsCount').textContent = data.examHistory.length;
+
+                // نوار تجربه
+                document.getElementById('userXp').textContent = data.xp;
+                const xpToNext = rewards.getXpToNextLevel();
+                document.getElementById('xpToNext').textContent = xpToNext;
+
+                const totalXp = data.xp;
+                const nextLevelXp = rewards.levels.find(l => l.level > data.level)?.xpRequired || totalXp + 100;
+                const prevLevelXp = rewards.levels.find(l => l.level === data.level)?.xpRequired || 0;
+                const progress = nextLevelXp > prevLevelXp ? ((totalXp - prevLevelXp) / (nextLevelXp - prevLevelXp)) * 100 : 0;
+                document.getElementById('xpProgress').style.width = Math.min(progress, 100) + '%';
+
+                // بج‌ها
+                const unlocked = rewards.getUnlockedBadges();
+                const badgesContainer = document.getElementById('badgesContainer');
+                if (unlocked.length === 0) {
+                    badgesContainer.innerHTML = '<span style="color:var(--text-muted);font-size:14px;">هنوز بجی دریافت نکردی</span>';
+                } else {
+                    badgesContainer.innerHTML = unlocked.map(b => 
+                        `<span class="badge-item" title="${b.desc}">${b.icon} ${b.name}</span>`
+                    ).join('');
+                }
+
+                // آمار
+                document.getElementById('avgScore').textContent = reports.avgScore + '%' || '--';
+                document.getElementById('bestScore').textContent = reports.bestScore + '%' || '--';
+                document.getElementById('worstScore').textContent = reports.worstScore + '%' || '--';
+                document.getElementById('progressPercent').textContent = Math.round(reports.progress) + '%' || '--';
+
+                // نمودار
+                const chartBars = document.getElementById('chartBars');
+                const scores = reports.scores.slice(-7);
+                if (scores.length === 0) {
+                    chartBars.innerHTML = '<span style="color:var(--text-muted);font-size:14px;">هنوز داده‌ای برای نمایش وجود ندارد</span>';
+                } else {
+                    const maxScore = Math.max(...scores, 100);
+                    chartBars.innerHTML = scores.map((s, i) => `
+                        <div class="chart-bar" style="height: ${(s / maxScore) * 100}%; background: ${s >= 70 ? 'var(--success)' : s >= 50 ? 'var(--warning)' : 'var(--danger)'};">
+                            <span class="bar-label">${s}%</span>
+                        </div>
+                    `).join('');
+                }
+
+                // تاریخچه
+                const historyContainer = document.getElementById('historyContainer');
+                const recent = reports.recentExams || [];
+                if (recent.length === 0) {
+                    historyContainer.innerHTML = '<span style="color:var(--text-muted);font-size:14px;">هنوز آزمونی ثبت نشده</span>';
+                } else {
+                    historyContainer.innerHTML = recent.map(exam => `
+                        <div class="history-item">
+                            <span class="exam-name">${exam.examTitle || 'آزمون'}</span>
+                            <span class="exam-score ${exam.score >= 70 ? 'high' : exam.score >= 50 ? 'medium' : 'low'}">${exam.score}%</span>
+                        </div>
+                    `).join('');
+                }
+
+                // ===== دانش‌آموزان (برای معلم - داده‌های نمونه) =====
+                if (userRole === 'teacher') {
+                    const studentsContainer = document.getElementById('studentsContainer');
+                    // داده‌های نمونه برای دانش‌آموزان
+                    const sampleStudents = [
+                        { name: 'علی رضایی', totalPoints: 120, badges: 2, examHistory: [1, 2, 3] },
+                        { name: 'سارا احمدی', totalPoints: 85, badges: 1, examHistory: [1, 2] },
+                        { name: 'محمد کریمی', totalPoints: 200, badges: 3, examHistory: [1, 2, 3, 4] }
+                    ];
+                    
+                    studentsContainer.innerHTML = sampleStudents.map(s => `
+                        <div class="student-item">
+                            <span class="student-name">${s.name}</span>
+                            <div class="student-stats">
+                                <span>⭐ ${s.totalPoints}</span>
+                                <span>🏅 ${s.badges}</span>
+                                <span>📝 ${s.examHistory.length}</span>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+            }
+
+            updateDashboard();
+            console.log('📊 داشبورد گزارش‌گیری با موفقیت بارگذاری شد!');
+        });
+    </script>
+
+</body>
+
+</html>

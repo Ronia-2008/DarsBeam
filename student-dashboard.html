@@ -81,6 +81,10 @@
                 <i class="bi bi-grid-1x2"></i>
                 <span>داشبورد</span>
             </a>
+            <a href="chat.html">
+        <i class="bi bi-chat-dots"></i>
+        <span>پیام‌ها</span>
+    </a>
             <a href="#" onclick="showCourses()">
                 <i class="bi bi-book"></i>
                 <span>درس‌های من</span>
@@ -89,6 +93,10 @@
                 <i class="bi bi-file-earmark-text"></i>
                 <span>آزمون‌ها</span>
             </a>
+            <a href="rewards-dashboard.html" onclick="RoleManager.setRole('student')">
+    <i class="bi bi-trophy"></i>
+    <span>🏆 جوایز و گزارش</span>
+</a>
             <a href="#" onclick="showProgress()">
                 <i class="bi bi-trophy"></i>
                 <span>پیشرفت</span>
@@ -216,11 +224,78 @@
 
     <!-- ===== اسکریپت‌ها ===== -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/role-manager.js"></script>
     <script src="js/settings.js"></script>
     <script src="js/modal.js"></script>
     <script src="js/student-dashboard.js"></script>
     <script src="js/notifications.js"></script>
     <script src="js/theme-manager.js"></script>
+    <script>
+    // ============================================
+        // 1. تم دارک/لایت
+        // ============================================
+        function toggleDarkMode(isDark) {
+            if (isDark) {
+                document.body.classList.add('dark-theme');
+                localStorage.setItem('darsbeam-theme', 'dark');
+            } else {
+                document.body.classList.remove('dark-theme');
+                localStorage.setItem('darsbeam-theme', 'light');
+            }
+            // ===== ارسال رویداد به صفحات دیگه =====
+            window.dispatchEvent(new Event('storage'));
+        }
+
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('darsbeam-theme');
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-theme');
+            } else {
+                document.body.classList.remove('dark-theme');
+            }
+        }
+
+        // ============================================
+        // 2. تغییر رنگ اصلی
+        // ============================================
+        function changeThemeColor(color) {
+            document.documentElement.style.setProperty('--primary-color', color);
+            localStorage.setItem('darsbeam-color', color);
+            // ===== ارسال رویداد به صفحات دیگه =====
+            window.dispatchEvent(new Event('storage'));
+        }
+
+        function loadColor() {
+            const savedColor = localStorage.getItem('darsbeam-color');
+            if (savedColor) {
+                document.documentElement.style.setProperty('--primary-color', savedColor);
+            }
+        }
+
+        // ============================================
+        // 3. به‌روزرسانی خودکار هنگام تغییر در صفحه دیگه
+        // ============================================
+        function applySettings() {
+            loadTheme();
+            loadColor();
+            console.log('🔄 تنظیمات به‌روزرسانی شد!');
+        }
+
+        // گوش دادن به رویداد storage (وقتی صفحه دیگه تغییری میده)
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'darsbeam-theme' || e.key === 'darsbeam-color') {
+                applySettings();
+                console.log('📥 تغییرات از صفحه دیگه دریافت شد!');
+            }
+        });
+        // ============================================
+        // 6. بارگذاری اولیه
+        // ============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            applySettings();
+            console.log('🎨 تنظیمات اولیه بارگذاری شدند!');
+        });
+</script>
 
 </body>
 

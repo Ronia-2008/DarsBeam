@@ -1,51 +1,25 @@
 // ============================================
-// exam-detail.js
-// مدیریت صفحه‌ی شروع آزمون
+// exam-detail.js - نسخه ساده و مطمئن
 // ============================================
 
 document.addEventListener('DOMContentLoaded', function() {
     'use strict';
 
     // ============================================
-    // داده‌های نمونه (بعداً از API میاد)
+    // داده‌های نمونه
     // ============================================
     const examData = {
         id: 1,
         title: 'آزمون ریاضی فصل اول',
         subject: 'ریاضی',
         difficulty: 'متوسط',
-        timeLimit: 15, // دقیقه
+        timeLimit: 15,
         questions: [
-            {
-                id: 1,
-                text: 'حاصل عبارت ۵ × (۳ + ۲) چند است؟',
-                options: ['۱۰', '۱۵', '۲۰', '۲۵'],
-                correct: 3 // ایندکس پاسخ صحیح
-            },
-            {
-                id: 2,
-                text: 'مساحت یک مربع به ضلع ۴ سانتی‌متر چند است؟',
-                options: ['۸ سانتی‌متر مربع', '۱۲ سانتی‌متر مربع', '۱۶ سانتی‌متر مربع', '۲۰ سانتی‌متر مربع'],
-                correct: 2
-            },
-            {
-                id: 3,
-                text: 'کدام عدد بزرگ‌تر است؟',
-                options: ['۰.۵', '۰.۰۵', '۰.۵۵', '۰.۵۰۵'],
-                correct: 2
-            },
-            {
-                id: 4,
-                text: 'حاصل ۱۲ ÷ ۴ چند است؟',
-                options: ['۲', '۳', '۴', '۶'],
-                correct: 1
-            },
-            {
-                id: 5,
-                text: 'یک مستطیل به طول ۸ و عرض ۵، محیط آن چند است؟',
-                options: ['۱۳', '۲۶', '۴۰', '۲۰'],
-                correct: 1
-            }
+            { id: 1, text: '۵ × (۳ + ۲) چند است؟', options: ['۱۰', '۱۵', '۲۰', '۲۵'], correct: 3 },
+            { id: 2, text: 'مساحت مربع به ضلع ۴؟', options: ['۸', '۱۲', '۱۶', '۲۰'], correct: 2 },
+            { id: 3, text: 'کدام عدد بزرگ‌تر است؟', options: ['۰.۵', '۰.۰۵', '۰.۵۵', '۰.۵۰۵'], correct: 2 },
+            { id: 4, text: '۱۲ ÷ ۴ چند است؟', options: ['۲', '۳', '۴', '۶'], correct: 1 },
+            { id: 5, text: 'محیط مستطیل ۸ و ۵؟', options: ['۱۳', '۲۶', '۴۰', '۲۰'], correct: 1 }
         ]
     };
 
@@ -66,14 +40,14 @@ document.addEventListener('DOMContentLoaded', function() {
     let currentQuestion = 0;
     let answers = {};
     let timerInterval = null;
-    let timeLeft = examData.timeLimit * 60; // ثانیه
+    let timeLeft = examData.timeLimit * 60;
     let isSubmitted = false;
 
     // ============================================
-    // 1. مقداردهی اولیه
+    // 1. مقداردهی
     // ============================================
     function init() {
-        // تنظیم عنوان
+        // تنظیم عنوان و اطلاعات
         document.getElementById('examTitle').textContent = examData.title;
         document.getElementById('examSubject').textContent = '📚 ' + examData.subject;
         document.getElementById('examDifficulty').textContent = 'سطح: ' + examData.difficulty;
@@ -81,15 +55,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // رندر سوالات
         renderQuestions();
-
+        
         // نمایش سوال اول
         showQuestion(0);
-
+        
         // شروع تایمر
         startTimer();
-
+        
         // به‌روزرسانی آمار
         updateStats();
+
+        console.log('📝 صفحه آزمون مقداردهی شد!');
     }
 
     // ============================================
@@ -107,10 +83,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
             let optionsHTML = '';
             q.options.forEach((opt, optIndex) => {
-                const isChecked = answers[index] === optIndex;
                 optionsHTML += `
-                    <label class="option-item" data-option="${optIndex}">
-                        <input type="radio" name="question_${index}" value="${optIndex}" ${isChecked ? 'checked' : ''}>
+                    <label class="option-item">
+                        <input type="radio" name="question_${index}" value="${optIndex}">
                         <span class="option-letter">${letters[optIndex]})</span>
                         <span class="option-label">${opt}</span>
                     </label>
@@ -131,19 +106,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 input.addEventListener('change', function() {
                     const value = parseInt(this.value);
                     answers[index] = value;
-                    
-                    // نمایش پاسخ داده شده
                     div.classList.add('answered');
-                    
-                    // به‌روزرسانی آمار
                     updateStats();
                     updateProgress();
-                    
-                    // ذخیره در localStorage (برای ادامه بعداً)
-                    saveProgress();
                 });
             });
         });
+
+        console.log('✅ سوالات رندر شدند! تعداد:', examData.questions.length);
     }
 
     // ============================================
@@ -158,12 +128,15 @@ document.addEventListener('DOMContentLoaded', function() {
         currentQuestion = index;
         counter.textContent = `${index + 1} از ${examData.questions.length}`;
 
-        // وضعیت دکمه‌ها
         prevBtn.disabled = index === 0;
-        nextBtn.textContent = index === examData.questions.length - 1 ? 'پایان' : 'بعدی';
-        nextBtn.innerHTML = index === examData.questions.length - 1 ? 
-            'پایان <i class="bi bi-check-lg"></i>' : 
-            'بعدی <i class="bi bi-arrow-left"></i>';
+        
+        if (index === examData.questions.length - 1) {
+            nextBtn.textContent = 'پایان';
+            nextBtn.innerHTML = 'پایان <i class="bi bi-check-lg"></i>';
+        } else {
+            nextBtn.textContent = 'بعدی';
+            nextBtn.innerHTML = 'بعدی <i class="bi bi-arrow-left"></i>';
+        }
     }
 
     // ============================================
@@ -194,11 +167,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ============================================
-    // 5. آمار و پیشرفت
+    // 5. آمار
     // ============================================
     function updateStats() {
         const answered = Object.keys(answers).length;
         answeredEl.textContent = answered + ' پاسخ داده شده';
+        updateProgress();
     }
 
     function updateProgress() {
@@ -210,160 +184,110 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ============================================
-    // 6. ذخیره پیشرفت
+    // 6. ثبت آزمون
     // ============================================
-    function saveProgress() {
-        const progress = {
-            examId: examData.id,
-            answers: answers,
-            timeLeft: timeLeft,
-            currentQuestion: currentQuestion
-        };
-        localStorage.setItem(`exam_progress_${examData.id}`, JSON.stringify(progress));
-    }
+    async function submitExam(auto = false) {
+        if (isSubmitted) return;
 
-    function loadProgress() {
-        const saved = localStorage.getItem(`exam_progress_${examData.id}`);
-        if (saved) {
-            try {
-                const progress = JSON.parse(saved);
-                answers = progress.answers || {};
-                timeLeft = progress.timeLeft || timeLeft;
-                currentQuestion = progress.currentQuestion || 0;
-                
-                // به‌روزرسانی UI
-                updateStats();
-                updateProgress();
-                showQuestion(currentQuestion);
-                
-                // علامت‌گذاری سوالات پاسخ داده شده
-                const cards = container.querySelectorAll('.question-card');
-                cards.forEach((card, index) => {
-                    if (answers[index] !== undefined) {
-                        card.classList.add('answered');
-                    }
-                });
-            } catch (e) {
-                console.log('خطا در بارگذاری پیشرفت:', e);
+        const total = examData.questions.length;
+        const answered = Object.keys(answers).length;
+
+        if (!auto && answered < total) {
+            const confirm = await darsbeamConfirm({
+                title: '⚠️ هنوز کامل نکردی!',
+                text: `از ${total} سؤال، فقط ${answered} تا رو پاسخ دادی.`,
+                icon: 'exclamation-triangle',
+                confirmText: 'بله، ثبت کن',
+                cancelText: 'بازگشت',
+                type: 'warning'
+            });
+            if (!confirm) return;
+        }
+
+        if (auto) {
+            await darsbeamConfirm({
+                title: '⏰ زمان تمام شد!',
+                text: 'آزمون به صورت خودکار ثبت شد.',
+                icon: 'clock',
+                confirmText: 'باشه',
+                cancelText: '',
+                type: 'danger'
+            });
+        }
+
+        // محاسبه نمره
+        let correct = 0;
+        examData.questions.forEach((q, index) => {
+            if (answers[index] === q.correct) {
+                correct++;
             }
-        }
-    }
-
-    // ============================================
-    // 7. ثبت آزمون
-    // ============================================
-    // ===== توی exam-detail.js =====
-
-async function submitExam(auto = false) {
-    if (isSubmitted) return;
-
-    const total = examData.questions.length;
-    const answered = Object.keys(answers).length;
-
-    if (!auto && answered < total) {
-        const confirm = await darsbeamConfirm({
-            title: '⚠️ هنوز کامل نکردی!',
-            text: `از ${total} سؤال، فقط ${answered} تا رو پاسخ دادی. آیا مطمئنی می‌خوای ثبت کنی؟`,
-            icon: 'exclamation-triangle',
-            confirmText: 'بله، ثبت کن',
-            cancelText: 'بازگشت',
-            type: 'warning'
         });
-        if (!confirm) return;
+
+        const score = Math.round((correct / total) * 100);
+        const passed = score >= 60;
+
+        // ذخیره نتیجه
+        const examResult = {
+            examId: examData.id,
+            examTitle: examData.title,
+            score: score,
+            correct: correct,
+            total: total,
+            passed: passed,
+            date: new Date().toISOString()
+        };
+
+        const results = JSON.parse(localStorage.getItem('darsbeam_exam_results')) || [];
+        results.push(examResult);
+        localStorage.setItem('darsbeam_exam_results', JSON.stringify(results));
+
+        // ===== ثبت در سیستم جایزه =====
+        try {
+            if (typeof darsbeamRewards !== 'undefined' && darsbeamRewards) {
+                darsbeamRewards.logExam({
+                    examTitle: examData.title,
+                    score: score,
+                    totalQuestions: total,
+                    correctAnswers: correct
+                });
+                console.log('✅ ثبت در سیستم جایزه انجام شد!');
+            } else {
+                console.warn('⚠️ سیستم جایزه در دسترس نیست');
+            }
+        } catch (e) {
+            console.error('❌ خطا در ثبت جایزه:', e);
+        }
+
+        // نمایش نتیجه
+        showResult(correct, total, score, passed);
+        clearInterval(timerInterval);
+        isSubmitted = true;
     }
 
-    // ===== محاسبه نمره =====
-    let correct = 0;
-    examData.questions.forEach((q, index) => {
-        if (answers[index] === q.correct) {
-            correct++;
-        }
-    });
-
-    const score = Math.round((correct / total) * 100);
-    const passed = score >= 60;
-
-    // ===== ذخیره نمره در localStorage =====
-    const examResult = {
-        examId: examData.id,
-        examTitle: examData.title,
-        score: score,
-        correct: correct,
-        total: total,
-        passed: passed,
-        date: new Date().toISOString()
-    };
-
-    // ذخیره در localStorage
-    const results = JSON.parse(localStorage.getItem('darsbeam_exam_results')) || [];
-    results.push(examResult);
-    localStorage.setItem('darsbeam_exam_results', JSON.stringify(results));
-
-    // ===== نمایش نتیجه =====
-    showResult(correct, total, score, passed);
-    clearInterval(timerInterval);
-    isSubmitted = true;
-}
-
     // ============================================
-    // 8. نمایش نتیجه
+    // 7. نمایش نتیجه
     // ============================================
     function showResult(correct, total, score, passed) {
-        const container = document.querySelector('.exam-container');
-        
-        const resultHTML = `
-            <div class="result-container active" id="resultContainer">
-                <div class="result-icon ${passed ? 'pass' : 'fail'}">
-                    <i class="bi ${passed ? 'bi-trophy' : 'bi-emoji-frown'}"></i>
-                </div>
-                <h2 class="result-title">${passed ? '🎉 تبریک!' : '💪 تلاش خوبی بود!'}</h2>
-                <p class="result-subtitle">${passed ? 'آزمون رو با موفقیت قبول شدی!' : 'دفعه‌ی بعد حتماً بهتر میشه!'}</p>
-                
-                <div class="result-score">
-                    <span class="score-number">${score}</span>
-                    <span class="score-total">%</span>
-                </div>
-                
-                <div class="result-details">
-                    <div class="result-detail-item">
-                        <div class="label">پاسخ صحیح</div>
-                        <div class="value correct">${correct}</div>
-                    </div>
-                    <div class="result-detail-item">
-                        <div class="label">پاسخ غلط</div>
-                        <div class="value wrong">${total - correct}</div>
-                    </div>
-                    <div class="result-detail-item">
-                        <div class="label">تعداد سوالات</div>
-                        <div class="value">${total}</div>
-                    </div>
-                </div>
-                
-                <div class="result-actions">
-                    <button class="btn-retry" onclick="location.reload()">
-                        <i class="bi bi-arrow-counterclockwise"></i>
-                        تلاش مجدد
-                    </button>
-                    <a href="student-dashboard.html" class="btn-back">
-                        <i class="bi bi-house"></i>
-                        بازگشت به داشبورد
-                    </a>
-                </div>
-            </div>
-        `;
+        document.getElementById('resultIcon').textContent = passed ? '🏆' : '💪';
+        document.getElementById('resultTitle').textContent = passed ? '🎉 تبریک!' : '💪 تلاش خوبی بود!';
+        document.getElementById('resultSubtitle').textContent = passed ? 'آزمون رو قبول شدی!' : 'دفعه بعد بهتر میشه!';
+        document.getElementById('resultScore').textContent = score + '%';
+        document.getElementById('resultCorrect').textContent = correct;
+        document.getElementById('resultWrong').textContent = total - correct;
 
-        // مخفی کردن سوالات و نمایش نتیجه
+        // مخفی کردن سوالات
         document.querySelector('.questions-container').style.display = 'none';
         document.querySelector('.exam-info-bar').style.display = 'none';
         document.querySelector('.exam-progress-bar').style.display = 'none';
         document.querySelector('.exam-actions').style.display = 'none';
-        
-        // اضافه کردن نتیجه
-        container.insertAdjacentHTML('beforeend', resultHTML);
+        document.querySelector('.exam-timer').style.display = 'none';
+
+        // نمایش نتیجه
+        document.getElementById('resultContainer').classList.add('active');
     }
 
     // ============================================
-    // 9. رویدادها
+    // 8. رویدادها
     // ============================================
     prevBtn.addEventListener('click', function() {
         if (currentQuestion > 0) {
@@ -384,14 +308,9 @@ async function submitExam(auto = false) {
     });
 
     // ============================================
-    // 10. اجرا
+    // 9. اجرا
     // ============================================
     init();
 
-    // بارگذاری پیشرفت قبلی (اگه وجود داشته باشه)
-    setTimeout(() => {
-        loadProgress();
-    }, 100);
-
-    console.log('📝 صفحه‌ی آزمون با موفقیت بارگذاری شد!');
+    console.log('📝 صفحه آزمون با موفقیت بارگذاری شد!');
 });

@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پیام‌ها | درس‌بیم</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- ===== CSS ===== -->
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/notifications.css">
+    <link rel="stylesheet" href="css/modal.css">
+    <link rel="stylesheet" href="css/chat.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        /* ===== دکمه تنظیمات ===== */
+        .settings-fab {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            z-index: 1000;
+        }
+        .settings-fab button {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 16px rgba(37, 99, 235, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .settings-fab button:hover {
+            transform: rotate(60deg) scale(1.05);
+            box-shadow: 0 6px 24px rgba(37, 99, 235, 0.4);
+        }
+        body.dark-theme .settings-fab button {
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+        }
+        @media (max-width: 576px) {
+            .settings-fab {
+                bottom: 16px;
+                left: 16px;
+            }
+            .settings-fab button {
+                width: 48px;
+                height: 48px;
+                font-size: 20px;
+            }
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        .back-btn:hover {
+            background: var(--bg-card-hover);
+            color: var(--text-primary);
+        }
+
+        /* ===== ایموجی بار بخش‌بندی‌شده ===== */
+        .emoji-picker {
+            display: none;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            position: absolute;
+            bottom: 65px;
+            right: 10px;
+            width: 300px;
+            max-height: 320px;
+            z-index: 100;
+            padding: 12px;
+            overflow: hidden;
+        }
+
+        .emoji-picker .emoji-search-box {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--bg-input);
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            padding: 0 12px;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .emoji-picker .emoji-search-box:focus-within {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.08);
+        }
+
+        .emoji-picker .emoji-search-box i {
+            color: var(--text-muted);
+            font-size: 16px;
+        }
+
+        .emoji-picker .emoji-search-box input {
+            border: none;
+            background: transparent;
+            padding: 10px 0;
+            width: 100%;
+            color: var(--text-primary);
+            outline: none;
+            font-size: 14px;
+        }
+
+        .emoji-picker .emoji-search-box input::placeholder {
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+
+        .emoji-picker .emoji-tabs {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 10px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+        }
+
+        .emoji-picker .emoji-tabs::-webkit-scrollbar {
+            height: 3px;
+        }
+        .emoji-picker .emoji-tabs::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 10px;
+        }
+
+        .emoji-picker .emoji-tab {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-secondary);
+            background: transparent;
+            border: 1px solid transparent;
+            white-space: nowrap;
+        }
+
+        .emoji-picker .emoji-tab:hover {
+            background: var(--bg-card-hover);
+        }
+
+        .emoji-picker .emoji-tab.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .emoji-picker .emoji-grid-container {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .emoji-picker .emoji-grid-container::-webkit-scrollbar {
+            width: 4px;
+        }
+        .emoji-picker .emoji-grid-container::-webkit-scrollbar-track {
+            background: var(--bg-body);
+            border-radius: 10px;
+        }
+        .emoji-picker .emoji-grid-container::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 10px;
+        }
+
+        .emoji-picker .emoji-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 3px;
+        }
+
+        .emoji-picker .emoji-grid .emoji-item {
+            font-size: 22px;
+            padding: 6px 4px;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .emoji-picker .emoji-grid .emoji-item:hover {
+            background: var(--bg-card-hover);
+            transform: scale(1.15);
+        }
+
+        .emoji-picker .emoji-grid .emoji-item.hidden {
+            display: none;
+        }
+
+        .emoji-picker .emoji-section-title {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-muted);
+            padding: 6px 4px 4px;
+            border-bottom: 1px solid var(--border-light);
+            margin-bottom: 4px;
+        }
+
+        /* ===== منوی context ===== */
+        .context-menu {
+            display: none;
+            position: fixed;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            padding: 6px 0;
+            min-width: 160px;
+            z-index: 10000;
+        }
+
+        .context-menu .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: var(--text-primary);
+            font-size: 14px;
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: right;
+        }
+
+        .context-menu .menu-item:hover {
+            background: var(--bg-card-hover);
+        }
+
+        .context-menu .menu-item i {
+            width: 18px;
+            color: var(--text-muted);
+        }
+
+        .context-menu .menu-item.danger {
+            color: #ef4444;
+        }
+        .context-menu .menu-item.danger i {
+            color: #ef4444;
+        }
+
+        /* ===== حالت ویرایش ===== */
+        .input-box.editing-mode {
+            border-color: #10b981 !important;
+            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15) !important;
+        }
+
+        .chat-message .message-text {
+            word-wrap: break-word;
+            user-select: text;
+        }
+
+        /* ===== ریسپانسیو ===== */
+        @media (max-width: 480px) {
+            .emoji-picker {
+                width: 240px;
+                max-height: 260px;
+                bottom: 55px;
+                right: 5px;
+                padding: 8px;
+            }
+            .emoji-picker .emoji-grid {
+                grid-template-columns: repeat(6, 1fr);
+            }
+            .emoji-picker .emoji-grid .emoji-item {
+                font-size: 18px;
+                padding: 4px 2px;
+            }
+            .emoji-picker .emoji-tab {
+                font-size: 11px;
+                padding: 3px 8px;
+            }
+            .emoji-picker .emoji-search-box input {
+                font-size: 13px;
+                padding: 8px 0;
+            }
+            .context-menu {
+                min-width: 130px;
+            }
+            .context-menu .menu-item {
+                font-size: 13px;
+                padding: 6px 12px;
+            }
+        }
+
+        body.dark-theme .emoji-picker {
+            background: #1e293b;
+            border-color: #334155;
+        }
+        body.dark-theme .emoji-picker .emoji-search-box {
+            background: #0f172a;
+            border-color: #334155;
+        }
+        body.dark-theme .emoji-picker .emoji-search-box input {
+            color: #f1f5f9;
+        }
+        body.dark-theme .emoji-picker .emoji-search-box input::placeholder {
+            color: #64748b;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ===== دکمه چرخ‌دنده ===== -->
+    <div class="settings-fab">
+        <button onclick="window.location.href='settings-page.html'">
+            <i class="bi bi-gear-fill"></i>
+        </button>
+    </div>
+
+    <!-- ===== منوی context ===== -->
+    <div class="context-menu" id="contextMenu">
+        <button class="menu-item" onclick="copyMessage()">
+            <i class="bi bi-copy"></i> کپی پیام
+        </button>
+        <button class="menu-item" onclick="startEditing()">
+            <i class="bi bi-pencil"></i> ویرایش
+        </button>
+        <button class="menu-item danger" onclick="deleteMessage()">
+            <i class="bi bi-trash"></i> حذف
+        </button>
+    </div>
+
+    <!-- ===========================
+            صفحه‌ی چت
+    =========================== -->
+    <main class="chat-page">
+        <div class="chat-container">
+
+            <!-- ===== سایدبار ===== -->
+            <div class="chat-sidebar">
+                <div class="chat-sidebar-header">
+                    <h2>💬 پیام‌ها</h2>
+                    <span class="chat-count" id="chatCount">۳</span>
+                </div>
+                <div class="chat-search">
+                    <div class="input-box">
+                        <i class="bi bi-search"></i>
+                        <input type="text" id="chatSearch" placeholder="جستجوی مخاطب...">
+                    </div>
+                </div>
+                <div class="chat-contact-list">
+                    <!-- توسط JS پر میشه -->
+                </div>
+            </div>
+
+            <!-- ===== بخش پیام‌ها ===== -->
+            <div class="chat-messages-area">
+
+                <!-- ===== هدر ===== -->
+                <div class="chat-messages-header">
+                    <div class="chat-avatar" id="chatAvatar">م</div>
+                    <div>
+                        <div class="chat-with" id="chatWithName">خانم محمدی</div>
+                        <div class="chat-status" id="chatStatus">🟢 آنلاین</div>
+                    </div>
+                    <a href="#" onclick="history.back()" class="back-btn" style="margin-right: auto;">
+                        <i class="bi bi-arrow-right"></i>
+                        بازگشت
+                    </a>
+                </div>
+
+                <!-- ===== لیست پیام‌ها ===== -->
+                <div class="chat-messages-list" id="chatMessagesList">
+                    <!-- توسط JS پر میشه -->
+                </div>
+
+                <!-- ===== ورودی ===== -->
+                <div class="chat-input-area">
+                    <div style="position: relative; flex: 1; display: flex; align-items: center;">
+                        <div class="input-box" id="inputBox">
+                            <button type="button" id="emojiBtn" style="background: none; border: none; color: var(--text-muted); font-size: 20px; cursor: pointer; padding: 0 8px; transition: all 0.3s ease;">
+                                <i class="bi bi-emoji-smile"></i>
+                            </button>
+                            <input type="text" id="chatMessageInput" placeholder="پیام خود را بنویسید...">
+                        </div>
+                        <!-- ===== ایموجی بار بخش‌بندی‌شده ===== -->
+                        <div class="emoji-picker" id="emojiPicker">
+                            <div class="emoji-search-box">
+                                <i class="bi bi-search"></i>
+                                <input type="text" id="emojiSearchInput" placeholder="جستجوی ایموجی...">
+                            </div>
+                            <div class="emoji-tabs" id="emojiTabs">
+                                <span class="emoji-tab active" data-tab="recent">🕐 اخیراً</span>
+                                <span class="emoji-tab" data-tab="face">😊 صورت‌ها</span>
+                                <span class="emoji-tab" data-tab="food">🍕 خوراکی‌ها</span>
+                                <span class="emoji-tab" data-tab="animal">🐱 حیوانات</span>
+                                <span class="emoji-tab" data-tab="object">📱 اشیاء</span>
+                            </div>
+                            <div class="emoji-grid-container" id="emojiGridContainer">
+                                <!-- توسط JS پر میشه -->
+                            </div>
+                        </div>
+                    </div>
+                    <button class="chat-send-btn" id="chatSendBtn">
+                        <i class="bi bi-send"></i>
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+    </main>
+
+    <!-- ===== اسکریپت‌ها ===== -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/notifications.js"></script>
+    <script src="js/modal.js"></script>
+    <script src="js/theme-manager.js"></script>
+    <script src="js/chat.js"></script>
+
+    <script>
+        // ============================================
+        // لیست ایموجی‌های بخش‌بندی‌شده
+        // ============================================
+        const emojiCategories = {
+            recent: [], // بعداً پر میشه
+            face: ['😊', '😂', '❤️', '🔥', '👍', '👏', '🎉', '💪', '🤔', '😍', '🥰', '😘', '😅', '🤣', '💯', '✨',
+                '🌟', '⭐', '🙏', '🤗', '😎', '🥳', '😏', '😒', '😢', '😭', '😤', '😡', '🤬', '🥺', '😇', '🤩',
+                '😴', '🥱', '😬', '🤪', '😜', '😝', '🤓', '🧐', '👀', '🫣', '🤭', '🫢', '🫡', '🤠', '👻', '👽',
+                '🤖', '👾', '💀', '☠️', '👋', '🤚', '🖐️', '✌️', '🤞', '🤟', '🤘', '👌', '💪', '🦾', '🦿', '🦵',
+                '🦶', '👂', '🦻', '👃', '🧠', '🫀', '🫁', '🦷', '🦴', '👁️', '👄', '🫦', '👅', '💋', '🩸', '💧'
+            ],
+            food: ['🍎', '🍐', '🍊', '🍋', '🍌', '🍉', '🍇', '🍓', '🫐', '🍈', '🍒', '🍑', '🥭', '🍍', '🥥', '🥝',
+                '🍅', '🍆', '🥑', '🫑', '🌽', '🥕', '🫒', '🥦', '🍄', '🥜', '🌰', '🍞', '🥐', '🥖', '🫓', '🥨',
+                '🧀', '🥚', '🍳', '🧈', '🥞', '🧇', '🥓', '🥩', '🍔', '🍟', '🍕', '🌭', '🥪', '🌮', '🌯', '🫔',
+                '🥙', '🧆', '🥚', '🍳', '🥘', '🍲', '🫕', '🥣', '🥗', '🍿', '🧈', '🧂', '🥤', '🧃', '🧉', '🧊'
+            ],
+            animal: ['🐶', '🐱', '🐭', '🐹', '🐰', '🦊', '🐻', '🐼', '🐨', '🐯', '🦁', '🐮', '🐷', '🐸', '🐵', '🐔',
+                '🐧', '🐦', '🐤', '🐣', '🦇', '🦉', '🦅', '🦆', '🦢', '🦩', '🦚', '🦜', '🐴', '🦄', '🐝', '🐞',
+                '🦋', '🐙', '🦑', '🐬', '🐳', '🐋', '🦈', '🐊', '🐅', '🐆', '🦓', '🦍', '🦧', '🐘', '🦛', '🦏',
+                '🐪', '🐫', '🦒', '🐃', '🐂', '🐄', '🐎', '🐖', '🐏', '🐑', '🐐', '🦌', '🐕', '🐩', '🦮', '🐕‍🦺'
+            ],
+            object: ['📱', '💻', '⌨️', '🖥️', '🖨️', '☎️', '📞', '📱', '⏰', '⌚', '📡', '🔋', '🪫', '💡', '🔦', '🕯️',
+                '🧯', '🪣', '🧹', '🧺', '🪒', '🧴', '🧷', '🧸', '🎈', '🎉', '🎊', '🎁', '🎀', '🎄', '🎃', '🎆',
+                '🎇', '🧨', '✨', '🎋', '🎍', '🎎', '🎐', '🎏', '🎗️', '🎟️', '🎫', '🎖️', '🏆', '🏅', '🥇', '🥈',
+                '🥉', '⚽', '🏀', '🏈', '⚾', '🥎', '🎾', '🏐', '🏉', '🥏', '🎱', '🪀', '🏓', '🏸', '🏒', '🏑'
+            ]
+        };
+
+        // ============================================
+        // بارگذاری ایموجی‌های اخیراً استفاده شده
+        // ============================================
+        function loadRecentEmojis() {
+            const recent = JSON.parse(localStorage.getItem('darsbeam_recent_emojis') || '[]');
+            emojiCategories.recent = recent.slice(0, 20);
+        }
+
+        function saveRecentEmoji(emoji) {
+            let recent = JSON.parse(localStorage.getItem('darsbeam_recent_emojis') || '[]');
+            recent = recent.filter(e => e !== emoji);
+            recent.unshift(emoji);
+            if (recent.length > 30) recent = recent.slice(0, 30);
+            localStorage.setItem('darsbeam_recent_emojis', JSON.stringify(recent));
+            emojiCategories.recent = recent;
+        }
+
+        // ============================================
+        // رندر ایموجی‌ها با بخش‌بندی
+        // ============================================
+        let currentTab = 'recent';
+
+        function renderEmojis(tab = 'recent') {
+            const container = document.getElementById('emojiGridContainer');
+            if (!container) return;
+
+            currentTab = tab;
+            const emojis = emojiCategories[tab] || [];
+
+            // به‌روزرسانی تب‌ها
+            document.querySelectorAll('.emoji-tab').forEach(t => {
+                t.classList.toggle('active', t.dataset.tab === tab);
+            });
+
+            if (emojis.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align:center;padding:30px 0;color:var(--text-muted);font-size:14px;">
+                        <i class="bi bi-emoji-neutral" style="font-size:32px;display:block;margin-bottom:8px;"></i>
+                        ایموجی‌ای در این بخش وجود ندارد
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '';
+            
+            // برای تب recent، عنوان خاصی نداریم
+            if (tab === 'recent') {
+                html += `<div class="emoji-grid" id="emojiGrid">`;
+                html += emojis.map(e => 
+                    `<span class="emoji-item" data-emoji="${e}" onclick="insertEmoji('${e}')">${e}</span>`
+                ).join('');
+                html += `</div>`;
+            } else {
+                html += `<div class="emoji-grid" id="emojiGrid">`;
+                html += emojis.map(e => 
+                    `<span class="emoji-item" data-emoji="${e}" onclick="insertEmoji('${e}')">${e}</span>`
+                ).join('');
+                html += `</div>`;
+            }
+
+            container.innerHTML = html;
+        }
+
+        // ============================================
+        // جستجوی ایموجی
+        // ============================================
+        function searchEmojis(query) {
+            const container = document.getElementById('emojiGridContainer');
+            if (!container) return;
+
+            const allEmojis = [...emojiCategories.face, ...emojiCategories.food, ...emojiCategories.animal, ...emojiCategories.object];
+            const filtered = allEmojis.filter(e => e.includes(query) || getEmojiName(e).includes(query));
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align:center;padding:30px 0;color:var(--text-muted);font-size:14px;">
+                        <i class="bi bi-emoji-neutral" style="font-size:32px;display:block;margin-bottom:8px;"></i>
+                        ایموجی‌ای پیدا نشد
+                    </div>
+                `;
+                return;
+            }
+
+            let html = `<div class="emoji-grid" id="emojiGrid">`;
+            html += filtered.map(e => 
+                `<span class="emoji-item" data-emoji="${e}" onclick="insertEmoji('${e}')">${e}</span>`
+            ).join('');
+            html += `</div>`;
+            container.innerHTML = html;
+        }
+
+        // ============================================
+        // تابع کمکی برای گرفتن اسم ایموجی
+        // ============================================
+        function getEmojiName(emoji) {
+            const names = {
+                '😊': 'smile happy', '😂': 'laugh cry', '❤️': 'heart love', '🔥': 'fire hot',
+                '👍': 'thumbs up', '👏': 'clap', '🎉': 'party celebration', '💪': 'strong muscle',
+                '🤔': 'thinking', '😍': 'love heart eyes', '🥰': 'cute love', '😘': 'kiss',
+                '😅': 'sweat smile', '🤣': 'laugh rolling', '💯': 'hundred perfect', '✨': 'sparkle shiny',
+                '🍕': 'pizza', '🍔': 'burger', '🍟': 'fries', '🌭': 'hotdog',
+                '🐱': 'cat', '🐶': 'dog', '🐰': 'rabbit', '🦊': 'fox',
+                '📱': 'phone mobile', '💻': 'laptop computer', '⌨️': 'keyboard', '🖥️': 'desktop'
+            };
+            return names[emoji] || '';
+        }
+
+        // ============================================
+        // تابع insertEmoji (رفع شده با ذخیره اخیراً)
+        // ============================================
+        window.insertEmoji = function(emoji) {
+            const input = document.getElementById('chatMessageInput');
+            if (!input) return;
+
+            // ذخیره در اخیراً استفاده شده
+            saveRecentEmoji(emoji);
+            
+            const cursorPos = input.selectionStart;
+            const text = input.value;
+            input.value = text.slice(0, cursorPos) + emoji + text.slice(cursorPos);
+            input.focus();
+            const newPos = cursorPos + emoji.length;
+            input.setSelectionRange(newPos, newPos);
+            
+            const sendBtn = document.getElementById('chatSendBtn');
+            if (sendBtn && input.value.trim()) {
+                sendBtn.disabled = false;
+                sendBtn.style.opacity = '1';
+            }
+            
+            document.getElementById('emojiPicker').style.display = 'none';
+        };
+
+        // ============================================
+        // رویدادها
+        // ============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            loadRecentEmojis();
+            renderEmojis('recent');
+
+            // ===== تب‌ها =====
+            document.querySelectorAll('.emoji-tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const tabName = this.dataset.tab;
+                    // اگر تب recent است، دوباره بارگذاری کن
+                    if (tabName === 'recent') {
+                        loadRecentEmojis();
+                    }
+                    renderEmojis(tabName);
+                    document.getElementById('emojiSearchInput').value = '';
+                });
+            });
+
+            // ===== جستجو =====
+            const searchInput = document.getElementById('emojiSearchInput');
+            if (searchInput) {
+                searchInput.addEventListener('input', function() {
+                    const query = this.value.trim().toLowerCase();
+                    if (query) {
+                        searchEmojis(query);
+                    } else {
+                        loadRecentEmojis();
+                        renderEmojis(currentTab);
+                    }
+                });
+            }
+
+            // ===== باز/بسته کردن ایموجی بار =====
+            const emojiBtn = document.getElementById('emojiBtn');
+            const emojiPicker = document.getElementById('emojiPicker');
+            
+            if (emojiBtn && emojiPicker) {
+                emojiBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const isOpen = emojiPicker.style.display === 'block';
+                    emojiPicker.style.display = isOpen ? 'none' : 'block';
+                    if (!isOpen) {
+                        // بارگذاری مجدد اخیراً
+                        loadRecentEmojis();
+                        renderEmojis('recent');
+                        document.getElementById('emojiSearchInput').value = '';
+                    }
+                });
+            }
+
+            // بستن با کلیک خارج
+            document.addEventListener('click', function(e) {
+                if (emojiPicker && emojiPicker.style.display === 'block') {
+                    if (!emojiPicker.contains(e.target) && e.target !== emojiBtn) {
+                        emojiPicker.style.display = 'none';
+                    }
+                }
+            });
+        });
+
+        // ============================================
+        // 1. تم دارک/لایت
+        // ============================================
+        function toggleDarkMode(isDark) {
+            if (isDark) {
+                document.body.classList.add('dark-theme');
+                localStorage.setItem('darsbeam-theme', 'dark');
+            } else {
+                document.body.classList.remove('dark-theme');
+                localStorage.setItem('darsbeam-theme', 'light');
+            }
+            // ===== ارسال رویداد به صفحات دیگه =====
+            window.dispatchEvent(new Event('storage'));
+        }
+
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('darsbeam-theme');
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-theme');
+            } else {
+                document.body.classList.remove('dark-theme');
+            }
+        }
+
+        // ============================================
+        // 2. تغییر رنگ اصلی
+        // ============================================
+        function changeThemeColor(color) {
+            document.documentElement.style.setProperty('--primary-color', color);
+            localStorage.setItem('darsbeam-color', color);
+            // ===== ارسال رویداد به صفحات دیگه =====
+            window.dispatchEvent(new Event('storage'));
+        }
+
+        function loadColor() {
+            const savedColor = localStorage.getItem('darsbeam-color');
+            if (savedColor) {
+                document.documentElement.style.setProperty('--primary-color', savedColor);
+            }
+        }
+
+        // ============================================
+        // 3. به‌روزرسانی خودکار هنگام تغییر در صفحه دیگه
+        // ============================================
+        function applySettings() {
+            loadTheme();
+            loadColor();
+            console.log('🔄 تنظیمات به‌روزرسانی شد!');
+        }
+
+        // گوش دادن به رویداد storage (وقتی صفحه دیگه تغییری میده)
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'darsbeam-theme' || e.key === 'darsbeam-color') {
+                applySettings();
+                console.log('📥 تغییرات از صفحه دیگه دریافت شد!');
+            }
+        });
+        // ============================================
+        // 6. بارگذاری اولیه
+        // ============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            applySettings();
+            console.log('🎨 تنظیمات اولیه بارگذاری شدند!');
+        });
+    </script>
+
+</body>
+
+</html>

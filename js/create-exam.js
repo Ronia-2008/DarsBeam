@@ -1,14 +1,13 @@
 // ============================================
 // create-exam.js
-// مدیریت کامل ساخت آزمون (اطلاعات، سوالات، بررسی)
-// با مودال اختصاصی درس‌بیم
+// مدیریت ساخت آزمون
 // ============================================
 
 document.addEventListener('DOMContentLoaded', function() {
     'use strict';
 
     // ============================================
-    // 1. المان‌ها
+    // المان‌ها
     // ============================================
     const sections = {
         info: document.getElementById('examInfoSection'),
@@ -29,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const reviewQuestionsContainer = document.getElementById('reviewQuestions');
 
     // ============================================
-    // 2. داده‌های آزمون (آبجکت اصلی)
+    // داده‌های آزمون
     // ============================================
     const examData = {
         title: '',
@@ -44,10 +43,8 @@ document.addEventListener('DOMContentLoaded', function() {
     let questionCounter = 0;
 
     // ============================================
-    // 3. توابع کمکی (UI)
+    // توابع کمکی
     // ============================================
-
-    // نمایش/مخفی کردن بخش‌ها
     function showSection(sectionId) {
         Object.keys(sections).forEach(key => {
             sections[key].classList.remove('active');
@@ -58,7 +55,6 @@ document.addEventListener('DOMContentLoaded', function() {
         updateProgress(sectionId);
     }
 
-    // به‌روزرسانی مرحله‌بندی
     function updateProgress(sectionId) {
         const steps = document.querySelectorAll('.progress-step');
         const lines = document.querySelectorAll('.progress-line');
@@ -76,10 +72,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ============================================
-    // 4. مدیریت سؤال‌ها
+    // مدیریت سؤال‌ها
     // ============================================
-
-    // ساختن المان یک سؤال
     function createQuestionHTML(index) {
         return `
             <div class="question-card" data-index="${index}">
@@ -89,13 +83,11 @@ document.addEventListener('DOMContentLoaded', function() {
                         <i class="bi bi-trash"></i>
                     </button>
                 </div>
-
                 <div class="question-body">
                     <div class="form-group full-width">
                         <label>متن سؤال</label>
                         <textarea class="question-text" rows="2" placeholder="متن سؤال را وارد کنید..."></textarea>
                     </div>
-
                     <div class="form-group full-width">
                         <label>نوع سؤال</label>
                         <div class="input-box">
@@ -107,7 +99,6 @@ document.addEventListener('DOMContentLoaded', function() {
                             </select>
                         </div>
                     </div>
-
                     <div class="options-container">
                         <div class="form-group">
                             <label>گزینه ۱</label>
@@ -138,7 +129,6 @@ document.addEventListener('DOMContentLoaded', function() {
                             </div>
                         </div>
                     </div>
-
                     <div class="form-group full-width">
                         <label>پاسخ صحیح</label>
                         <div class="input-box">
@@ -156,7 +146,6 @@ document.addEventListener('DOMContentLoaded', function() {
         `;
     }
 
-    // اضافه کردن سؤال جدید
     function addQuestion() {
         const index = questionCounter;
         const html = createQuestionHTML(index);
@@ -164,7 +153,6 @@ document.addEventListener('DOMContentLoaded', function() {
         tempDiv.innerHTML = html;
         const questionElement = tempDiv.firstElementChild;
 
-        // رویداد حذف
         const removeBtn = questionElement.querySelector('.remove-question-btn');
         removeBtn.addEventListener('click', function() {
             if (document.querySelectorAll('.question-card').length <= 1) {
@@ -175,7 +163,6 @@ document.addEventListener('DOMContentLoaded', function() {
             renumberQuestions();
         });
 
-        // رویداد تغییر نوع سؤال (نمایش/مخفی کردن گزینه‌ها)
         const typeSelect = questionElement.querySelector('.question-type');
         const optionsContainer = questionElement.querySelector('.options-container');
         const correctAnswer = questionElement.querySelector('.correct-answer').closest('.form-group');
@@ -190,7 +177,6 @@ document.addEventListener('DOMContentLoaded', function() {
         questionCounter++;
     }
 
-    // شماره‌گذاری مجدد سؤال‌ها
     function renumberQuestions() {
         const cards = document.querySelectorAll('.question-card');
         cards.forEach((card, index) => {
@@ -200,7 +186,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // جمع‌آوری داده‌های سؤال‌ها
     function collectQuestions() {
         const cards = document.querySelectorAll('.question-card');
         const questions = [];
@@ -223,7 +208,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 correctAnswer: parseInt(correct.value)
             };
 
-            // برای تستی، بررسی پر بودن گزینه‌ها
             if (type === 'multiple') {
                 const emptyOptions = questionData.options.some(opt => opt === '');
                 if (emptyOptions) {
@@ -239,9 +223,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ============================================
-    // 5. جمع‌آوری اطلاعات از فرم
+    // اطلاعات فرم
     // ============================================
-
     function collectExamInfo() {
         const title = document.getElementById('examTitle').value.trim();
         const subject = document.getElementById('examSubject').value;
@@ -259,11 +242,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ============================================
-    // 6. نمایش در بخش بررسی
+    // بررسی
     // ============================================
-
     function populateReview() {
-        // اطلاعات
         document.getElementById('reviewTitle').textContent = examData.title;
         document.getElementById('reviewSubject').textContent = examData.subject;
         document.getElementById('reviewGrade').textContent = examData.grade;
@@ -271,7 +252,6 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('reviewDifficulty').textContent = examData.difficulty;
         document.getElementById('reviewQuestionCount').textContent = examData.questions.length;
 
-        // سؤال‌ها
         reviewQuestionsContainer.innerHTML = '';
         examData.questions.forEach((q, index) => {
             const div = document.createElement('div');
@@ -306,9 +286,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ============================================
-    // 7. نمایش پیام‌ها با مودال
+    // پیام‌ها
     // ============================================
-
     async function showError(message) {
         await darsbeamConfirm({
             title: '❌ خطا',
@@ -331,28 +310,14 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    async function showInfo(message, title = 'ℹ️ اطلاعات') {
-        await darsbeamConfirm({
-            title: title,
-            text: message,
-            icon: 'info-circle',
-            confirmText: 'باشه',
-            cancelText: '',
-            type: 'info'
-        });
-    }
-
     // ============================================
-    // 8. ذخیره‌سازی
+    // ذخیره‌سازی آزمون (با اتصال به سیستم جایزه)
     // ============================================
-
     async function saveExam() {
         try {
-            // جمع‌آوری سؤال‌ها
             const questions = collectQuestions();
             examData.questions = questions;
 
-            // ذخیره در LocalStorage
             const exams = JSON.parse(localStorage.getItem('darsbeam_exams')) || [];
             const newExam = {
                 id: Date.now(),
@@ -363,37 +328,59 @@ document.addEventListener('DOMContentLoaded', function() {
             exams.push(newExam);
             localStorage.setItem('darsbeam_exams', JSON.stringify(exams));
 
+            // ============================================
+            // ===== ثبت در سیستم جایزه برای معلم =====
+            // ============================================
+            try {
+                const userRole = localStorage.getItem('user_role') || 'teacher';
+                const userId = userRole === 'teacher' ? 'teacher_1' : 'student_1';
+                
+                if (typeof darsbeamRewards === 'undefined' || !darsbeamRewards) {
+                    if (typeof initRewards === 'function') {
+                        darsbeamRewards = initRewards(userId);
+                    }
+                }
+
+                if (darsbeamRewards) {
+                    console.log('🎖️ ثبت ساخت آزمون در سیستم جایزه...');
+                    // ثبت ساخت آزمون در سیستم جایزه
+                    if (typeof darsbeamRewards.logExamCreated === 'function') {
+                        darsbeamRewards.logExamCreated();
+                    } else {
+                        // اگر تابع خاصی نداره، امتیاز مستقیم بده
+                        darsbeamRewards.addPoints(15, 'ساخت آزمون جدید');
+                    }
+                    notifySuccess('🎖️ امتیاز ساخت آزمون!', '+۱۵ امتیاز برای ساخت آزمون جدید');
+                }
+            } catch (rewardError) {
+                console.warn('⚠️ خطا در ثبت در سیستم جایزه:', rewardError);
+            }
+
             await showSuccess(`"${examData.title}" با موفقیت ذخیره شد.`, '✅ آزمون ذخیره شد!');
             window.location.href = 'teacher-dashboard.html';
         } catch (error) {
-            // خطاها قبلاً در collectQuestions مدیریت شده
             console.error('خطا در ذخیره‌سازی:', error);
         }
     }
 
     // ============================================
-    // 9. رویدادها (Event Listeners)
+    // رویدادها
     // ============================================
-
-    // مرحله ۱ → ۲: رفتن به بخش سؤال‌ها
     btns.nextToQuestions.addEventListener('click', function() {
         const info = collectExamInfo();
         if (info) {
             Object.assign(examData, info);
             showSection('questions');
-
             if (document.querySelectorAll('.question-card').length === 0) {
                 addQuestion();
             }
         }
     });
 
-    // مرحله ۲ → ۱: بازگشت به اطلاعات
     btns.backToInfo.addEventListener('click', function() {
         showSection('info');
     });
 
-    // مرحله ۲ → ۳: رفتن به بررسی
     btns.reviewExam.addEventListener('click', function() {
         try {
             const questions = collectQuestions();
@@ -405,12 +392,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // مرحله ۳ → ۲: برگشت به سؤال‌ها
     btns.editQuestions.addEventListener('click', function() {
         showSection('questions');
     });
 
-    // ذخیره نهایی
     btns.saveExam.addEventListener('click', async function() {
         const confirmResult = await darsbeamConfirm({
             title: '💾 ذخیره آزمون',
@@ -426,15 +411,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // افزودن سؤال جدید
     btns.addQuestion.addEventListener('click', function() {
         addQuestion();
     });
 
     // ============================================
-    // 10. مقداردهی اولیه
+    // مقداردهی اولیه
     // ============================================
-
     showSection('info');
 
     setTimeout(() => {
